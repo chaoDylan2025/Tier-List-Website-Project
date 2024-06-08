@@ -1,0 +1,47 @@
+.TierCreated{
+    background-color: greenyellow;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 50px;
+}
+.TierCreated:hover{
+    opacity: 0.7;
+    transition-duration: 0.2s;
+}
+.TierCreated:active{
+    background-color: gray;
+}
+
+
+
+.RemoveTier{
+    background-color: red;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 40px;
+}
+.RemoveTier:hover{
+    opacity: 0.7;
+    transition-duration: 0.2s;
+}
+.RemoveTier:active{
+    background-color: gray;
+}
+
+
+.ColorChange{
+    background-color: lightblue;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 40px;
+}
+.ColorChange:hover{
+    opacity: 0.7;
+    transition-duration: 0.2s;
+}
+.ColorChange:active{
+    background-color: gray;
+}
