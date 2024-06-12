@@ -1,47 +1,48 @@
-.TierCreated{
+.buttons{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left: 80px;
+}
+
+#TierListCreated{
     background-color: greenyellow;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin-top: 50px;
 }
-.TierCreated:hover{
+#TierListCreated:hover{
     opacity: 0.7;
     transition-duration: 0.2s;
 }
-.TierCreated:active{
+#TierListCreated:active{
     background-color: gray;
 }
 
-
-
-.RemoveTier{
+#ModifyList{
     background-color: red;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin-left: 40px;
+    margin-left: 80px;
 }
-.RemoveTier:hover{
+#ModifyList:hover{
     opacity: 0.7;
     transition-duration: 0.2s;
 }
-.RemoveTier:active{
+#ModifyList:active{
     background-color: gray;
 }
 
-
-.ColorChange{
+#DeleteTierList{
     background-color: lightblue;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin-left: 40px;
 }
-.ColorChange:hover{
+#DeleteTierList:hover{
     opacity: 0.7;
     transition-duration: 0.2s;
 }
-.ColorChange:active{
+#DeleteTierList:active{
     background-color: gray;
 }
