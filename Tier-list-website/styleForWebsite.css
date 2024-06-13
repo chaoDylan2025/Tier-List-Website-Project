@@ -1,9 +1,17 @@
+body{
+    background-color: rgba(0, 0, 0, 0.812);
+}
 #header-area{
     display: flex;
     flex-grow: 1;
-    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.812);
     color: white;
     font-family:Georgia, 'Times New Roman', Times, serif;
+    justify-content: center;
+}
+
+#header-name{
+    justify-content: center;
 }
 
 #main-button-area{

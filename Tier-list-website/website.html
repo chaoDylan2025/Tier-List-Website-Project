@@ -12,25 +12,59 @@
     <body>
         <div id="header-area">
             <header>
-                <h1> Tier List Creator </h1>
+                <div id="header-name">
+                    <h1> Tier List Creator </h1>
+                </div>
             </header>
         </div>
 
         <div id="main-button-area">
-            <button class = "buttons" id="TierListCreated">Create a Tier List</button>
+            <button class = "buttons" id="TierListCreated" onclick="createTierList()">Create a Tier List</button>
             <button class = "buttons" id="ModifyList">Modify Tier List</button>
             <button class = "buttons" id="DeleteTierList">Delete Tier List</button>
         </div>
-
         <br>
 
-        <script>
-        </script>
+        <div id="Default_Tier_List"></div>
+
         <div id="image-placeholder">
             <div id="capForUser">Insert your images or uploaded images here</div>
             <div id="Placeholder"></div>
         </div>
     </body>
+
+    <script>
+        function createTierList(){
+            document.getElementById("Default_Tier_List").innerHTML = 
+            `<div id="containerForTierList">
+                <div class= "tier" id="S">
+                    <div id="border-for-tier">
+                    </div>
+                </div>
+                <div class= "tier" id="A">
+                    <div id="border-for-tier">
+                    </div>
+                </div>
+                <div class= "tier" id="B">
+                    <div id="border-for-tier">
+                    </div>
+                </div>
+                <div class= "tier" id="C">
+                    <div id="border-for-tier">
+                    </div>
+                </div>
+                <div class= "tier" id="D">
+                    <div id="border-for-tier">
+                    </div>
+                </div>
+                <div class= "tier" id="F">
+                    <div id="border-for-tier">
+                    </div>
+                </div>
+            </div>`;
+        }
+
+    </script>
     
 
     <div id="footer-area">
