@@ -25,6 +25,7 @@ body{
     display: flex;
     flex-direction: column;
     background-color: rgba(40, 40, 40, 0.927);
+    border-style: solid;
     margin-bottom: 10px;
 }
 
@@ -34,9 +35,11 @@ body{
 }
 
 #Placeholder{
-    background-color: black;
+    background-color: rgb(2, 2, 2);
+    border-style: solid;
     padding-top: 50px;
 }
+
 
 #footer-area{
     background-color: rgba(40, 40, 40, 0.927);
