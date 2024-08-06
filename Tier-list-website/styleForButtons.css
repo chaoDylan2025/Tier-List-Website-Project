@@ -1,48 +1,52 @@
+/** Styling for buttons */
 .buttons{
     margin-top: 30px;
     margin-bottom: 30px;
     margin-left: 80px;
 }
 
-#TierListCreated{
+/** Styling for 'Create a Tier List' */
+#tier_list_created{
     background-color: greenyellow;
     border: none;
     border-radius: 4px;
     cursor: pointer;
 }
-#TierListCreated:hover{
+#tier_list_created:hover{
     opacity: 0.7;
     transition-duration: 0.2s;
 }
-#TierListCreated:active{
+#tier_list_created:active{
     background-color: gray;
 }
 
-#ModifyList{
+/** Styling for 'Modify Tier List' */
+#modify_tier_list{
     background-color: red;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     margin-left: 80px;
 }
-#ModifyList:hover{
+#modify_tier_list:hover{
     opacity: 0.7;
     transition-duration: 0.2s;
 }
-#ModifyList:active{
+#modify_tier_list:active{
     background-color: gray;
 }
 
-#DeleteTierList{
+/** Styling for 'Delete Tier List' */
+#delete_tier_list{
     background-color: lightblue;
     border: none;
     border-radius: 4px;
     cursor: pointer;
 }
-#DeleteTierList:hover{
+#delete_tier_list:hover{
     opacity: 0.7;
     transition-duration: 0.2s;
 }
-#DeleteTierList:active{
+#delete_tier_list:active{
     background-color: gray;
 }

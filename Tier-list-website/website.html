@@ -19,64 +19,113 @@
         </div>
 
         <div id="main-button-area">
-            <button class = "buttons" id="TierListCreated" onclick="createTierList()">Create a Tier List</button>
-            <button class = "buttons" id="ModifyList" onclick="modifyTierList()">Modify Tier List</button>
-            <button class = "buttons" id="DeleteTierList">Delete Tier List</button>
+            <button class = "buttons" id="tier_list_created" onclick="createTierList()">Create a Tier List</button>
+            <button class = "buttons" id="modify_tier_list" onclick="modifyTierList()">Modify Tier List</button>
+            <button class = "buttons" id="delete_tier_list">Delete Tier List</button>
         </div>
         <br>
 
-        <div id="Default_Tier_List"></div>
+        <!-- Default tier list is created by clicking on 'Create a Tier List'-->
+        <div id="default_tier_list"></div>
 
-        <div id="image-placeholder">
-            <div id="capForUser">Insert your images or uploaded images here</div>
-            <div id="Placeholder"></div>
+        <!-- Container that will contain all images to insert in the tier list -->
+        <div id="image-place-holder">
+            <div id="cap_for_user">Insert your images or uploaded images here</div>
+            <div id="place-holder" draggable="true"></div>
         </div>
     </body>
 
     <script>
+        /** Implement image dragging for images container*/
+        var images_in_container = document.getElementById("place-holder");
+        
+        images_in_container.addEventListener("dragover", (e) => {
+            e.preventDefault();
+        });
+
+        images_in_container.addEventListener("drop", (e) => {
+            e.preventDefault();
+            const imageUrl = e.dataTransfer.getData('text/html');
+            const url = /src\s*=\s*"(.+?)"/.exec(imageUrl)[1];
+            const newImage = document.createElement('img');
+            newImage.src = url;
+            newImage.draggable = true;
+            newImage.align = "left";
+
+            newImage.addEventListener("dragstart", (e) => {
+                e.dataTransfer.setData("text/plain", e.target.src);
+            });
+            images_in_container.appendChild(newImage);
+        });
+
+        /** Implement image dragging for tiers */
+        var image_insertion_in_tiers = document.querySelectorAll(".image-container");
+
+        image_insertion_in_tiers.forEach(tier => {
+            tier.addEventListener("dragover", (e) => {
+                e.preventDefault();
+            });
+            
+            tier.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const imgSrc = e.dataTransfer.getData('text/plain');
+                const newImage = document.createElement('img');
+                newImage.src = imgSrc;
+                newImage.draggable = true;
+
+                newImage.addEventListener("dragstart", (e) => {
+                    e.dataTransfer.setData("text/plain", e.target.src);
+                });
+                const sourceImage = document.querySelector(`#place-holder img[src="${imgSrc}"]`);
+                if(sourceImage){
+                    sourceImage.remove();
+                }
+                tier.appendChild(newImage);
+            });    
+        });
+
         function createTierList(){
-            document.getElementById("Default_Tier_List").innerHTML = 
+            document.getElementById("default_tier_list").innerHTML = 
             `<div id="tier-list">
                 <div id="tier-list-container">
                     <div class="tier" id="S">
                         <span class="tier-name">S</span>
                     </div>
-                    <div class="image-container"></div>
+                    <div class="image-container" draggable="true"></div>
                 </div>
                 <div id="tier-list-container">
                     <div class="tier" id="A">
                         <span class="tier-name">A</span>
                     </div>
-                    <div class="image-container"></div>
+                    <div class="image-container" draggable="true"></div>
                 </div>
                 <div id="tier-list-container">
                     <div class="tier" id="B">
                         <span class="tier-name">B</span>
                     </div>
-                    <div class="image-container"></div>
+                    <div class="image-container" draggable="true"></div>
                 </div>
                 <div id="tier-list-container">
                     <div class="tier" id="C">
                         <span class="tier-name">C</span>
                     </div>
-                    <div class="image-container"></div>
+                    <div class="image-container" draggable="true"></div>
                 </div>
                 <div id="tier-list-container">
                     <div class="tier" id="D">
                         <span class="tier-name">D</span>
                     </div>
-                    <div class="image-container"></div>
+                    <div class="image-container" draggable="true"></div>
                 </div>
                 <div id="tier-list-container">
                     <div class="tier" id="F">
                         <span class="tier-name">F</span>
                     </div>
-                    <div class="image-container"></div>
+                    <div class="image-container" draggable="true"></div>
                 </div>
             </div>`;  
         }
     </script>
-    
 
     <div id="footer-area">
         <footer>
@@ -87,5 +136,4 @@
             <a href="https://en.wikipedia.org/wiki/Tier_list">Link</a>
         </footer>
     </div>
-
 </html>

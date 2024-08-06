@@ -1,10 +1,21 @@
+/** Contains default tier list when user clicks on 'Create a Tier List' */
+#default_tier_list{
+    margin-bottom: 100px;
+}
+
+/** Contains default tier list */
+.tier-list{
+    display: flex;
+    flex-direction: column;
+}
+/** Contains tier information */
 #tier-list-container{
     display: flex;
     border-style: solid;
     width: 750px;
     overflow: hidden;
 }
-
+/** Header for tier name */
 .tier{
     max-width: 100px;
     padding-top: 50px;
@@ -14,13 +25,6 @@
     flex: 1 1 auto;
     display: flex;
 }
-
-.tier-list{
-    display: flex;
-    flex-direction: column;
-    outline: 2px solid blue;
-}
-
 .tier-name{
     font-weight: bold;
     margin-right: 0.5rem;
@@ -28,38 +32,36 @@
     position: relative;
 }
 
-.tier-header{
-    display: flex;
-    align-items: center;
-    position: relative;
-}
-
+/** Styling for each tier's image container */
 .image-container{
     border-style: solid; 
     background-color: rgba(0, 0, 0, 0.501);
     width: 645px;
+    text-align: start;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.image-container img{
+    width: 75px;
 }
 
+/** Background colors for each tier's header */
 #S{
     background-color: rgb(253, 123, 123);
 }
-
 #A{
     background-color: rgb(255, 170, 91);   
 }
-
 #B{
     background-color: rgb(253, 226, 144);   
 }
-
 #C{
     background-color: rgb(246, 253, 123);   
 }
-
 #D{
     background-color: rgb(146, 246, 115);   
 }
-
 #F{
     background-color: rgb(123, 253, 244);   
 }
