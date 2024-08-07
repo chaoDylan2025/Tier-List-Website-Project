@@ -29,29 +29,43 @@ body{
     display: flex;
     flex-direction: column;
     background-color: rgba(40, 40, 40, 0.927);
-    background-size: cover;
     border-style: solid;
     margin-bottom: 30px;
     height: 250px;
     cursor: grab;
 }
-#cap_for_user{
-    color: white;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+#buttons-in-place-holder{
+   margin-top: 15px;
+   margin-bottom: 15px;
 }
+#buttons-to-space{
+    display: flex;
+    justify-content: space-between;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
 #place-holder{
-    background-color: rgb(2, 2, 2);
+    background-color: rgba(27, 27, 27, 0.927);
     border-style: solid;
+    border-width: 1px;
     width: 100%;
     height: 100%;
     text-align: start;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
+    margin-bottom: 30px;
 }
 #place-holder img{
     width: 80px;
 }
+#cap_for_user{
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 
 /** Styling for website footer area */
 #footer-area{

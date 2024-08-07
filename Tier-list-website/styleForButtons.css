@@ -26,7 +26,6 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin-left: 80px;
 }
 #modify_tier_list:hover{
     opacity: 0.7;
@@ -48,5 +47,34 @@
     transition-duration: 0.2s;
 }
 #delete_tier_list:active{
+    background-color: gray;
+}
+
+/** Styling for images container buttons */
+#upload_images{
+    background-color: rgba(245, 245, 245, 0.835);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+#upload_images:hover{
+    opacity: 0.7;
+    transition-duration: 0.2s;
+}
+#upload_images:active{
+    background-color: gray;
+}
+
+#search_images{
+    background-color: rgba(245, 245, 245, 0.835);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+#search_images:hover{
+    opacity: 0.7;
+    transition-duration: 0.2s;
+}
+#search_images:active{
     background-color: gray;
 }
