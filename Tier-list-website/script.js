@@ -1,112 +1,79 @@
-document.addEventListener('DOMContentLoaded', () => {
-
-    // Handle dragging images into place-holder
-    const placeHolder = document.getElementById("place-holder");
-
-    placeHolder.addEventListener("dragover", (e) => {
-        e.preventDefault();
-    });
-
-    placeHolder.addEventListener("drop", (e) => {
-        e.preventDefault();
-
-        const imageUrl = e.dataTransfer.getData('text/html');
-        const urlMatch = imageUrl.match(/src="([^"]+)"/);
-
-        if (urlMatch) {
-            const url = urlMatch[1];
-
-            // Create a new image element
-            const newImage = document.createElement('img');
-            newImage.src = url;
-            newImage.draggable = true;
-            newImage.align = "left";
-
-            // Set up dragstart event
-            newImage.addEventListener("dragstart", (e) => {
-                e.dataTransfer.setData("text/plain", e.target.src);
-            });
-
-            placeHolder.appendChild(newImage);
-        }
-    });
-
-    // Handle dragging images into tier containers
-    const tiers = document.querySelectorAll(".image-container");
-
-    tiers.forEach(tier => {
-        tier.addEventListener("dragover", (e) => {
-            e.preventDefault();
-        });
-
-        tier.addEventListener("drop", (e) => {
-            e.preventDefault();
-
-            const imgSrc = e.dataTransfer.getData('text/plain');
-
-            // Find the image with the dragged src
-            const sourceImage = document.querySelector(`#place-holder img[src="${imgSrc}"]`);
-
-            if (sourceImage) {
-                sourceImage.remove(); // Remove from place-holder
-
-                // Create a new image element
-                const newImage = document.createElement('img');
-                newImage.src = imgSrc;
-                newImage.draggable = true;
-
-                // Set up dragstart event
-                newImage.addEventListener("dragstart", (e) => {
-                    e.dataTransfer.setData("text/plain", e.target.src);
-                });
-
-                tier.appendChild(newImage);
-            } 
-            else {
-                alert("The image could not be found in the place-holder.");
-            }
-        });
-    });
-});
+const num_of_images_in_row = [];
 
 function createTierList(){
     document.getElementById("default_tier_list").innerHTML = 
-    `<div id="tier-list">
-        <div id="tier-list-container">
-            <div class="tier" id="S">
-                <span class="tier-name">S</span>
-            </div>
-            <div class="image-container" draggable="true"></div>
+    `<div class="tier">
+        <div class="tier-name" id="S">
+            <span> S </span>
         </div>
-        <div id="tier-list-container">
-            <div class="tier" id="A">
-                <span class="tier-name">A</span>
-            </div>
-            <div class="image-container" draggable="true"></div>
+        <div class="image-container">
         </div>
-        <div id="tier-list-container">
-            <div class="tier" id="B">
-                <span class="tier-name">B</span>
-            </div>
-            <div class="image-container" draggable="true"></div>
+    </div>
+    <div class="tier">
+        <div class="tier-name" id="A">
+            <span> A </span>
         </div>
-        <div id="tier-list-container">
-            <div class="tier" id="C">
-                <span class="tier-name">C</span>
-            </div>
-            <div class="image-container" draggable="true"></div>
+        <div class="image-container">
         </div>
-        <div id="tier-list-container">
-            <div class="tier" id="D">
-                <span class="tier-name">D</span>
-            </div>
-            <div class="image-container" draggable="true"></div>
+    </div>
+    <div class="tier">
+        <div class="tier-name" id="B">
+            <span> B </span>
         </div>
-        <div id="tier-list-container">
-            <div class="tier" id="F">
-                <span class="tier-name">F</span>
-            </div>
-            <div class="image-container" draggable="true"></div>
+        <div class="image-container">
         </div>
-    </div>`;  
+    </div>
+    <div class="tier">
+        <div class="tier-name" id="C">
+            <span> C </span>
+        </div>
+        <div class="image-container">
+        </div>
+    </div>
+    <div class="tier">
+        <div class="tier-name" id="D">
+            <span> D </span>
+        </div>
+        <div class="image-container">
+        </div>
+    </div>
+    <div class="tier">
+        <div class="tier-name" id="F">
+            <span> F </span>
+        </div>
+        <div class="image-container">
+        </div>
+    </div>`;
+
+    const tiers = document.querySelectorAll('.tier');
+    tiers.forEach(tier => {
+        tier.addEventListener('dragover', dragOver);
+        tier.addEventListener('drop', drop);
+    });
+    console.log(num_of_images_in_row);
 }
+
+function dragStart(event) {
+    event.dataTransfer.setData('text/plain', event.target.src);
+}
+
+function dragOver(event) {
+    event.preventDefault();
+}
+
+function drop(event) {
+    event.preventDefault();
+    const src = event.dataTransfer.getData('text/plain');
+    const image = new Image(100.00, 100.00);
+    image.src = src;
+    event.target.appendChild(image);
+}
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    const tiers = document.querySelectorAll('.tier');
+    tiers.forEach(tier => {
+        tier.addEventListener('dragover', dragOver);
+        tier.addEventListener('drop', drop);
+    });
+    console.log(num_of_images_in_row);
+});
