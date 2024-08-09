@@ -11,18 +11,19 @@
 /** Header for tier name */
 .tier{
     display: flex;
-    flex: row;
-    height: 100%; 
+    height: auto; 
+    width: 100%;
     border-style: solid;
     border-width: 2px;
     background-color: rgba(18, 17, 17, 0.099);
+    overflow: hidden;
 }
 .tier-name{
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: bold;
-    height: 100%;
+    min-height: 85px;
     width: 85px;
 }
 /** Styling for each tier's image container */
@@ -32,11 +33,7 @@
     width: 675px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: flex-start;
-    text-align: start;
     overflow: hidden;
-    object-fit: contain;
 }
 
 /** Background colors for each tier's header */
