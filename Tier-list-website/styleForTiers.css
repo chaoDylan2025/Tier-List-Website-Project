@@ -30,10 +30,16 @@
 .image-container{
     background-color: rgba(62, 60, 60, 0.501);
     height: auto;
-    width: 675px;
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
+    align-items: flex-end;
     overflow: hidden;
+}
+.image-container img{
+    height: 85px;
+    width: 85px;
+    object-fit: cover;
 }
 
 /** Background colors for each tier's header */
