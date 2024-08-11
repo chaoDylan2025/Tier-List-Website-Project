@@ -19,10 +19,31 @@
         </div>
 
         <div id="main-button-area">
-            <button class = "buttons" id="tier_list_created" onclick="createTierList()">Create a Tier List</button>
-            <button class = "buttons" id="modify_tier_list" onclick="modifyTierList()">Modify Tier List</button>
-            <button class = "buttons" id="delete_tier_list">Delete Tier List</button>
+            <div>
+                <button class = "buttons" id="tier_list_created" onclick="createTierList()">Create a Tier List</button>
+            </div>
+            <div>
+                <button class = "buttons" id="modify_tier_list">Modify Tier List</button>
+            </div>
+            <div>
+                <button class = "buttons" id="delete_tier_list">Delete Tier List</button>
+            </div>
         </div>
+
+        <!-- Dialog box for modifying tier list -->
+        <dialog class="modify-options">
+            <h3> Select an option </h3>
+            <form method="dialog">
+              <button class="modButtons">Change name of selected tier</button>
+            </form>
+            <form method="dialog">
+                <button class="modButtons">Change name of selected tier</button>
+            </form>
+            <form method="dialog">
+                <button class="modButtons">Change name of selected tier</button>
+            </form>
+            <button class="modButtons cancel_tier_mod">Cancel</button>
+          </dialog>
         <br>
 
         <!-- Default tier list is created by clicking on 'Create a Tier List'-->
@@ -45,6 +66,7 @@
 
     <script src="script.js"></script>
     <script src="image-place-holder.js"></script>
+    <script src="modifyTierList.js"></script>
 
     <div id="footer-area">
         <footer>

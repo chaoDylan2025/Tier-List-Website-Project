@@ -21,7 +21,7 @@ body{
     display: flex;
     margin-top: 20px;
     background-color: rgba(40, 40, 40, 0.927);
-    align-items: center;
+    justify-content: space-between;
 }
 
 /** Styling for image container that contains images to be inserted in tier list */
