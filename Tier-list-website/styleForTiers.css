@@ -1,5 +1,5 @@
-/** Contains default tier list when user clicks on 'Create a Tier List' */
-#default_tier_list{
+/** Contains tier list structure */
+#default_tier_list, #current_tier_list_layout{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9,7 +9,7 @@
     margin-bottom: 100px;
 }
 /** Header for tier name */
-.tier{
+.tier, .current_tier{
     display: flex;
     height: auto; 
     width: 100%;

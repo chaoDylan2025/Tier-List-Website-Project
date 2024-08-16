@@ -1,50 +1,9 @@
-// Creates a default tier list after the 'Create a Tier List' button has been clicked
-function createTierList(){
-    document.getElementById("default_tier_list").innerHTML = 
-    `<div class="tier">
-        <div class="tier-name" id="S">
-            <span> S </span>
-        </div>
-        <div class="image-container"></div>
-    </div>
-    <div class="tier">
-        <div class="tier-name" id="A">
-            <span> A </span>
-        </div>
-        <div class="image-container"></div>
-    </div>
-    <div class="tier">
-        <div class="tier-name" id="B">
-            <span> B </span>
-        </div>
-        <div class="image-container"></div>
-    </div>
-    <div class="tier">
-        <div class="tier-name" id="C">
-            <span> C </span>
-        </div>
-        <div class="image-container"></div>
-    </div>
-    <div class="tier">
-        <div class="tier-name" id="D">
-            <span> D </span>
-        </div>
-        <div class="image-container"></div>
-    </div>
-    <div class="tier">
-        <div class="tier-name" id="F">
-            <span> F </span>
-        </div>
-        <div class="image-container"></div>
-    </div>`;
-
-    // Allows images in every tier of tierlist to be dragged and dropped
-    const tiers = document.querySelectorAll('.image-container');
-    tiers.forEach(tier => {
-        tier.addEventListener('dragover', dragOver);
-        tier.addEventListener('drop', drop);
-    });
-}
+// Allows images in every tier of tierlist to be dragged and dropped
+const tiers = document.querySelectorAll('.image-container');
+tiers.forEach(tier => {
+    tier.addEventListener('dragover', dragOver);
+    tier.addEventListener('drop', drop);
+});
 
 // Allows user to drag images
 function dragOver(event) {

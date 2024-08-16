@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Simple Tier List
+        </title>
+        <link rel="stylesheet" href="styleForButtons.css">
+        <link rel="stylesheet" href="styleForWebsite.css">
+        <link rel="stylesheet" href="styleForTiers.css">
+    </head>
+
+    <body>
+        <div id="header-area">
+            <header>
+                <div id="header-name">
+                    <h1> Tier List Creator </h1>
+                </div>
+            </header>
+        </div>
+
+        <div id="main-button-area">
+            <div>
+                <button class = "modButtons" id="tier_color_change">Change color of selected tier</button>
+            </div>
+            <div>
+                <button class = "modButtons" id="clear_tier">Clear selected tier</button>
+            </div>
+            <div>
+                <button class = "modButtons" id="clear_tier_list">Clear Tier List</button>
+            </div>
+        </div>
+
+        <!-- Dialog box for modifying tier list -->
+        <dialog id="change-tier-color">
+        </dialog>
+
+        <dialog id="clear-tier">
+        </dialog>
+
+        <dialog id="clear-tier-list">
+        </dialog>
+
+        <br>
+
+        <!-- Default tier list -->
+        <div id="default_tier_list">
+            <div class="tier">
+                <div class="tier-name" id="S">
+                    <span> S </span>
+                </div>
+                <div class="image-container"></div>
+            </div>
+            <div class="tier">
+                <div class="tier-name" id="A">
+                    <span> A </span>
+                </div>
+                <div class="image-container"></div>
+            </div>
+            <div class="tier">
+                <div class="tier-name" id="B">
+                    <span> B </span>
+                </div>
+                <div class="image-container"></div>
+            </div>
+            <div class="tier">
+                <div class="tier-name" id="C">
+                    <span> C </span>
+                </div>
+                <div class="image-container"></div>
+            </div>
+            <div class="tier">
+                <div class="tier-name" id="D">
+                    <span> D </span>
+                </div>
+                <div class="image-container"></div>
+            </div>
+            <div class="tier">
+                <div class="tier-name" id="F">
+                    <span> F </span>
+                </div>
+                <div class="image-container"></div>
+            </div>
+        </div>
+
+        <!-- Container that will contain all images to insert in the tier list -->
+        <p id="cap_for_user"> Insert your images or uploaded images here </p>
+        <div id="image-place-holder">
+            <div id="buttons-in-place-holder">
+                <div id="buttons-to-space">
+                    <button id="upload_images" onclick="uploadImages()"> Upload Images </button>
+                    <button id="search_images"> Search for Images </button>
+                </div>  
+            </div>
+            <div id="place-holder" draggable="true">
+            </div>
+        </div>     
+    </body>
+
+    <script src="script.js"></script>
+    <script src="image-place-holder.js"></script>
+    <script src="modifyTierList.js"></script>
+
+    <div id="footer-area">
+        <footer>
+            How to create Tier List: 
+            <a href="https://youtu.be/rmK2a_7Aovo?si=e05jhYDhmY-ocxuh">Link</a>
+            <br>
+            What is a Tier List:
+            <a href="https://en.wikipedia.org/wiki/Tier_list">Link</a>
+        </footer>
+    </div>
+</html>

@@ -3,6 +3,7 @@ body{
     background-color: rgba(0, 0, 0, 0.812);
 }
 
+
 /** Styling for website title */
 #header-area{
     display: flex;
@@ -16,6 +17,7 @@ body{
     justify-content: center;
 }
 
+
 /** Styling for tier list buttons area */
 #main-button-area{
     display: flex;
@@ -23,6 +25,7 @@ body{
     background-color: rgba(40, 40, 40, 0.927);
     justify-content: space-between;
 }
+
 
 /** Styling for image container that contains images to be inserted in tier list */
 #image-place-holder{
@@ -66,6 +69,20 @@ body{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+
+/** Styling for modifying tier list */
+#change-tier-color{
+    height: 350px;
+    width: 350px;
+}
+#clear-tier{
+    height: 650px;
+    width: 650px;
+}
+#clear-tier-list{
+    height: 650px;
+    width: 650px;
+}
 
 /** Styling for website footer area */
 #footer-area{

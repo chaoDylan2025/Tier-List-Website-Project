@@ -1,12 +1,4 @@
-/** Styling for buttons */
-.buttons{
-    margin-top: 30px;
-    margin-bottom: 30px;
-    margin-left: 80px;
-    margin-right: 80px;
-}
-
-/** Styling for 'Create a Tier List' */
+/** Styling for 'Create a Default Tier List' */
 #tier_list_created{
     background-color: greenyellow;
     border: none;
@@ -21,35 +13,58 @@
     background-color: gray;
 }
 
-/** Styling for 'Modify Tier List' */
-#modify_tier_list{
+.buttons, .modButtons{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left: 80px;
+    margin-right: 80px;
+}
+.cancel-button{
+    margin-top: 300px;
+}
+
+#tier_color_change{
     background-color: red;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
 }
-#modify_tier_list:hover{
+#tier_color_change:hover{
     opacity: 0.7;
     transition-duration: 0.2s;
 }
-#modify_tier_list:active{
+#tier_color_change:active{
     background-color: gray;
 }
 
-/** Styling for 'Delete Tier List' */
-#delete_tier_list{
+#clear_tier{
     background-color: lightblue;
     border: none;
     border-radius: 4px;
     cursor: pointer;
 }
-#delete_tier_list:hover{
+#clear_tier:hover{
     opacity: 0.7;
     transition-duration: 0.2s;
 }
-#delete_tier_list:active{
+#clear_tier:active{
     background-color: gray;
 }
+
+#clear_tier_list{
+    background-color: rgb(167, 226, 128);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+#clear_tier_list:hover{
+    opacity: 0.7;
+    transition-duration: 0.2s;
+}
+#clear_tier_list:active{
+    background-color: gray;
+}
+
 
 /** Styling for images container buttons */
 #upload_images{
@@ -80,16 +95,18 @@
     background-color: gray;
 }
 
-/** Styling for modifying tier list buttons */
-.modButtons{
-    margin-bottom: 10px;
+
+/** Styling for custom tier list creation */
+#custom_tier_list_created{
+    background-color: red;
+    border: none;
     border-radius: 4px;
     cursor: pointer;
 }
-.modButtons:hover{
+#custom_tier_list_created:hover{
     opacity: 0.7;
     transition-duration: 0.2s;
 }
-.modButtons:active{
+#custom_tier_list_created:active{
     background-color: gray;
 }
