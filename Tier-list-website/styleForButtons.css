@@ -23,6 +23,26 @@
     margin-top: 300px;
 }
 
+.confirmation-buttons{
+    background-color: rgb(85, 86, 85);
+    border-radius: 6px;
+    cursor: pointer;
+}
+.confirmation-buttons:hover{
+    opacity: 0.7;
+    transition-duration: 0.2s;
+
+}
+.confirmation-buttons:active{
+    background-color: gray;
+}
+
+.mod-buttons-area{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
 #tier_color_change{
     background-color: red;
     border: none;

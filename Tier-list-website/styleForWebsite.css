@@ -79,9 +79,32 @@ body{
     height: 650px;
     width: 650px;
 }
+#header_for_tier_clearing{
+    margin-bottom: 15px;
+}
+#header_for_tier_clearing > span{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 18px;
+}
+#checkbox_layout{
+    margin-bottom: 15px;
+}
+
 #clear-tier-list{
     height: 650px;
     width: 650px;
+}
+
+#color-picker {
+    padding: 20px;
+    text-align: center;
+}
+.color-info {
+    margin-top: 20px;
+}
+
+#image-place-holder-area{
+    display: inline;
 }
 
 /** Styling for website footer area */
