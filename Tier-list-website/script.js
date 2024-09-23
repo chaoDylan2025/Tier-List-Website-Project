@@ -1,75 +1,42 @@
-// Allows images in every tier of tierlist to be dragged and dropped
-const tiers = document.querySelectorAll('.image-container');
-tiers.forEach(tier => {
-    tier.addEventListener('dragover', dragOver);
-    tier.addEventListener('drop', drop);
-});
+/** Upload images to the tier list image container */
+// ADD DIV TO IMAGES
+function uploadImages(){ 
+    // Creates hidden input element that allows user to upload their image files
+    const access_files = document.createElement("input");
+    access_files.type = "file";
+    access_files.accept = "image/png, image/jpeg";
+    access_files.multiple = true;
+    access_files.style.visibility = 'hidden'; 
 
-// Allows user to drag images
-function dragOver(event) {
-    event.preventDefault();
+    // Executes this code when user selects their image files
+    access_files.onchange = () => {
+        // Array of files selected
+        const files = access_files.files;
+        // Access div where images will be stored for user to drag to any tiers
+        const placeHolder = document.getElementById('place-holder');
+
+        // Iterates through every file in files array
+        for(const file of files){
+            // Reads current file
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                // Create image element of image file selected
+                const image = new Image(85, 85);
+                image.src = e.target.result;
+                
+                let image_div = document.createElement('div');
+                image_div.append(image);
+                placeHolder.appendChild(image_div);
+            }
+            // Reads contents of current file
+            reader.readAsDataURL(file);
+        } 
+    }
+    // Simulates mouse click on 'input' element
+    access_files.click();
 }
 
-// Allows user to drop images
-function drop(event) {
-    event.preventDefault();
-
-    // Ensure that the target is the correct image container
-    var image_in_container = event.target;
-    if (!image_in_container.classList.contains('image-container')) {
-        image_in_container = image_in_container.closest('.image-container');
-    }
-
-    // Get url of image that is being dragged
-    const src = event.dataTransfer.getData('text/plain');
-
-    // Creates image element of image being dragged
-    const image = new Image();
-    image.style.width = '85px';
-    image.style.height = '85px';
-    image.src = src;
-    image.style.objectFit = 'cover';
-    image.draggable = true;
-
-    // Sets dragged data to image's src attribute
-    image.addEventListener("dragstart", (e) => {
-        e.dataTransfer.setData("text/plain", e.target.src);
-    });
-
-    // Remove selected image(s) from previous location
-    const from_image_container = document.querySelector(`#place-holder img[src="${image.src}"]`);
-    if(from_image_container){
-        from_image_container.remove();
-    } 
-    else {
-        const tiers = document.querySelectorAll('.image-container');
-        tiers.forEach(tier => {
-            const existing_image = tier.querySelector(`img[src="${image.src}"]`);
-            if(existing_image){
-                existing_image.remove();
-            }
-        });
-    }
-    
-    /** Rearranging images in a tier */
-    const all_images = image_in_container.querySelectorAll('img');
-    var inserted_image = false;
-
-    // Iterate through all images to properly rearrange images
-    for(var i = 0; i < all_images.length; i++){
-        const current_image = all_images[i];
-        const current_rect = current_image.getBoundingClientRect();
-
-        // Insert image to the left if current image is being moved to the left
-        if(event.clientX < current_rect.left + current_rect.width / 2){
-            image_in_container.insertBefore(image, current_image);
-            inserted_image = true;
-            break;
-        }
-    }
-
-    // Append image if no images are being moved to the left
-    if(!inserted_image){
-        image_in_container.appendChild(image);
-    }
+function image_dragging(){
+    // Allow image dragging from image place holder to tiers
+    drake = dragula({containers: [document.querySelector("#place-holder"), document.querySelector("#S2"), document.querySelector("#A2"), document.querySelector("#B2"), document.querySelector("#C2"), document.querySelector("#D2"), document.querySelector("#F2")]});
 }

@@ -7,9 +7,13 @@
         <link rel="stylesheet" href="styleForButtons.css">
         <link rel="stylesheet" href="styleForWebsite.css">
         <link rel="stylesheet" href="styleForTiers.css">
+        <link rel="stylesheet" href="dragula.css">
     </head>
 
-    <body>
+    <body onload="image_dragging()">
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.3/dragula.min.js'></script>
+        <script src="script.js"></script>
+        <script src="modifyTierList.js"></script>
         <div id="header-area">
             <header>
                 <div id="header-name">
@@ -94,15 +98,12 @@
                         <button id="search_images"> Search for Images </button>
                     </div>  
                 </div>
-                <div id="place-holder" draggable="true">
+                <div id="place-holder">
                 </div>
             </div>  
-         </div>   
+         </div>  
     </body>
 
-    <script src="script.js"></script>
-    <script src="image-place-holder.js"></script>
-    <script src="modifyTierList.js"></script>
 
     <div id="footer-area">
         <footer>
