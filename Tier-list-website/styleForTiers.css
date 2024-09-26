@@ -1,5 +1,5 @@
 /** Contains tier list structure */
-#default_tier_list, #current_tier_list_layout{
+.tier_list_layout{
     display: inline;
     padding: 10px;
     width: 80vw;
@@ -7,7 +7,7 @@
     margin-bottom: 100px;
 }
 /** Header for tier name */
-.tier, .current_tier{
+.tier{
     display: flex;
     height: auto; 
     width: 100%;
@@ -16,7 +16,7 @@
     background-color: rgba(7, 7, 7, 0.099);
     overflow: hidden;
 }
-.tier-name, .current_tier_name{
+.tier-name{
     align-content: center;
     text-align: center;
     font-weight: bold;
@@ -25,7 +25,7 @@
 }
 
 /** Styling for each tier's image container */
-.image-container, .current_image_container{
+.image-container{
     background-color: rgb(16, 16, 16);
     height: auto;
     width: 100%;
@@ -34,7 +34,7 @@
     align-items: flex-end;
     overflow: hidden;
 }
-.image-container img, .current_image_container img{
+.image-container img{
     height: 85px;
     width: 85px;
     object-fit: cover;

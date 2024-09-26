@@ -1,18 +1,17 @@
 /** Upload images to the tier list image container */
-// ADD DIV TO IMAGES
 function uploadImages(){ 
-    // Creates hidden input element that allows user to upload their image files
+    // Creates hidden input element that allows the user to upload their images
     const access_files = document.createElement("input");
     access_files.type = "file";
     access_files.accept = "image/png, image/jpeg";
     access_files.multiple = true;
     access_files.style.visibility = 'hidden'; 
 
-    // Executes this code when user selects their image files
+    // Execute this code when user selects their images
     access_files.onchange = () => {
         // Array of files selected
         const files = access_files.files;
-        // Access div where images will be stored for user to drag to any tiers
+
         const placeHolder = document.getElementById('place-holder');
 
         // Iterates through every file in files array
@@ -36,7 +35,26 @@ function uploadImages(){
     access_files.click();
 }
 
+/** Uses a function from the Dragula JS Library for image dragging and dropping */
 function image_dragging(){
     // Allow image dragging from image place holder to tiers
-    drake = dragula({containers: [document.querySelector("#place-holder"), document.querySelector("#S2"), document.querySelector("#A2"), document.querySelector("#B2"), document.querySelector("#C2"), document.querySelector("#D2"), document.querySelector("#F2")]});
+    // FIX BY CREATING FUNCTION THAT CREATES ARRAYS OF ALL TIER IDS
+    let arr_of_containers = create_array_of_valid_containers();
+
+    // dragula({containers: [document.querySelector("#place-holder"), document.querySelector("#S2"), document.querySelector("#A2"), 
+    //     document.querySelector("#B2"), document.querySelector("#C2"), document.querySelector("#D2"), document.querySelector("#F2")]});
+    dragula({containers: arr_of_containers});
+}
+
+function create_array_of_valid_containers(){
+    let name_of_tier_list_id = document.querySelector(".tier_list_layout").id;
+    let arr_of_tier_ids = [document.querySelector("#place-holder")];
+
+    document.getElementById(`${name_of_tier_list_id}`).querySelectorAll(`.image-container`).forEach(e =>
+        {
+            arr_of_tier_ids.push(document.querySelector(`#${e.id}`));
+        }
+    );
+
+    return arr_of_tier_ids;
 }
