@@ -31,30 +31,27 @@ function uploadImages(){
             reader.readAsDataURL(file);
         } 
     }
-    // Simulates mouse click on 'input' element
+    // Simulate mouse click
     access_files.click();
 }
 
 /** Uses a function from the Dragula JS Library for image dragging and dropping */
 function image_dragging(){
-    // Allow image dragging from image place holder to tiers
-    // FIX BY CREATING FUNCTION THAT CREATES ARRAYS OF ALL TIER IDS
+    // Inserts array of valid containers into 'containers' key of the dragula function
     let arr_of_containers = create_array_of_valid_containers();
-
-    // dragula({containers: [document.querySelector("#place-holder"), document.querySelector("#S2"), document.querySelector("#A2"), 
-    //     document.querySelector("#B2"), document.querySelector("#C2"), document.querySelector("#D2"), document.querySelector("#F2")]});
     dragula({containers: arr_of_containers});
 }
 
+/** Creates an array of valid containers that allow image dragging and dropping */
 function create_array_of_valid_containers(){
     let name_of_tier_list_id = document.querySelector(".tier_list_layout").id;
     let arr_of_tier_ids = [document.querySelector("#place-holder")];
 
+    // Push all tier ids of the current tier list to an array
     document.getElementById(`${name_of_tier_list_id}`).querySelectorAll(`.image-container`).forEach(e =>
         {
             arr_of_tier_ids.push(document.querySelector(`#${e.id}`));
         }
     );
-
     return arr_of_tier_ids;
 }
