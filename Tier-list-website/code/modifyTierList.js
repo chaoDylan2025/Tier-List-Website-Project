@@ -1,15 +1,10 @@
-// Save current state of tier list
-var json_string;
-
-// Tier and color selected
+// Global variables
 var selectedTier;
 var selectedColor;
 
-// Array of tier headers
 const tier_headers_arr = [];
 retrieve_tier_header_names();
 
-// Array of tiers checked
 var tiers_checked = new Set();
 
 // Inner html for container of buttons in each dialog box
@@ -23,17 +18,15 @@ const button_inner_html =
 
 /** Present a dialogue box depending on button that was clicked */
 const buttons_in_dialog = document.querySelectorAll('.modButtons');
-buttons_in_dialog.forEach(current_button => 
-{
+
+buttons_in_dialog.forEach(current_button => {
     current_button.addEventListener("click", () => {
-        // Contains name of dialog box
         var dialog_name = "";
 
+        console.log("Pressed one of the buttons...");
         /** Opens the dialog box for changing color of any tier(s) */ 
         if(current_button.textContent == 'Change color of selected tier'){
             dialog_name = "change-tier-color";
-            // Default option is not selected
-            var no_default_option_selected = false;
 
             document.getElementById(dialog_name).innerHTML = 
             `
@@ -49,16 +42,19 @@ buttons_in_dialog.forEach(current_button =>
                 <option value="F">F</option>
             </select>
 
-            <div id="color-picker">
-            </div>
+            <div id="color-picker"></div>
             <div class="mod-buttons-area"></div>
             `;
 
+            // Opens dialog box
             document.querySelector(`#${dialog_name}`).showModal();
+
+            // default option for changing tier colors has been selected
+            var default_option_selected = true;
 
             document.querySelector("#tier-select").addEventListener("change", (event) => {
                 // Show color picker if any tier was selected
-                if(event.target.value != "" && no_default_option_selected == false){
+                if(event.target.value != "" && default_option_selected == true){
                     document.querySelector('#color-picker').innerHTML = `
                     <input type="color" id="colorInput" value="#ff0000">
                         <div class="color-info">
@@ -68,15 +64,17 @@ buttons_in_dialog.forEach(current_button =>
                     `;
                     selectedTier = event.target.value;
                     selectedColor = document.getElementById('hexValue').textContent;
-                    no_default_option_selected = true;
+                    default_option_selected = false;
                 }
+
                 // Remove color picker if 'Select a tier' was selected
-                else if(event.target.value == "" && no_default_option_selected == true){
+                else if(event.target.value == "" && default_option_selected == false){
                     document.getElementById('color-picker').innerHTML = "";
-                    no_default_option_selected = false;
+                    default_option_selected = true;
                 }
+
                 // Allow user to continue to use the color picker
-                if(event.target.value != "" && no_default_option_selected == true){
+                if(event.target.value != "" && default_option_selected == false){
                     document.getElementById('colorInput').addEventListener('input', function() {
                         const color = this.value;
                         document.getElementById('hexValue').textContent = color;
@@ -113,7 +111,7 @@ buttons_in_dialog.forEach(current_button =>
             document.querySelector(`#${dialog_name}`).showModal();
         }
 
-        // Opens the dialog box for clearing images of tier list
+        // Opens the dialog box for clearing all tier list images
         else if(current_button.textContent == 'Clear Tier List'){
             tier_headers_arr.forEach(tier => {
                 document.getElementById(`${tier}2`).innerHTML = "";
@@ -168,10 +166,12 @@ function confirm_button_functionality(dialog_name){
 
 /** Adds checkboxes to all of the tier names in current tier list */
 function checkbox_tier_names(div_id){
-    var current_tier_list = document.getElementById("default_tier_list");
-    var current_tier = current_tier_list.querySelectorAll('.tier');
+    var current_tier_list_id = document.querySelector(".tier_list_layout").id;
+    var current_tier_list = document.getElementById(current_tier_list_id);
+
     const insert_in_container = document.getElementById(div_id);
 
+    var current_tier = current_tier_list.querySelectorAll('.tier');
     current_tier.forEach((tier, index) => {
         // Contains checkbox and label for each tier
         const current_div = document.createElement('div');
@@ -203,7 +203,6 @@ function content_of_checked_tiers(div_to_insert_images){
             if(checkbox.checked){
                 document.getElementById(`${tier_headers_arr[index]}3`).style.display = 'flex';
                 tiers_checked.add(tier_headers_arr[index]);
-                //console.log("Current tiers checked: " + tiers_checked);
             }
             else if(!checkbox.checked){
                 document.getElementById(`${tier_headers_arr[index]}3`).style.display = 'none';
@@ -260,62 +259,3 @@ function retrieve_tier_header_names(){
         tier_headers_arr.push(name.textContent.trim());
     });
 }
-
-// /** Save current state of tier list */
-// function save_tier_list_state(divId) {
-//     const div = document.getElementById(divId);
-    
-//     // Holds the state of each tier's images
-//     const state = [];
-
-//     // Loop through each child element in the div
-//     div.childNodes.forEach(child => {
-//         if (child.tagName === "IMG") {
-//             state.push({
-//                 tag: child.tagName,
-//                 src: child.src,
-//                 width: child.style.width,
-//                 height: child.style.height,
-//             });
-//         } 
-//         else if (child.tagName) {
-//             console.log(`Current child being appended to state: ${child.tagName}`)
-//             state.push({
-//                 tag: child.tagName,
-//                 innerHTML: child.innerHTML,        
-//             });
-//         }
-//     });
-//     // Convert state array to JSON string
-//     const stateJSON = JSON.stringify(state);
-
-//     return stateJSON;
-// }
-
-// /** Restore tier list */
-// function restore_tier_list(divId, stateJSON) {
-//     const div = document.getElementById(divId);
-
-//     // Clear the current content of the div
-//     div.innerHTML = "";
-
-//     // Parse JSON string to get state array
-//     const state = JSON.parse(stateJSON);
-
-//     // Loop through each saved state and recreate the elements
-//     state.forEach(item => {
-//         let element;
-//         if (item.tag === "IMG") {
-//             element = new Image();
-//             element.src = item.src;
-//             element.style.width = item.width;
-//             element.style.height = item.height;
-//         } 
-//         else {
-//             element = document.createElement(item.tag);
-//             element.innerHTML = item.innerHTML;
-//             console.log(element.innerHTML);
-//         }
-//         div.appendChild(element);
-//     });
-// }
