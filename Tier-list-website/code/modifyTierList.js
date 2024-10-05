@@ -3,7 +3,6 @@ var selectedTier;
 var selectedColor;
 
 const tier_headers_arr = [];
-retrieve_tier_header_names();
 
 var tiers_checked = new Set();
 
@@ -15,6 +14,8 @@ const button_inner_html =
 <div id="confirmButton">
     <button class="confirmation-buttons confirm-button"> Confirm </button>
 </div>`;
+
+retrieve_tier_header_names();
 
 /** Present a dialogue box depending on button that was clicked */
 const buttons_in_dialog = document.querySelectorAll('.modButtons');
@@ -129,7 +130,10 @@ buttons_in_dialog.forEach(current_button => {
     });
 });
 
-/** Exits dialog box  */
+
+/***********************************************************
+ * Button functionality for Back button and Confirm button *
+ ***********************************************************/
 function back_button_functionality(dialog_name){
     const back_buttons = document.querySelectorAll('.back-button');
     back_buttons.forEach(button => {
@@ -142,7 +146,6 @@ function back_button_functionality(dialog_name){
     });     
 }
 
-/** Confirm modifications */
 function confirm_button_functionality(dialog_name){
     const confirm_buttons = document.querySelectorAll('.confirm-button');
 
@@ -164,7 +167,11 @@ function confirm_button_functionality(dialog_name){
     });
 }
 
-/** Adds checkboxes to all of the tier names in current tier list */
+/************************
+ * Dialog box functions *
+ ************************/
+
+// Adds checkboxes to all of the tier names in current tier list */
 function checkbox_tier_names(div_id){
     var current_tier_list_id = document.querySelector(".tier_list_layout").id;
     var current_tier_list = document.getElementById(current_tier_list_id);
@@ -189,6 +196,7 @@ function checkbox_tier_names(div_id){
         insert_in_container.append(current_div);
     });
 }
+
 
 /** Retrieve images of checked tiers */
 function content_of_checked_tiers(div_to_insert_images){
@@ -248,9 +256,9 @@ function replicate_tier_list(div_to_insert_images){
 
         insert_in_container.append(current_div);
         color_index ++;
-
     });
 }
+
 
 /** Append tier header names in an array */
 function retrieve_tier_header_names(){
@@ -258,4 +266,33 @@ function retrieve_tier_header_names(){
     tier_headers.forEach(name => {
         tier_headers_arr.push(name.textContent.trim());
     });
+}
+
+
+/**************************************
+ * Tier list customization functions *
+ **************************************/
+
+/** Creates a dialog box that will let users see the custom tier list they are creating */
+function create_custom_tier_list(){
+    document.getElementById("tier_list_customization").innerHTML =
+    `
+    <div id="options_for_tier_list_customization">
+        <label for="num_of_tiers"> Enter number of tiers for your custom tier list (3-15):</label>
+        <input id="num_of_tiers" type="number" min="3" max="15"/>
+        <button onclick="show_tier_naming_option()"> Enter </button>
+    </div>
+    <div id="names_for_tiers"></div>
+    <div class="mod-buttons-area"></div>
+    `
+
+    //document.querySelector(".mod-buttons-area").innerHTML = button_inner_html;
+    document.getElementById("tier_list_customization").showModal();
+}
+
+/** Executes when user clicks on enter after inputting some number */
+function show_tier_naming_option(){
+    if(document.getElementById("num_of_tiers").value == 3){
+        console.log("User is considering to have 3 tiers in tier list...");
+    }
 }

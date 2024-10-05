@@ -107,6 +107,16 @@ body{
     display: inline;
 }
 
+/** Styling for customizing tier list */
+#tier_list_customization{
+    height: 350px;
+    width: 650px;
+}
+
+#options_for_tier_list_customization{
+    flex-direction: column;
+}
+
 /** Styling for website footer area */
 #footer-area{
     background-color: rgba(40, 40, 40, 0.927);

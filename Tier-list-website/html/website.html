@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="../styling/styleForButtons.css">
         <link rel="stylesheet" href="../styling/styleForWebsite.css">
         <link rel="stylesheet" href="../styling/styleForTiers.css">
+        <script src="../code/modifyTierList.js"></script>  
     </head>
 
     <body>
@@ -24,8 +25,11 @@
             </div>
             <div></div>
             <div>
-                <button class = "buttons" id="custom_tier_list_created">Create a Custom Tier List</button>
+                <button class = "buttons" id="custom_tier_list_created" onclick="create_custom_tier_list()">Create a Custom Tier List</button>
             </div>
-        </div>        
+        </div>    
+        
+        <!-- Dialog box for tier list customization -->
+        <dialog id="tier_list_customization"></dialog>
     </body>
 </html>
