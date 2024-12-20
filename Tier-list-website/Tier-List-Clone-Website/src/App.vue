@@ -1,16 +1,11 @@
 <script setup>
-import {ref, onMounted} from "vue"
-import { useRouter } from "vue-router"
-
-const hide_home_page = ref(false)
-
 </script>
 
 <template>
     <v-app class="bg-black">
         <v-container class="bg-black">
         </v-container>
-        <v-container v-if="hide_home_page == false">
+        <v-container v-if="$route.fullPath == '/'">
             <v-row class="bg-grey-darken-3">
                 <v-col></v-col>
                 <v-col>
@@ -30,7 +25,7 @@ const hide_home_page = ref(false)
                 </v-col>
     
                 <v-col>
-                    <v-btn @click="hide_home_page = true" to="/CustomizeTierList">Use a Default Tier List</v-btn>
+                    <v-btn to="/CustomizeTierList">Use a Default Tier List</v-btn>
                 </v-col>                 
             </v-row>
         </v-container>
