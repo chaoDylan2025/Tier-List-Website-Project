@@ -31,7 +31,7 @@ var default_tier_list = ref([
 
 <template>
     <v-app class="bg-black">
-        <v-container class="center">
+        <v-container>
             <v-row>
                 <v-col>
                     <v-btn> Create new Tier </v-btn>
@@ -46,12 +46,15 @@ var default_tier_list = ref([
         
         </v-container>
 
-        <v-container>
+        <v-container class="d-print-inline px-10 mb-10" width="80vw" height="70vh">
             <!-- Iterates through an object that contains default tier list -->
-            <v-container v-for="tier in default_tier_list" :key="tier.tier_name">
+            <v-row v-for="tier in default_tier_list" :key="tier.tier_name" :class="`bg-${tier.color} d-print-flex h-auto w-100 tier-border`">
                 <!-- Contains tier name and its color -->
-                <v-col :class="`bg-${tier.color}`"> {{ tier.tier_name }} </v-col>
-            </v-container>
+                <v-col> 
+                    <p> {{ tier.tier_name }} </p>
+                </v-col>
+                <v-col class="bg-grey-darken-4 border-thin"></v-col>
+            </v-row>
 
         </v-container>
 
@@ -61,3 +64,42 @@ var default_tier_list = ref([
         </v-container>
     </v-app>
 </template>
+
+<style lang="css">
+.tier-border{
+    border-style: solid;
+    border-width: 2px;
+}
+/** Header for tier name */
+.tier{
+    display: flex;
+    height: auto; 
+    width: 100%;
+    border-style: solid;
+    border-width: 2px;
+    overflow: hidden;
+}
+.tier-name{
+    align-content: center;
+    text-align: center;
+    font-weight: bold;
+    min-height: 85px;
+    width: 85px;
+}
+
+/** Styling for each tier's image container */
+.image-container{
+    background-color: rgb(16, 16, 16);
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    overflow: hidden;
+}
+.image-container img{
+    height: 85px;
+    width: 85px;
+    object-fit: cover;
+}
+</style>
