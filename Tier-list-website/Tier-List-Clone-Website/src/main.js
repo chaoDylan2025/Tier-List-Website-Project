@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import { createVuetify } from "vuetify"
 import { aliases, mdi } from "vuetify/iconsets/mdi"
 import { fa } from "vuetify/iconsets/fa"
+import VueDraggable from 'vuedraggable'
 import "vuetify/styles";
 import "@mdi/font/css/materialdesignicons.css";
 import "@fortawesome/fontawesome-free/css/all.css";
@@ -24,6 +25,7 @@ const vuetify = createVuetify({
 const app = createApp(App)
 
 app.use(router)
+app.use(VueDraggable)
 app.use(vuetify)
 
 app.mount('#app')
