@@ -36,8 +36,28 @@ var default_tier_list = ref([
     },
 ])
 
+// Contains colors used in default tier list
+const colors_of_default_tier_list = ["red-lighten-3", "yellow-darken-3", "yellow-darken-1", "yellow-lighten-1", "lime-accent-2", "lime-accent-4"]
+
 // Contains image files
 var files_arr = ref([])
+
+// Inserts a new tier in the tier list
+function add_new_tier(tier_list){
+    const num_of_tiers = tier_list.length
+    tier_list.push({
+        tier_name: `Tier ${num_of_tiers+1}`,
+        color: colors_of_default_tier_list[getRandomInt(0, colors_of_default_tier_list.length)],
+        tier_image_container: []
+    })
+}
+
+// Gets a random number between the minimum number and maximum number
+function getRandomInt(min, max) {
+  const minCeiled = Math.ceil(min)
+  const maxFloored = Math.floor(max)
+  return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled)
+}
 
 // Upload images to image container
 function uploadToImageContainer(){
@@ -79,7 +99,7 @@ function uploadToImageContainer(){
         <v-container>
             <v-row>
                 <v-col>
-                    <v-btn size="small"> Create new Tier </v-btn>
+                    <v-btn @click="add_new_tier(default_tier_list)" size="small"> Create new Tier </v-btn>
                 </v-col>
                 <v-col>
                     <v-btn size="small"> Modify Tiers </v-btn>
