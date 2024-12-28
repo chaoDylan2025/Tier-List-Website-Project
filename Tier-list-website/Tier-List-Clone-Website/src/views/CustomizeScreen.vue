@@ -125,6 +125,24 @@ function uploadToImageContainer(){
                 </div>
             </div>  
         </v-container> 
+
+        <!-- Contains trash icon that deletes images -->
+        <v-container>
+            <v-row></v-row>
+            <v-row>
+                <v-col cols="10"></v-col>
+                <v-col>
+                    <v-hover>
+                        <template v-slot:default="{ isHovering, props }">
+                            <v-card width="25" v-bind="props" :color="isHovering ? 'primary' : 'black'">
+                                <v-icon :icon="`mdi-delete`"></v-icon>
+                            </v-card>
+                        </template>
+                    </v-hover>
+                </v-col>
+            </v-row>
+
+        </v-container>
     </v-app>
 </template>
 
