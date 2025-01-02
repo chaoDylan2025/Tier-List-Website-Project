@@ -7,38 +7,38 @@ import {ref, onMounted} from 'vue'
 var default_tier_list = ref([
     {
         tier_name: "S", 
-        color: "red-lighten-3",
+        color: "rgb(253, 123, 123)",
         tier_image_container: []
     },
     {
         tier_name: "A", 
-        color: "yellow-darken-3",
+        color: "rgb(255, 170, 91)",
         tier_image_container: []
     },
     {
         tier_name: "B", 
-        color: "yellow-darken-1",
+        color: "rgb(253, 226, 144)",
         tier_image_container: []
     },
     {
         tier_name: "C", 
-        color: "yellow-lighten-1",
+        color: "rgb(246, 253, 123)",
         tier_image_container: []
     },
     {
         tier_name: "D", 
-        color: "lime-accent-2",
+        color: "rgb(146, 246, 115)",
         tier_image_container: []
     },
     {
         tier_name: "F", 
-        color: "lime-accent-4",
+        color: "rgb(123, 253, 244)",
         tier_image_container: []
     },
 ])
 
 // Contains colors used in default tier list
-const colors_of_default_tier_list = ["red-lighten-3", "yellow-darken-3", "yellow-darken-1", "yellow-lighten-1", "lime-accent-2", "lime-accent-4"]
+const colors_of_default_tier_list = ["rgb(253, 123, 123)", "rgb(255, 170, 91)", "rgb(253, 226, 144)", "rgb(246, 253, 123)", "rgb(146, 246, 115)", "rgb(123, 253, 244)"]
 
 // Contains image files
 var files_arr = ref([])
@@ -117,10 +117,10 @@ function uploadToImageContainer(){
         <!-- Contains the default tier list structure -->
         <v-container class="d-print-inline px-10 mb-10 h-auto">
             <!-- Iterates through an object that contains default tier list -->
-            <v-row v-for="tier in default_tier_list" :key="tier.tier_name" :class="`bg-${tier.color} d-print-flex h-auto w-100 tier-border overflow-hidden`">
+            <v-row v-for="tier in default_tier_list" :key="tier.tier_name" :style="`background-color: ${tier.color}`" :class="`d-print-flex h-auto w-100 tier-border overflow-hidden`">
                 <!-- Contains tier name and its color -->
                 <v-col class="h-auto w-auto"> 
-                    <p class="text-center text-break font-weight-bold"> {{ tier.tier_name }} </p>
+                    <p class="text-center text-break font-weight-bold" :style="`color: black`"> {{ tier.tier_name }} </p>
                 </v-col>
                 <v-col class="d-flex flex-wrap align-end overflow-hidden h-auto w-100 bg-grey-darken-4">
                 </v-col>
@@ -174,6 +174,7 @@ function uploadToImageContainer(){
 /* Styling for Default Tier List border */
 .tier-border{
     border-style: solid;
+    border-color: black;
     border-width: 2px;
 }
 

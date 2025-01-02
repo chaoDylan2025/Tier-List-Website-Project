@@ -1,6 +1,7 @@
 <script setup>
 import {ref, computed} from 'vue'
 import TierNameChange from './TierNameChange.vue'
+import TierColorChange from './TierColorChange.vue'
 
 const props = defineProps({
     open_dialog: Boolean,
@@ -11,12 +12,15 @@ const props = defineProps({
 var temp_json_string = JSON.stringify(props.tier_list)
 var copy_of_tier_list = ref(JSON.parse(temp_json_string))
 
-/**************************************************************
- * Functions and variables for modifying selected tier's name *
- **************************************************************/
 // Opens modal dialog for changing selected tier's name
-var open_tier_name_dialog = ref(false)
+var open_tier_modification_dialog = ref(false)
 
+// Opens modal dialog for changing selected tier's color
+var open_tier_color_dialog = ref(false)
+
+/***********************************************************************
+ * Functions and variables for modifying selected tier's name or color *
+ ***********************************************************************/
 // Contains selected tier
 var current_tier = ref("")
 
@@ -41,7 +45,7 @@ function confirm_tier_name_change(state, new_name){
     // Changes name of selected tier
     tier.value = new_name
     // Set to false to exit modal dialog
-    open_tier_name_dialog.value = state
+    open_tier_modification_dialog.value = state
 }
 </script>
 
@@ -68,11 +72,11 @@ function confirm_tier_name_change(state, new_name){
                         </v-col>
                         
                         <v-col>
-                            <v-btn @click="current_tier = copy_of_tier_list[index], index_of_current_tier = index, original_tier = copy_of_tier_list[index], open_tier_name_dialog = true" size="x-small" variant="plain" prepend-icon="mdi-pencil">Change Name</v-btn> 
+                            <v-btn @click="current_tier = copy_of_tier_list[index], index_of_current_tier = index, original_tier = copy_of_tier_list[index], open_tier_modification_dialog = true" size="x-small" variant="plain" prepend-icon="mdi-pencil">Change Name</v-btn> 
                         </v-col>
 
                         <v-col>
-                            <v-btn size="x-small" variant="plain" prepend-icon="mdi-format-color-fill"> Change Color</v-btn>
+                            <v-btn @click="current_tier = copy_of_tier_list[index], copy_of_tier_list[index], index_of_current_tier = index, original_tier = copy_of_tier_list[index], open_tier_color_dialog = true" size="x-small" variant="plain" prepend-icon="mdi-format-color-fill"> Change Color</v-btn>
                         </v-col>
                     </v-row>
 
@@ -84,8 +88,10 @@ function confirm_tier_name_change(state, new_name){
             </v-card>
         </v-dialog>
 
-        <TierNameChange :tier_name_dialog="open_tier_name_dialog" :current_tier="current_tier" 
-        @close="(state) => open_tier_name_dialog = state" @changeTierName="confirm_tier_name_change"/>
+        <TierNameChange :tier_name_dialog="open_tier_modification_dialog" :current_tier="current_tier" 
+        @close="(state) => open_tier_modification_dialog = state" @changeTierName="confirm_tier_name_change"/>
+        <TierColorChange :tier_color_dialog="open_tier_color_dialog" :current_tier="current_tier" 
+        @close="(state) => open_tier_color_dialog = state"/>
     </v-app>
 </template>
 
