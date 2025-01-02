@@ -1,14 +1,48 @@
 <script setup>
-import {ref, onMounted} from 'vue'
+import {ref, computed} from 'vue'
+import TierNameChange from './TierNameChange.vue'
 
 const props = defineProps({
     open_dialog: Boolean,
     tier_list: Object
 })
 
-// Contains a reference to the open_dialog prop
-const dialog_opened = ref(props.open_dialog)
+// Copy of tier list that was passed as a prop
+var temp_json_string = JSON.stringify(props.tier_list)
+var copy_of_tier_list = ref(JSON.parse(temp_json_string))
 
+/**************************************************************
+ * Functions and variables for modifying selected tier's name *
+ **************************************************************/
+// Opens modal dialog for changing selected tier's name
+var open_tier_name_dialog = ref(false)
+
+// Contains selected tier
+var current_tier = ref("")
+
+// Contains index of selected tier
+var index_of_current_tier = ref(0)
+
+// Restore original name of selected tier
+var original_tier = ref("")
+
+// Computed prop for selected tier
+const tier = computed({
+    get(){
+        return copy_of_tier_list.value[index_of_current_tier.value]
+    },
+    set(new_name){
+        copy_of_tier_list.value[index_of_current_tier.value].tier_name = new_name
+    }
+})
+
+// Executes when user confirms selected tier's new name
+function confirm_tier_name_change(state, new_name){
+    // Changes name of selected tier
+    tier.value = new_name
+    // Set to false to exit modal dialog
+    open_tier_name_dialog.value = state
+}
 </script>
 
 <template>
@@ -20,7 +54,7 @@ const dialog_opened = ref(props.open_dialog)
             <v-card>
                 <!-- Contains the default tier list structure -->
                 <v-container class="ml-5 mt-10 d-print-inline px-10 mb-10 h-auto">
-                    <v-row v-for="tier in props.tier_list">
+                    <v-row v-for="(tier, index) in copy_of_tier_list">
                         <v-col>
                             <!-- Iterates through an object that contains default tier list -->
                             <v-row :key="tier.tier_name" :class="`bg-${tier.color} d-print-flex h-auto w-auto tier-border overflow-hidden`">
@@ -34,7 +68,7 @@ const dialog_opened = ref(props.open_dialog)
                         </v-col>
                         
                         <v-col>
-                            <v-btn size="x-small" variant="plain" prepend-icon="mdi-pencil">Change Name</v-btn> 
+                            <v-btn @click="current_tier = copy_of_tier_list[index], index_of_current_tier = index, original_tier = copy_of_tier_list[index], open_tier_name_dialog = true" size="x-small" variant="plain" prepend-icon="mdi-pencil">Change Name</v-btn> 
                         </v-col>
 
                         <v-col>
@@ -49,6 +83,9 @@ const dialog_opened = ref(props.open_dialog)
                 </v-container>
             </v-card>
         </v-dialog>
+
+        <TierNameChange :tier_name_dialog="open_tier_name_dialog" :current_tier="current_tier" 
+        @close="(state) => open_tier_name_dialog = state" @changeTierName="confirm_tier_name_change"/>
     </v-app>
 </template>
 
