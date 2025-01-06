@@ -30,7 +30,7 @@ var index_of_current_tier = ref(0)
 // Restore original name of selected tier
 var original_tier = ref("")
 
-// Computed prop for selected tier
+// Computed props for selected tier
 const tier = computed({
     get(){
         return copy_of_tier_list.value[index_of_current_tier.value]
@@ -40,13 +40,31 @@ const tier = computed({
     }
 })
 
-// Executes when user confirms selected tier's new name
+const tier_color = computed({
+    get(){
+        return copy_of_tier_list.value[index_of_current_tier.value]
+    },
+    set(new_color){
+        copy_of_tier_list.value[index_of_current_tier.value].color = new_color
+    }
+})
+
+// Changes selected tier's new name
 function confirm_tier_name_change(state, new_name){
     // Changes name of selected tier
     tier.value = new_name
     // Set to false to exit modal dialog
     open_tier_modification_dialog.value = state
 }
+
+// Changes selected tier's color
+function confirm_tier_color_change(state, new_color){
+    // Changes name of selected tier
+    tier_color.value = new_color
+    // Set to false to exit modal dialog
+    open_tier_color_dialog.value = state
+}
+
 </script>
 
 <template>
@@ -61,7 +79,7 @@ function confirm_tier_name_change(state, new_name){
                     <v-row v-for="(tier, index) in copy_of_tier_list">
                         <v-col>
                             <!-- Iterates through an object that contains default tier list -->
-                            <v-row :key="tier.tier_name" :class="`bg-${tier.color} d-print-flex h-auto w-auto tier-border overflow-hidden`">
+                            <v-row :key="tier.tier_name" :class="`d-print-flex h-auto w-auto tier-border overflow-hidden`" :style="`background-color: ${tier.color}`">
                                 <!-- Contains tier name and its color -->
                                 <v-col class="h-auto w-auto"> 
                                     <p class="text-center text-break font-weight-bold"> {{ tier.tier_name }} </p>
@@ -76,7 +94,7 @@ function confirm_tier_name_change(state, new_name){
                         </v-col>
 
                         <v-col>
-                            <v-btn @click="current_tier = copy_of_tier_list[index], copy_of_tier_list[index], index_of_current_tier = index, original_tier = copy_of_tier_list[index], open_tier_color_dialog = true" size="x-small" variant="plain" prepend-icon="mdi-format-color-fill"> Change Color</v-btn>
+                            <v-btn @click="current_tier = copy_of_tier_list[index], index_of_current_tier = index, original_tier = copy_of_tier_list[index], open_tier_color_dialog = true" size="x-small" variant="plain" prepend-icon="mdi-format-color-fill"> Change Color</v-btn>
                         </v-col>
                     </v-row>
 
@@ -91,7 +109,7 @@ function confirm_tier_name_change(state, new_name){
         <TierNameChange :tier_name_dialog="open_tier_modification_dialog" :current_tier="current_tier" 
         @close="(state) => open_tier_modification_dialog = state" @changeTierName="confirm_tier_name_change"/>
         <TierColorChange :tier_color_dialog="open_tier_color_dialog" :current_tier="current_tier" 
-        @close="(state) => open_tier_color_dialog = state"/>
+        @close="(state) => open_tier_color_dialog = state" @changeTierColor="confirm_tier_color_change"/>
     </v-app>
 </template>
 

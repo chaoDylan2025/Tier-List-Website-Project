@@ -23,7 +23,7 @@ var change_selected_tier_name = ref("")
                     <v-row>
                         <v-col>
                             <!-- Iterates through an object that contains default tier list -->
-                            <v-row :class="`bg-${props.current_tier.color} d-print-flex h-auto w-auto tier-border overflow-hidden`">
+                            <v-row :class="`d-print-flex h-auto w-auto tier-border overflow-hidden`" :style="`background-color: ${props.current_tier.color}`">
                                 <!-- Contains tier name and its color -->
                                 <v-col class="h-auto w-auto"> 
                                     <v-text-field

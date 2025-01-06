@@ -1,5 +1,5 @@
 <script setup>
-import {ref, onMounted} from 'vue'
+import {ref, computed, watch} from 'vue'
 
 const props = defineProps({
     tier_color_dialog: Boolean,
@@ -7,8 +7,21 @@ const props = defineProps({
 })
 
 // Change selected tier's color
-var change_selected_tier_color = ref("")
+var current_tier_color = computed({
+    get(){
+        return change_selected_tier_color.value
+    },
+    set(color){
+        change_selected_tier_color.value = color
+    }
+})
 
+var change_selected_tier_color = ref(props.current_tier.color)
+
+// Watch for changes to selected tier's color
+watch (change_selected_tier_color, (color, old_color) => {
+    current_tier_color.value = color
+})
 </script>
 
 <template>
@@ -23,7 +36,7 @@ var change_selected_tier_color = ref("")
                     <v-row>
                         <v-col>
                             <!-- Iterates through an object that contains default tier list -->
-                            <v-row :class="`bg-${props.current_tier.color} d-print-flex h-auto w-auto tier-border overflow-hidden`">
+                            <v-row :class="`d-print-flex h-auto w-auto tier-border overflow-hidden`" :style="`background-color: ${current_tier_color}`">
                                 <!-- Contains tier name and its color -->
                                 <v-col class="h-auto w-auto"> 
                                     <p> {{ props.current_tier.tier_name }} </p>
