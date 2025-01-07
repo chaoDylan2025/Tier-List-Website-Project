@@ -100,7 +100,7 @@ function confirm_tier_color_change(state, new_color){
 
                     <v-row class="mt-8">
                         <v-btn @click="$emit('close', false)">Back</v-btn>
-                        <v-btn>Confirm</v-btn>
+                        <v-btn @click="$emit('update', false, copy_of_tier_list)">Confirm</v-btn>
                     </v-row>
                 </v-container>
             </v-card>

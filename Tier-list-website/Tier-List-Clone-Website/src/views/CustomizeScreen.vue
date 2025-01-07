@@ -63,6 +63,12 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled)
 }
 
+// Updates current tier list based on modifications
+function updateTierList(state, new_tier_list){
+    open_modal_dialog.value = state
+    default_tier_list = new_tier_list
+}
+
 // Upload images to image container
 function uploadToImageContainer(){
     // Creates hidden input element that allows the user to upload their images
@@ -166,7 +172,8 @@ function uploadToImageContainer(){
             </v-row>
 
         </v-container>
-        <ModifyTierList :open_dialog="open_modal_dialog" :tier_list="default_tier_list" @close="(state) => open_modal_dialog = state"/>
+        <ModifyTierList :open_dialog="open_modal_dialog" :tier_list="default_tier_list" @close="(state) => open_modal_dialog = state"
+            @update="updateTierList"/>
     </v-app>
 </template>
 

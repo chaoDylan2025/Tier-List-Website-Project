@@ -1,26 +1,16 @@
 <script setup>
-import {ref, computed, watch} from 'vue'
+import {ref, watch} from 'vue'
 
 const props = defineProps({
     tier_color_dialog: Boolean,
     current_tier: Object,
 })
 
-// Change selected tier's color
-var current_tier_color = computed({
-    get(){
-        return change_selected_tier_color.value
-    },
-    set(color){
-        change_selected_tier_color.value = color
-    }
-})
-
 var change_selected_tier_color = ref(props.current_tier.color)
 
 // Watch for changes to selected tier's color
-watch (change_selected_tier_color, (color, old_color) => {
-    current_tier_color.value = color
+watch (() => props.current_tier.color, (color) => {
+    change_selected_tier_color.value = color  
 })
 </script>
 
@@ -36,7 +26,7 @@ watch (change_selected_tier_color, (color, old_color) => {
                     <v-row>
                         <v-col>
                             <!-- Iterates through an object that contains default tier list -->
-                            <v-row :class="`d-print-flex h-auto w-auto tier-border overflow-hidden`" :style="`background-color: ${current_tier_color}`">
+                            <v-row :class="`d-print-flex h-auto w-auto tier-border overflow-hidden`" :style="`background-color: ${change_selected_tier_color}`">
                                 <!-- Contains tier name and its color -->
                                 <v-col class="h-auto w-auto"> 
                                     <p> {{ props.current_tier.tier_name }} </p>
@@ -52,7 +42,7 @@ watch (change_selected_tier_color, (color, old_color) => {
                     </v-row>
 
                     <v-row class="mt-8">
-                        <v-btn @click="$emit('close', false), change_selected_tier_color=''">Back</v-btn>
+                        <v-btn @click="$emit('close', false), change_selected_tier_color=props.current_tier.color">Back</v-btn>
                         <v-btn @click="$emit('changeTierColor', false, change_selected_tier_color)">Confirm</v-btn>
                     </v-row>
                 </v-container>
