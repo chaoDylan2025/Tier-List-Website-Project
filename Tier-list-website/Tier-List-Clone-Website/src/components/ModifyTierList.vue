@@ -2,6 +2,7 @@
 import {ref, computed} from 'vue'
 import TierNameChange from './TierNameChange.vue'
 import TierColorChange from './TierColorChange.vue'
+import TierListDisplay from './TierListDisplay.vue'
 
 const props = defineProps({
     open_dialog: Boolean,
@@ -24,11 +25,11 @@ var open_tier_color_dialog = ref(false)
 // Contains selected tier
 var current_tier = ref("")
 
+// Contains original content of selected tier
+var original_tier = ref("")
+
 // Contains index of selected tier
 var index_of_current_tier = ref(0)
-
-// Restore original name of selected tier
-var original_tier = ref("")
 
 // Computed props for selected tier
 const tier = computed({
@@ -36,7 +37,7 @@ const tier = computed({
         return copy_of_tier_list.value[index_of_current_tier.value]
     },
     set(new_name){
-        copy_of_tier_list.value[index_of_current_tier.value].tier_name = new_name
+        copy_of_tier_list.value[index_of_current_tier].tier_name = new_name
     }
 })
 
@@ -45,9 +46,25 @@ const tier_color = computed({
         return copy_of_tier_list.value[index_of_current_tier.value]
     },
     set(new_color){
-        copy_of_tier_list.value[index_of_current_tier.value].color = new_color
+        copy_of_tier_list.value[index_of_current_tier].color = new_color
     }
 })
+
+// Assign variables their values before opening tier name modification dialog
+function open_tier_name_mod_dialog(index){
+    current_tier = copy_of_tier_list.value[index]
+    index_of_current_tier = index
+    original_tier = copy_of_tier_list[index]
+    open_tier_modification_dialog.value = true
+}
+
+// Assign variables their values before openining tier color modification dialog
+function open_tier_color_mod_dialog(index){
+    current_tier = copy_of_tier_list.value[index]
+    index_of_current_tier = index
+    original_tier = copy_of_tier_list[index]
+    open_tier_color_dialog.value = true
+}
 
 // Changes selected tier's new name
 function confirm_tier_name_change(state, new_name){
@@ -64,7 +81,6 @@ function confirm_tier_color_change(state, new_color){
     // Set to false to exit modal dialog
     open_tier_color_dialog.value = state
 }
-
 </script>
 
 <template>
@@ -72,33 +88,16 @@ function confirm_tier_color_change(state, new_color){
         <v-dialog
         v-model="props.open_dialog"
         height="auto"
-        width="auto">
+        width="1000">
             <v-card>
-                <!-- Contains the default tier list structure -->
-                <v-container class="ml-5 mt-10 d-print-inline px-10 mb-10 h-auto">
-                    <v-row v-for="(tier, index) in copy_of_tier_list">
-                        <v-col>
-                            <!-- Iterates through an object that contains default tier list -->
-                            <v-row :key="tier.tier_name" :class="`d-print-flex h-auto w-auto tier-border overflow-hidden`" :style="`background-color: ${tier.color}`">
-                                <!-- Contains tier name and its color -->
-                                <v-col class="h-auto w-auto"> 
-                                    <p class="text-center text-break font-weight-bold"> {{ tier.tier_name }} </p>
-                                </v-col>
-                                <v-col class="d-flex flex-wrap align-end overflow-hidden h-auto w-100 bg-grey-darken-4">
-                                </v-col>
-                            </v-row>
-                        </v-col>
-                        
-                        <v-col>
-                            <v-btn @click="current_tier = copy_of_tier_list[index], index_of_current_tier = index, original_tier = copy_of_tier_list[index], open_tier_modification_dialog = true" size="x-small" variant="plain" prepend-icon="mdi-pencil">Change Name</v-btn> 
-                        </v-col>
-
-                        <v-col>
-                            <v-btn @click="current_tier = copy_of_tier_list[index], index_of_current_tier = index, original_tier = copy_of_tier_list[index], open_tier_color_dialog = true" size="x-small" variant="plain" prepend-icon="mdi-format-color-fill"> Change Color</v-btn>
-                        </v-col>
-                    </v-row>
+                <v-container>
+                    <!-- Contains tier list structure -->
+                     <v-row>
+                        <TierListDisplay :tier_list= copy_of_tier_list :show_mod_buttons="true" @open_tier_name_mod="open_tier_name_mod_dialog" @open_tier_color_mod="open_tier_color_mod_dialog"/>
+                     </v-row>
 
                     <v-row class="mt-8">
+                        <v-spacer></v-spacer>
                         <v-btn @click="$emit('close', false)">Back</v-btn>
                         <v-btn @click="$emit('update', false, copy_of_tier_list)">Confirm</v-btn>
                     </v-row>

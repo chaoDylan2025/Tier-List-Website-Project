@@ -1,5 +1,5 @@
 <script setup>
-import {ref, onMounted} from 'vue'
+import {ref} from 'vue'
 
 const props = defineProps({
     tier_name_dialog: Boolean,
@@ -8,7 +8,6 @@ const props = defineProps({
 
 // Change selected tier's name
 var change_selected_tier_name = ref("")
-
 </script>
 
 <template>
@@ -39,7 +38,7 @@ var change_selected_tier_name = ref("")
 
                     <v-row class="mt-8">
                         <v-btn @click="$emit('close', false), change_selected_tier_name=''">Back</v-btn>
-                        <v-btn @click="$emit('changeTierName', false, change_selected_tier_name)">Confirm</v-btn>
+                        <v-btn @click="$emit('changeTierName', false, change_selected_tier_name), change_selected_tier_name=''">Confirm</v-btn>
                     </v-row>
                 </v-container>
             </v-card>

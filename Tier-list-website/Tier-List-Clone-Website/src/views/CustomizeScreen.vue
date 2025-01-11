@@ -1,5 +1,6 @@
 <script setup>
 import draggable from 'vuedraggable'
+import TierListDisplay from '../components/TierListDisplay.vue'
 import ModifyTierList from '../components/ModifyTierList.vue'
 import {ref, onMounted} from 'vue'
 
@@ -40,11 +41,11 @@ var default_tier_list = ref([
 // Contains colors used in default tier list
 const colors_of_default_tier_list = ["rgb(253, 123, 123)", "rgb(255, 170, 91)", "rgb(253, 226, 144)", "rgb(246, 253, 123)", "rgb(146, 246, 115)", "rgb(123, 253, 244)"]
 
-// Contains image files
-var files_arr = ref([])
-
 // Opens modal dialog for customizing tier list
 var open_modal_dialog = ref(false)
+
+// Contains image files
+var files_arr = ref([])
 
 // Inserts a new tier in the tier list
 function add_new_tier(tier_list){
@@ -120,18 +121,7 @@ function uploadToImageContainer(){
             </v-row>
         </v-container>
 
-        <!-- Contains the default tier list structure -->
-        <v-container class="d-print-inline px-10 mb-10 h-auto">
-            <!-- Iterates through an object that contains default tier list -->
-            <v-row v-for="tier in default_tier_list" :key="tier.tier_name" :style="`background-color: ${tier.color}`" :class="`d-print-flex h-auto w-100 tier-border overflow-hidden`">
-                <!-- Contains tier name and its color -->
-                <v-col class="h-auto w-auto"> 
-                    <p class="text-center text-break font-weight-bold" :style="`color: black`"> {{ tier.tier_name }} </p>
-                </v-col>
-                <v-col class="d-flex flex-wrap align-end overflow-hidden h-auto w-100 bg-grey-darken-4">
-                </v-col>
-            </v-row>
-        </v-container>
+        <TierListDisplay :tier_list="default_tier_list"/>
 
         <v-container id="image-place-holder-area">
             <div>
@@ -172,6 +162,7 @@ function uploadToImageContainer(){
             </v-row>
 
         </v-container>
+
         <ModifyTierList :open_dialog="open_modal_dialog" :tier_list="default_tier_list" @close="(state) => open_modal_dialog = state"
             @update="updateTierList"/>
     </v-app>
