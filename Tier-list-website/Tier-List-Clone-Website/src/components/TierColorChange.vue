@@ -1,6 +1,5 @@
 <script setup>
 import {ref, watch} from 'vue'
-import TierListDisplay from './TierListDisplay.vue'
 
 const props = defineProps({
     tier_color_dialog: Boolean,

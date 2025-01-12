@@ -2,6 +2,7 @@
 import draggable from 'vuedraggable'
 import TierListDisplay from '../components/TierListDisplay.vue'
 import ModifyTierList from '../components/ModifyTierList.vue'
+import DeleteTiers from '../components/DeleteTiers.vue'
 import {ref, onMounted} from 'vue'
 
 // Contains the initial default tier list
@@ -43,6 +44,9 @@ const colors_of_default_tier_list = ["rgb(253, 123, 123)", "rgb(255, 170, 91)", 
 
 // Opens modal dialog for customizing tier list
 var open_modal_dialog = ref(false)
+
+// Opens modal dialog for deleting tiers in tier list
+var delete_tiers_modal_dialog = ref(false)
 
 // Contains image files
 var files_arr = ref([])
@@ -116,7 +120,7 @@ function uploadToImageContainer(){
                     <v-btn @click="open_modal_dialog = true" size="small"> Modify Tiers </v-btn>
                 </v-col>
                 <v-col>
-                    <v-btn size="small"> Delete Tiers </v-btn>
+                    <v-btn @click="delete_tiers_modal_dialog = true" size="small"> Delete Tiers </v-btn>
                 </v-col>
             </v-row>
         </v-container>
@@ -165,6 +169,9 @@ function uploadToImageContainer(){
 
         <ModifyTierList :open_dialog="open_modal_dialog" :tier_list="default_tier_list" @close="(state) => open_modal_dialog = state"
             @update="updateTierList"/>
+        <DeleteTiers :tier_delete_dialog="delete_tiers_modal_dialog" :tier_list="default_tier_list" @close="(state) =>  delete_tiers_modal_dialog = state"
+        />
+        
     </v-app>
 </template>
 
