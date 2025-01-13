@@ -37,16 +37,15 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
     <v-container class="ml-5 mt-10 d-print-inline px-10 mb-10 h-auto">
         <!-- Iterates through an object that contains tier list -->
         <v-row class="d-flex flex-row" v-for="(tier, index) in props.tier_list" :key="tier.tier_name" :class="`d-print-flex h-auto w-100 overflow-hidden`">
-            <v-col v-if="props.show_checkboxes === true">
+            <div class="mr-5" v-if="props.show_checkboxes === true">
                 <v-row>
                     <v-checkbox
                         v-model="tiers_to_delete_arr"
                         label=""
-                        :value="tier.tier_name">
+                        :value="tier">
                     </v-checkbox>
                 </v-row>
-
-            </v-col>
+            </div>
             
             <!-- Contains tier name and its color -->
             <v-col>
