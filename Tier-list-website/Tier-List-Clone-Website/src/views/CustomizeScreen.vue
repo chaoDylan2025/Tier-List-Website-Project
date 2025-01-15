@@ -71,7 +71,7 @@ function getRandomInt(min, max) {
 // Updates current tier list based on modifications
 function updateTierList(state, new_tier_list){
     open_modal_dialog.value = state
-    default_tier_list = new_tier_list
+    default_tier_list.value = new_tier_list
 }
 
 // Deletes selected tiers from current tier list
@@ -113,7 +113,6 @@ function uploadToImageContainer(){
     // Simulate mouse click
     access_files.click();
 }
-
 </script>
 
 <template>
