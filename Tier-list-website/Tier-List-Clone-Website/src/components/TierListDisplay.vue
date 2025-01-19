@@ -13,13 +13,13 @@ const props = defineProps({
 var tiers_to_delete_arr = ref([])
 
 // Executes emit event when user clicks on button that modifies selected tier's name
-function open_tier_name_mod_dialog(index){
-    emit('open_tier_name_mod', index)
+function open_tier_name_mod_dialog(index, props){
+    emit('open_tier_name_mod', index, props)
 }
 
 // Executes emit event when user clicks on button that modifies selected tier's color
-function open_tier_color_mod_dialog(index){
-    emit('open_tier_color_mod', index)
+function open_tier_color_mod_dialog(index, props){
+    emit('open_tier_color_mod', index, props)
 }
 
 // Executes emit event when user selects a tier that they want to delete or remove from array
@@ -63,11 +63,11 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
             <v-col v-if="props.show_mod_buttons === true">
                 <v-row>
                     <v-col>
-                        <v-btn @click="open_tier_name_mod_dialog(index)" size="x-small" variant="plain" prepend-icon="mdi-pencil">Change Name</v-btn> 
+                        <v-btn @click="open_tier_name_mod_dialog(index, props.tier_list)" size="x-small" variant="plain" prepend-icon="mdi-pencil">Change Name</v-btn> 
                     </v-col>
 
                     <v-col>
-                        <v-btn @click="open_tier_color_mod_dialog(index)" size="x-small" variant="plain" prepend-icon="mdi-format-color-fill"> Change Color</v-btn>
+                        <v-btn @click="open_tier_color_mod_dialog(index, props.tier_list)" size="x-small" variant="plain" prepend-icon="mdi-format-color-fill"> Change Color</v-btn>
                     </v-col>
                 </v-row>
             </v-col>

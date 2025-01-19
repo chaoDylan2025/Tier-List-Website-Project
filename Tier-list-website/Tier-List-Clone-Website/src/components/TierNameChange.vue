@@ -3,7 +3,8 @@ import {ref} from 'vue'
 
 const props = defineProps({
     tier_name_dialog: Boolean,
-    current_tier: Object,
+    tier_list: Object,
+    index: Number
 })
 
 // Change selected tier's name
@@ -22,12 +23,12 @@ var change_selected_tier_name = ref("")
                     <v-row>
                         <v-col>
                             <!-- Iterates through an object that contains default tier list -->
-                            <v-row :class="`d-print-flex h-auto w-auto tier-border overflow-hidden`" :style="`background-color: ${props.current_tier.color}`">
+                            <v-row :class="`d-print-flex h-auto w-auto tier-border overflow-hidden`" :style="`background-color: ${props.tier_list[props.index].color}`">
                                 <!-- Contains tier name and its color -->
                                 <v-col class="h-auto w-auto"> 
                                     <v-text-field
                                     v-model="change_selected_tier_name"
-                                    :placeholder="props.current_tier.tier_name"
+                                    :placeholder="props.tier_list[props.index].tier_name"
                                     </v-text-field>
                                 </v-col>
                                 <v-col class="d-flex flex-wrap align-end overflow-hidden h-auto w-100 bg-grey-darken-4">
@@ -38,7 +39,7 @@ var change_selected_tier_name = ref("")
 
                     <v-row class="mt-8">
                         <v-btn @click="$emit('close', false), change_selected_tier_name=''">Back</v-btn>
-                        <v-btn @click="$emit('changeTierName', false, change_selected_tier_name), change_selected_tier_name=''">Confirm</v-btn>
+                        <v-btn @click="$emit('changeTierName', false, change_selected_tier_name, props.tier_list), change_selected_tier_name=''">Confirm</v-btn>
                     </v-row>
                 </v-container>
             </v-card>
