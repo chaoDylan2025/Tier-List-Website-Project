@@ -1,10 +1,25 @@
 <script setup>
+import { ref } from 'vue'
 import draggable from 'vuedraggable'
 import TierListDisplay from '../components/TierListDisplay.vue'
 import ModifyTierList from '../components/ModifyTierList.vue'
 import DeleteTiers from '../components/DeleteTiers.vue'
 import {default_tier_list, open_modal_dialog, delete_tiers_modal_dialog, files_arr} from '../front-end-code/customize_screen_functions'
 import {add_new_tier, updateTierList, deleteTiers, uploadToImageContainer} from '../front-end-code/customize_screen_functions'
+
+const props = defineProps({
+    tier_list: Object,
+    open_custom_tier_list_dialog: Boolean,
+})
+
+const drag = ref(false)
+
+function update_tier_images_arr(img_arr, index){
+    default_tier_list.value[index] = img_arr
+}
+
+console.log(props.tier_list)
+
 </script>
 
 <template>
@@ -23,7 +38,7 @@ import {add_new_tier, updateTierList, deleteTiers, uploadToImageContainer} from 
             </v-row>
         </v-container>
 
-        <TierListDisplay :tier_list="default_tier_list"/>
+        <TierListDisplay :tier_list="props.tier_list.value"  @update_tier_images="update_tier_images_arr"/>
 
         <v-container id="image-place-holder-area">
             <div>
@@ -37,11 +52,16 @@ import {add_new_tier, updateTierList, deleteTiers, uploadToImageContainer} from 
                 </div>
                 <div class="d-flex text-start justify-start align-start h-100 w-100" id="place-holder">
                     <draggable
+                    v-model="files_arr"
                     group="tier_list"
-                    :list="files_arr"
-                    itemKey="index">
+                    tag="transition-group"
+                    @start="drag=true" 
+                    @end="drag=false" 
+                    item-key="index">
                         <template #item="{ element }">
-                            <img :src="element" height="85" width="85"></img>
+                            <div>
+                                <img :src="element" height="85" width="85"></img>
+                            </div>
                         </template>
                     </draggable>
                 </div>

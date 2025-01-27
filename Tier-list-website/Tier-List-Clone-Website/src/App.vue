@@ -1,4 +1,8 @@
 <script setup>
+import { onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute()
 </script>
 
 <template>
@@ -17,7 +21,7 @@
             </v-row>
             <v-row class="bg-grey-darken-4">
                 <v-col>
-                    <v-btn>Create a Tier List</v-btn>
+                    <v-btn :to="{ name: `CustomTierList`}">Create a Tier List</v-btn>
                 </v-col>
                 
                 <v-col>
@@ -25,7 +29,7 @@
                 </v-col>
     
                 <v-col>
-                    <v-btn to="/CustomizeTierList">Use a Default Tier List</v-btn>
+                    <v-btn :to="{ name: `DefaultTierList`}">Use a Default Tier List</v-btn>
                 </v-col>                 
             </v-row>
         </v-container>

@@ -5,34 +5,36 @@ export var default_tier_list = ref([
     {
         tier_name: "S", 
         color: "rgb(253, 123, 123)",
-        tier_image_container: []
+        tier_image_container: ref([])
     },
     {
         tier_name: "A", 
         color: "rgb(255, 170, 91)",
-        tier_image_container: []
+        tier_image_container: ref([])
     },
     {
         tier_name: "B", 
         color: "rgb(253, 226, 144)",
-        tier_image_container: []
+        tier_image_container: ref([])
     },
     {
         tier_name: "C", 
         color: "rgb(246, 253, 123)",
-        tier_image_container: []
+        tier_image_container: ref([])
     },
     {
         tier_name: "D", 
         color: "rgb(146, 246, 115)",
-        tier_image_container: []
+        tier_image_container: ref([])
     },
     {
         tier_name: "F", 
         color: "rgb(123, 253, 244)",
-        tier_image_container: []
+        tier_image_container: ref([])
     },
 ])
+
+export var custom_tier_list = ref([])
 
 // Contains colors used in default tier list
 export const colors_of_default_tier_list = ["rgb(253, 123, 123)", "rgb(255, 170, 91)", "rgb(253, 226, 144)", "rgb(246, 253, 123)", "rgb(146, 246, 115)", "rgb(123, 253, 244)"]
