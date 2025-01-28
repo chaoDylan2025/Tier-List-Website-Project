@@ -1,24 +1,32 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import draggable from 'vuedraggable'
 import TierListDisplay from '../components/TierListDisplay.vue'
 import ModifyTierList from '../components/ModifyTierList.vue'
 import DeleteTiers from '../components/DeleteTiers.vue'
 import {default_tier_list, open_modal_dialog, delete_tiers_modal_dialog, files_arr} from '../front-end-code/customize_screen_functions'
 import {add_new_tier, updateTierList, deleteTiers, uploadToImageContainer} from '../front-end-code/customize_screen_functions'
+import CustomTierList from '../components/CustomTierList.vue'
+import { useRoute } from 'vue-router'
+
+const router = useRoute()
 
 const props = defineProps({
     tier_list: Object,
-    open_custom_tier_list_dialog: Boolean,
 })
+
+// Ref variable that opens and closes modal dialog
+var open_custom_tier_list_modal_dialog = ref(false)
+
+if(router.name == 'CustomTierList'){
+    open_custom_tier_list_modal_dialog.value = true
+}
 
 const drag = ref(false)
 
 function update_tier_images_arr(img_arr, index){
     default_tier_list.value[index] = img_arr
 }
-
-console.log(props.tier_list)
 
 </script>
 
@@ -86,6 +94,8 @@ console.log(props.tier_list)
 
         </v-container>
 
+        <!-- Displays components -->
+        <CustomTierList :open_custom_tier_list_dialog="open_custom_tier_list_modal_dialog" :tier_list="props.tier_list" @close="(state) => open_custom_tier_list_modal_dialog = state"/>
         <ModifyTierList :open_dialog="open_modal_dialog" :tier_list="default_tier_list" @close="(state) => open_modal_dialog = state"
             @update="updateTierList"/>
         <DeleteTiers :tier_delete_dialog="delete_tiers_modal_dialog" :tier_list="default_tier_list" @close="(state) =>  delete_tiers_modal_dialog = state"
