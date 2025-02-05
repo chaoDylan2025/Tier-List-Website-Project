@@ -55,7 +55,7 @@ var custom_tier_list = ref([])
                 </v-row>
                 <v-row class="mt-8">
                     <v-spacer></v-spacer>
-                    <v-btn class="mr-5" @click="$emit('close', false)">Back</v-btn>
+                    <v-btn class="mr-5" @click="$router.push('/')">Back</v-btn>
                     <v-btn class="mr-5" @click="create_custom_tier_list(custom_tier_list, num_of_tiers, open_mod_tier_list_dialog)">Confirm</v-btn>
                 </v-row>
                 <p> {{ custom_tier_list }}</p>

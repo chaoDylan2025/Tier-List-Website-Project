@@ -95,7 +95,6 @@ function update_tier_images_arr(img_arr, index){
         </v-container>
 
         <!-- Displays components -->
-        <CustomTierList :open_custom_tier_list_dialog="open_custom_tier_list_modal_dialog" :tier_list="props.tier_list" @close="(state) => open_custom_tier_list_modal_dialog = state"/>
         <ModifyTierList :open_dialog="open_modal_dialog" :tier_list="default_tier_list" @close="(state) => open_modal_dialog = state"
             @update="updateTierList"/>
         <DeleteTiers :tier_delete_dialog="delete_tiers_modal_dialog" :tier_list="default_tier_list" @close="(state) =>  delete_tiers_modal_dialog = state"

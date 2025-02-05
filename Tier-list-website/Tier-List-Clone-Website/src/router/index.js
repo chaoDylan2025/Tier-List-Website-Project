@@ -9,8 +9,8 @@ const router = createRouter({
     {
       path: '/CustomizeTierList',
       name: 'CustomTierList',
-      component: () => import('../views/CustomizeScreen.vue'),
-      props: {tier_list: custom_tier_list}
+      component: () => import('../components/CustomTierList.vue'),
+      props: {open_custom_tier_list_dialog: true, tier_list: custom_tier_list}
     },
     {
       path: '/CustomizeTierList',
