@@ -16,7 +16,6 @@ const router = createRouter({
       path: '/CustomizeTierList',
       name: 'DefaultTierList',
       component: () => import('../views/CustomizeScreen.vue'),
-      props: {tier_list: default_tier_list}
     },
   ],
 })
