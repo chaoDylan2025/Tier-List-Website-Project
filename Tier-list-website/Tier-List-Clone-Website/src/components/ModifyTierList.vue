@@ -6,38 +6,30 @@ import { open_tier_modification_dialog, open_tier_color_dialog, index_of_current
 import { open_tier_name_mod_dialog, open_tier_color_mod_dialog, confirm_tier_name_change, confirm_tier_color_change } from '../front-end-code/modify_tier_list_functions'
 
 const props = defineProps({
-    open_dialog: Boolean,
     tier_list: Object
 })
 </script>
 
 <template>
-    <v-app class="bg-black">
-        <v-dialog
-        v-model="props.open_dialog"
-        height="auto"
-        width="1000">
-            <v-card>
-                <v-container>
-                    <!-- Contains tier list structure -->
-                     <v-row>
-                        <TierListDisplay :tier_list= props.tier_list :show_mod_buttons="true" @open_tier_name_mod="open_tier_name_mod_dialog" @open_tier_color_mod="open_tier_color_mod_dialog"/>
-                     </v-row>
+    <v-app>
+        <v-container>
+            <!-- Contains tier list structure -->
+            <v-row>
+                <TierListDisplay :tier_list= props.tier_list :show_mod_buttons="true" @open_tier_name_mod="open_tier_name_mod_dialog" @open_tier_color_mod="open_tier_color_mod_dialog"/>
+            </v-row>
 
-                    <v-row class="mt-8">
-                        <v-spacer></v-spacer>
-                        <v-btn @click="$emit('close', false)">Back</v-btn>
-                        <v-btn @click="$emit('update', false, props.tier_list)">Confirm</v-btn>
-                    </v-row>
-                </v-container>
-            </v-card>
-        </v-dialog>
-
-        <TierNameChange :tier_name_dialog="open_tier_modification_dialog" :tier_list="props.tier_list" :index="index_of_current_tier"
-        @close="(state) => open_tier_modification_dialog = state" @changeTierName="confirm_tier_name_change"/>
-        <TierColorChange :tier_color_dialog="open_tier_color_dialog" :tier_list="props.tier_list" :index="index_of_current_tier" 
-        @close="(state) => open_tier_color_dialog = state" @changeTierColor="confirm_tier_color_change"/>
+            <v-row class="mt-8">
+                <v-spacer></v-spacer>
+                <v-btn @click="$emit('close', false)">Back</v-btn>
+                <v-btn @click="$emit('update', false, props.tier_list)">Confirm</v-btn>
+            </v-row>
+        </v-container>
     </v-app>
+
+    <TierNameChange :tier_name_dialog="open_tier_modification_dialog" :tier_list="props.tier_list" :index="index_of_current_tier"
+    @close="(state) => open_tier_modification_dialog = state" @changeTierName="confirm_tier_name_change"/>
+    <TierColorChange :tier_color_dialog="open_tier_color_dialog" :tier_list="props.tier_list" :index="index_of_current_tier" 
+    @close="(state) => open_tier_color_dialog = state" @changeTierColor="confirm_tier_color_change"/>
 </template>
 
 <style lang="css">

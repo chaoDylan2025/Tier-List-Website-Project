@@ -1,5 +1,5 @@
 <script setup>
-import {ref, computed} from 'vue'
+import { computed, ref, watch } from 'vue'
 import { create_custom_tier_list } from '../front-end-code/custom_tier_list'
 import CreateCustomTierList from '../views/CreateCustomTierList.vue'
 
@@ -24,12 +24,12 @@ var custom_tier_list = ref([])
 
 <template>
     <v-app class="bg-black">
-        <v-card>
+        <v-container>
             <v-card-title class="mt-4 text-center"> How many Tiers would you like to add? </v-card-title>
             <v-row>
                 <v-spacer></v-spacer>
                 <v-responsive max-width="350" class="mt-5">
-                    <v-text-field :rules="rules" v-model="num_of_tiers">
+                    <v-text-field :rules="rules" v-model="num_of_tiers" bg-color="white">
                         <template v-slot:append>
                             <v-btn variant="text" @click="num_of_tiers += 1">
                                 <v-icon color="red">
@@ -48,14 +48,8 @@ var custom_tier_list = ref([])
                     </v-text-field>
                 </v-responsive>
                 <v-spacer></v-spacer>
-                
             </v-row>
-            <v-row class="mt-8">
-                <v-spacer></v-spacer>
-                <v-btn class="mr-5" @click="$router.go(-1)">Back</v-btn>
-                <v-btn class="mr-5" @click="create_custom_tier_list(custom_tier_list, num_of_tiers, open_mod_tier_list_dialog)">Confirm</v-btn>
-            </v-row>
-        </v-card>
+        </v-container>
 
         <div v-if="custom_tier_list.length >= 1">
             <CreateCustomTierList :tier_list="custom_tier_list"/>
