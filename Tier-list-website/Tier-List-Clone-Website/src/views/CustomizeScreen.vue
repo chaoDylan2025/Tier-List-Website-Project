@@ -99,8 +99,10 @@ function update_tier_images_arr(img_arr, index){
         scrim="white"
         height="auto"
         width="1000">
-            <ModifyTierList :open_dialog="open_modal_dialog" :tier_list="current_tier_list" @close="(state) => open_modal_dialog = state"
-                @update="updateTierList"/>
+            <v-container style="background-color: white">
+                <ModifyTierList :open_dialog="open_modal_dialog" :tier_list="current_tier_list" @close="(state) => open_modal_dialog = state"
+                    @update="updateTierList"/>
+            </v-container>
         </v-dialog>
 
         <!-- Displays if user wants to delete any tier(s) -->

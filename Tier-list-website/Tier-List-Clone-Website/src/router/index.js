@@ -10,7 +10,6 @@ const router = createRouter({
       path: '/CustomTierList',
       name: 'CustomTierList',
       component: () => import('../components/CustomTierList.vue'),
-      props: {tier_list: custom_tier_list}
     },
     {
       path: '/CustomizeTierList',

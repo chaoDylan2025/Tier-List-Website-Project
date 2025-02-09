@@ -11,25 +11,27 @@ const props = defineProps({
 </script>
 
 <template>
-    <v-app>
-        <v-container>
-            <!-- Contains tier list structure -->
-            <v-row>
-                <TierListDisplay :tier_list= props.tier_list :show_mod_buttons="true" @open_tier_name_mod="open_tier_name_mod_dialog" @open_tier_color_mod="open_tier_color_mod_dialog"/>
-            </v-row>
+        <!-- Contains tier list structure -->
+        <v-row>
+            <TierListDisplay :tier_list= props.tier_list :show_mod_buttons="true" @open_tier_name_mod="open_tier_name_mod_dialog" @open_tier_color_mod="open_tier_color_mod_dialog"/>
+        </v-row>
 
-            <v-row class="mt-8">
-                <v-spacer></v-spacer>
+        <v-row class="mt-8">
+            <v-spacer></v-spacer>
+            <v-col>
                 <v-btn @click="$emit('close', false)">Back</v-btn>
-                <v-btn @click="$emit('update', false, props.tier_list)">Confirm</v-btn>
-            </v-row>
-        </v-container>
-    </v-app>
+            </v-col>
+            <v-col>
+                <v-btn @click="$emit('update', false, props.tier_list)" class="ml-10">Confirm</v-btn>
+            </v-col>
+        </v-row>
 
-    <TierNameChange :tier_name_dialog="open_tier_modification_dialog" :tier_list="props.tier_list" :index="index_of_current_tier"
-    @close="(state) => open_tier_modification_dialog = state" @changeTierName="confirm_tier_name_change"/>
-    <TierColorChange :tier_color_dialog="open_tier_color_dialog" :tier_list="props.tier_list" :index="index_of_current_tier" 
-    @close="(state) => open_tier_color_dialog = state" @changeTierColor="confirm_tier_color_change"/>
+        <v-container v-show="false">
+            <TierNameChange :tier_name_dialog="open_tier_modification_dialog" :tier_list="props.tier_list" :index="index_of_current_tier"
+            @close="(state) => open_tier_modification_dialog = state" @changeTierName="confirm_tier_name_change"/>
+            <TierColorChange :tier_color_dialog="open_tier_color_dialog" :tier_list="props.tier_list" :index="index_of_current_tier" 
+            @close="(state) => open_tier_color_dialog = state" @changeTierColor="confirm_tier_color_change"/>
+        </v-container>
 </template>
 
 <style lang="css">
