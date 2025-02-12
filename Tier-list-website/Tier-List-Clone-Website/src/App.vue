@@ -21,7 +21,7 @@ const route = useRoute()
             </v-row>
             <v-row class="bg-grey-darken-4">
                 <v-col>
-                    <v-btn :to="{ name: `CustomTierList`}">Create a Tier List</v-btn>
+                    <v-btn :to="{ name: `Customization`}">Create a Tier List</v-btn>
                 </v-col>
                 
                 <v-col>

@@ -16,8 +16,6 @@ const props = defineProps({
     tier_list: Object
 })
 
-// Ref variable that opens and closes modal dialog
-var open_custom_tier_list_modal_dialog = ref(false)
 // Ref variable that contains tier list prop
 var current_tier_list = ref(props.tier_list)
 

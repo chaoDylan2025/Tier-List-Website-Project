@@ -1,9 +1,8 @@
 <script setup>
 import { computed, ref, watch, onMounted } from 'vue'
 import { tier_list } from '../store/tierlist'
-import { add_new_tier, custom_tier_list } from '../front-end-code/customize_screen_functions'
+import { add_new_tier, custom_tier_list, updateCustomTierList } from '../front-end-code/customize_screen_functions'
 import ModifyTierList from '../components/ModifyTierList.vue'
-// import CreateCustomTierList from '../views/CreateCustomTierList.vue'
 
 const props = defineProps({
     open_custom_tier_list_dialog: Boolean,
@@ -15,15 +14,13 @@ const rules = ref([value => !!value || 'Must have at least one tier', value => N
 // Used for incrementing and decrementing number of tiers to add
 var num_of_tiers = ref(1)
 
-// Open ModifyTierList Component
-var open_mod_tier_list_dialog = ref(false)
-
 // Contains Tier List store
 var store = tier_list()
 
 // Clear custom tier list structure if page refreshes
 onMounted(() => {
-    store.custom_list.length = 1
+    store.custom_list.length = 0
+    add_new_tier(store.custom_list)
 })
 
 </script>
@@ -58,7 +55,7 @@ onMounted(() => {
         </v-container>
 
         <div v-if="custom_tier_list.length >= 1">
-            <ModifyTierList :tier_list="store.custom_list"/> 
+            <ModifyTierList :tier_list="store.custom_list" :no_back_button="true" @updateCustomTierList="updateCustomTierList"/> 
         </div>
     </v-app>
 </template>

@@ -6,7 +6,8 @@ import { open_tier_modification_dialog, open_tier_color_dialog, index_of_current
 import { open_tier_name_mod_dialog, open_tier_color_mod_dialog, confirm_tier_name_change, confirm_tier_color_change } from '../front-end-code/modify_tier_list_functions'
 
 const props = defineProps({
-    tier_list: Object
+    tier_list: Object,
+    no_back_button: Boolean,
 })
 </script>
 
@@ -16,7 +17,7 @@ const props = defineProps({
             <TierListDisplay :tier_list= props.tier_list :show_mod_buttons="true" @open_tier_name_mod="open_tier_name_mod_dialog" @open_tier_color_mod="open_tier_color_mod_dialog"/>
         </v-row>
 
-        <v-row class="mt-8">
+        <v-row class="mt-8" v-if="props.no_back_button == false">
             <v-spacer></v-spacer>
             <v-col>
                 <v-btn @click="$emit('close', false)">Back</v-btn>
@@ -24,6 +25,11 @@ const props = defineProps({
             <v-col>
                 <v-btn @click="$emit('update', false, props.tier_list)" class="ml-10">Confirm</v-btn>
             </v-col>
+            <v-spacer></v-spacer>
+        </v-row>
+
+        <v-row class="mt-8 justify-center" v-else>
+            <v-btn @click="$emit('updateCustomTierList', props.tier_list)">Confirm</v-btn>
         </v-row>
 
         <v-container v-show="false">

@@ -1,4 +1,5 @@
 import { ref } from 'vue'
+import { router } from '../router/index'
 
 // Contains the initial default tier list
 export var default_tier_list = ref([
@@ -69,6 +70,12 @@ export function getRandomInt(min, max) {
 export function updateTierList(state, new_tier_list){
     open_modal_dialog.value = state
     default_tier_list.value = new_tier_list
+}
+
+// Updates custom tier list and navigates to Customization page
+export function updateCustomTierList(tier_list){
+    custom_tier_list.value = tier_list
+    router.push({name: 'CustomTierList'})    
 }
 
 // Deletes selected tiers from current tier list
