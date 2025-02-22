@@ -9,13 +9,13 @@ export var open_tier_color_dialog = ref(false)
 /***********************************************************************
  * Functions and variables for modifying selected tier's name or color *
  ***********************************************************************/
-// Contains selected tier
+// Selected tier
 export var current_tier = ref("")
 
-// Contains original content of selected tier
+// Original content of selected tier
 export var original_tier = ref("")
 
-// Contains index of selected tier
+// Index of selected tier
 export var index_of_current_tier = ref(0)
 
 // Returns computed property that changes current tier's name

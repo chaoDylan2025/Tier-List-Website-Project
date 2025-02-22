@@ -35,6 +35,7 @@ export var default_tier_list = ref([
     },
 ])
 
+// Contains the customizable tier list
 export var custom_tier_list = ref([])
 
 // Contains colors used in default tier list

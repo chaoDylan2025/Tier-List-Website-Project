@@ -17,12 +17,11 @@ var num_of_tiers = ref(1)
 // Contains Tier List store
 var store = tier_list()
 
-// Clear custom tier list structure if page refreshes
+// Clear custom tier list if page refreshes
 onMounted(() => {
     store.custom_list.length = 0
     add_new_tier(store.custom_list)
 })
-
 </script>
 
 <template>
@@ -54,11 +53,9 @@ onMounted(() => {
             </v-row>
         </v-container>
 
+        <!-- Displays if user has at least 1 tier in their customizable tier list -->
         <div v-if="custom_tier_list.length >= 1">
             <ModifyTierList :tier_list="store.custom_list" :no_back_button="true" @updateCustomTierList="updateCustomTierList"/> 
         </div>
     </v-app>
 </template>
-
-<style lang="css">
-</style>
