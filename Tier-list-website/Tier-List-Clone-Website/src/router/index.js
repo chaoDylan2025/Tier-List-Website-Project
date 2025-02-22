@@ -5,18 +5,21 @@ export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/CustomTierList',
+      // Navigates to the CustomTierList Component
+      path: '/CreateCustomTierList',
       name: 'Customization',
       component: () => import('../components/CustomTierList.vue'),
     },
     {
-      path: '/CustomizeTierList',
+      // Navigates to the CustomizeScreen Component with custom_tier_list passed as a prop
+      path: '/CustomTierList',
       name: 'CustomTierList',
       component: () => import('../views/CustomizeScreen.vue'),
       props: {tier_list: custom_tier_list}
     },
     {
-      path: '/CustomizeTierList',
+      // Navigates to the CustomizeScreen Component with default_tier_list passed as a prop
+      path: '/DefaultList',
       name: 'DefaultTierList',
       component: () => import('../views/CustomizeScreen.vue'),
       props: {tier_list: default_tier_list}
