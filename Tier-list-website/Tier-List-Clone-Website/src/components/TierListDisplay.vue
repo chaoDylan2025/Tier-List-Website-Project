@@ -1,20 +1,16 @@
 <script setup>
 import draggable from 'vuedraggable'
-import { ref, computed, watch } from 'vue'
-import {default_tier_list, open_modal_dialog, delete_tiers_modal_dialog, files_arr} from '../front-end-code/customize_screen_functions'
-import {add_new_tier, updateTierList, deleteTiers, uploadToImageContainer} from '../front-end-code/customize_screen_functions'
+import { ref, watch } from 'vue'
 
 const emit = defineEmits(['open_tier_name_mod', 'open_tier_color_mod', 'delete_tiers', 'update_tier_images'])
 const props = defineProps({
     tier_list: Object,
+    image_list: Array,
     current_tier_images: Array,
     show_mod_buttons: Boolean,
     show_checkboxes: Boolean,
     delete_tiers_arr: Array
 })
-
-var tiers_to_delete_arr = ref([])
-const drag = ref(false)
 
 // Executes emit event when user clicks on button that modifies selected tier's name
 function open_tier_name_mod_dialog(index, props){
@@ -26,17 +22,15 @@ function open_tier_color_mod_dialog(index, props){
     emit('open_tier_color_mod', index, props)
 }
 
-// Executes emit event when user selects a tier that they want to delete or remove from array
+// Executes emit event when tiers_to_delete_arr updates
 function update_delete_tiers_arr(arr, index){
     emit('delete_tiers', arr, index)
 }
 
-// Executes emit event when user drags image into a tier
-function update_tier_imgs(img_arr){
-    emit('update_tier_images', img_arr)
-}
+// Tiers to delete
+var tiers_to_delete_arr = ref([])
 
-// Watches for 
+// Adds or removes any tiers from tiers_to_delete_arr
 watch (() => tiers_to_delete_arr.value, (new_arr) => {
     update_delete_tiers_arr(new_arr)
 })
@@ -45,8 +39,9 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
 <template>
     <!-- Contains tier list structure -->
     <v-container class="ml-5 mt-10 d-print-inline px-10 mb-10 h-auto">
-        <!-- Iterates through an object that contains tier list -->
+        <!-- Iterates through the tier list -->
         <v-row class="d-flex flex-row" v-for="(tier, index) in props.tier_list" :key="tier.tier_name" :class="`d-print-flex h-auto w-100 overflow-hidden`">
+            <!-- Displays when user wants to delete any tier(s) -->
             <div class="mr-5" v-if="props.show_checkboxes === true">
                 <v-row>
                     <v-checkbox
@@ -57,28 +52,29 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
                 </v-row>
             </div>
             
-            <!-- Contains tier name and its color -->
+            <!-- Contains the tier's name and color -->
             <v-col>
-                <!-- Iterates through an object that contains default tier list -->
+                <!-- Tier color -->
                 <v-row :key="tier.tier_name" :class="`d-print-flex h-auto w-auto tier-border overflow-hidden`" :style="`background-color: ${tier.color}`">
-                    <!-- Contains tier name and its color -->
+                    <!-- Tier name -->
                     <v-col class="h-auto w-auto"> 
                         <p class="text-center text-break font-weight-bold" :style="`color: black`"> {{ tier.tier_name }} </p>
                     </v-col>
+                    <!-- Images for the Tier -->
                     <v-col class="d-flex flex-wrap align-end overflow-hidden h-auto w-100 bg-grey-darken-4">
                         <draggable
                         group="tier_list"
                         v-model="tier.tier_image_container"
-                        @end="update_tier_imgs(tier.tier_image_container, index)"
                         >
                             <template #item="{ element }">
-                                <img :src="element" height="85" width="85"></img>
+                                <img :src="element.src" height="85" width="85"></img>
                             </template>
                         </draggable>
                     </v-col>
                 </v-row>
             </v-col>
                 
+            <!-- Displays when user wants to modify any tier(s) -->
             <v-col v-if="props.show_mod_buttons === true">
                 <v-row>
                     <v-col>

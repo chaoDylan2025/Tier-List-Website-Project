@@ -108,7 +108,10 @@ export function uploadToImageContainer(){
             const reader = new FileReader();
             reader.onload = (e) => {
                 // Append image file to an array of draggable elements
-                files_arr.value.push(e.target.result)
+                files_arr.value.push({
+                    id: files_arr.length,
+                    src: e.target.result
+                })
             }
             // Reads contents of current file
             reader.readAsDataURL(file);

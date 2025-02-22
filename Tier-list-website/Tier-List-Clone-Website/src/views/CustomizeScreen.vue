@@ -1,30 +1,17 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import draggable from 'vuedraggable'
 import TierListDisplay from '../components/TierListDisplay.vue'
 import ModifyTierList from '../components/ModifyTierList.vue'
 import DeleteTiers from '../components/DeleteTiers.vue'
-import {default_tier_list, open_modal_dialog, delete_tiers_modal_dialog, files_arr} from '../front-end-code/customize_screen_functions'
-import {add_new_tier, updateTierList, deleteTiers, uploadToImageContainer} from '../front-end-code/customize_screen_functions'
-import { tier_list } from '../store/tierlist'
-import { useRoute } from 'vue-router'
-
-const router = useRoute()
-const store = tier_list()
+import { open_modal_dialog, delete_tiers_modal_dialog, files_arr } from '../front-end-code/customize_screen_functions'
+import { add_new_tier, updateTierList, deleteTiers, uploadToImageContainer } from '../front-end-code/customize_screen_functions'
 
 const props = defineProps({
     tier_list: Object
 })
 
-// Ref variable that contains tier list prop
 var current_tier_list = ref(props.tier_list)
-
-const drag = ref(false)
-
-function update_tier_images_arr(img_arr, index){
-    default_tier_list.value[index] = img_arr
-}
-
 </script>
 
 <template>
@@ -60,12 +47,10 @@ function update_tier_images_arr(img_arr, index){
                     v-model="files_arr"
                     group="tier_list"
                     tag="transition-group"
-                    @start="drag=true" 
-                    @end="drag=false" 
-                    item-key="index">
-                        <template #item="{ element }">
+                    item-key="id">
+                        <template #item="{ element }" :key="element.id">
                             <div>
-                                <img :src="element" height="85" width="85"></img>
+                                <img :src="element.src" height="85" width="85"></img>   
                             </div>
                         </template>
                     </draggable>
@@ -122,14 +107,11 @@ function update_tier_images_arr(img_arr, index){
     background-color: rgba(40, 40, 40, 0.927);
     border-style: solid;
 }
-
-/* Styling for Image Container */
 #place-holder{
     background-color: rgba(27, 27, 27, 0.927);
     border-style: solid;
     border-width: 1px;
 }
-
 #place-holder img{
     width: 85px;
 }
