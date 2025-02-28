@@ -6,32 +6,32 @@ export var default_tier_list = ref([
     {
         tier_name: "S", 
         color: "rgb(253, 123, 123)",
-        tier_image_container: ref([])
+        tier_image_container: []
     },
     {
         tier_name: "A", 
         color: "rgb(255, 170, 91)",
-        tier_image_container: ref([])
+        tier_image_container: []
     },
     {
         tier_name: "B", 
         color: "rgb(253, 226, 144)",
-        tier_image_container: ref([])
+        tier_image_container: []
     },
     {
         tier_name: "C", 
         color: "rgb(246, 253, 123)",
-        tier_image_container: ref([])
+        tier_image_container: []
     },
     {
         tier_name: "D", 
         color: "rgb(146, 246, 115)",
-        tier_image_container: ref([])
+        tier_image_container: []
     },
     {
         tier_name: "F", 
         color: "rgb(123, 253, 244)",
-        tier_image_container: ref([])
+        tier_image_container: []
     },
 ])
 
@@ -103,6 +103,9 @@ export function uploadToImageContainer(){
         // Accesses the div where all images will be uploaded to
         const placeHolder = document.getElementById('place-holder');
 
+        // Gives each image a unique id
+        let index = 0
+
         // Iterate through every file
         for(const file of files){
             // Reads current file
@@ -110,7 +113,7 @@ export function uploadToImageContainer(){
             reader.onload = (e) => {
                 // Append image file to an array of draggable elements
                 files_arr.value.push({
-                    id: files_arr.length,
+                    id: index ++,
                     src: e.target.result
                 })
             }
