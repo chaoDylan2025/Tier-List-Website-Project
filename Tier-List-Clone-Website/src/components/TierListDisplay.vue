@@ -1,9 +1,9 @@
 <script setup>
 import draggable from 'vuedraggable'
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { uploadToImageContainer } from '../front-end-code/customize_screen_functions.js'
 
-const emit = defineEmits(['open_tier_name_mod', 'open_tier_color_mod', 'delete_tiers', 'update_tier_images'])
+const emit = defineEmits(['open_tier_name_mod', 'open_tier_color_mod', 'delete_tiers', 'update:files_arr', 'update:current_tier_list'])
 const props = defineProps({
     tier_list: Object,
     files_arr: Array,
@@ -11,8 +11,24 @@ const props = defineProps({
     show_checkboxes: Boolean,
 })
 
-var current_tier_list = ref(props.tier_list)
-var files_arr = ref(props.files_arr)
+const current_tier_list = computed({
+    get(){
+        console.log("Got the current_tier_list")
+        return props.tier_list
+    },
+    set(newArr){
+        emit('update:current_tier_list', newArr)
+    }
+})
+
+const files_arr = computed({
+    get(){
+        return props.files_arr
+    },
+    set(newArr){
+        emit('update:files_arr', newArr)
+    }
+})
 
 // Executes emit event when user clicks on button that modifies selected tier's name
 function open_tier_name_mod_dialog(index, props){
@@ -65,8 +81,10 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
                     <!-- Images for the Tier -->
                     <v-col class="d-flex flex-wrap align-end overflow-hidden h-auto w-100 bg-grey-darken-4">
                         <draggable
-                        group="tier_list"
                         v-model="tier.tier_image_container"
+                        class="d-flex"
+                        group="tier_list" 
+                        item-key="id"
                         >
                             <template #item="{ element }">
                                 <img :src="element.src" height="85" width="85"></img>
@@ -101,13 +119,13 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
                     <v-btn @click="uploadToImageContainer()" size="small"> Upload </v-btn>
                 </div>  
             </div>
-            <div class="d-flex text-start justify-start align-start h-100 w-100" id="place-holder">
+            <div id="place-holder">
                 <draggable
                 v-model="files_arr"
+                class="d-flex"
                 group="tier_list"
-                tag="transition-group"
                 item-key="id">
-                    <template #item="{ element }" :key="element.id">
+                    <template #item="{ element }">
                         <div>
                             <img :src="element.src" height="85" width="85"></img>   
                         </div>

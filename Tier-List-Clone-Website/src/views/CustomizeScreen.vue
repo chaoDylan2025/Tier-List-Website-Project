@@ -30,7 +30,7 @@ var current_tier_list = ref(props.tier_list)
             </v-row>
         </v-container>
 
-        <TierListDisplay :tier_list="current_tier_list"  :files_arr="files_arr" @update_tier_images="update_tier_images_arr"/>
+        <TierListDisplay v-model:tier_list="current_tier_list"  v-model:files_arr="files_arr"/>
 
         <!-- Displays if user wants to customize tier list -->
         <v-dialog

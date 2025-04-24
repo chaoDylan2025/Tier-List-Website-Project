@@ -1,4 +1,3 @@
-import { ref, computed } from 'vue'
 import { add_new_tier } from './customize_screen_functions'
 
 // Opens Custom Tier List modal dialog if prop is 'CustomTierList'
