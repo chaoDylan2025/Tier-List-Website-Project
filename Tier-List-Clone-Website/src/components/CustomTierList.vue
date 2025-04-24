@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watch, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { tier_list } from '../store/tierlist'
 import { add_new_tier, custom_tier_list, updateCustomTierList } from '../front-end-code/customize_screen_functions'
 import ModifyTierList from '../components/ModifyTierList.vue'

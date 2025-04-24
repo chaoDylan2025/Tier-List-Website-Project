@@ -1,6 +1,6 @@
 <script setup>
 import TierListDisplay from '../components/TierListDisplay.vue'
-import {ref, computed} from 'vue'
+import { ref } from 'vue'
 
 const props = defineProps({
     tier_delete_dialog: Boolean,

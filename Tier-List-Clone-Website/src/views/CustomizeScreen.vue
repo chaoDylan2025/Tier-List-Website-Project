@@ -1,6 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import draggable from 'vuedraggable'
+import { ref } from 'vue'
 import TierListDisplay from '../components/TierListDisplay.vue'
 import ModifyTierList from '../components/ModifyTierList.vue'
 import DeleteTiers from '../components/DeleteTiers.vue'

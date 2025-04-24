@@ -100,9 +100,6 @@ export function uploadToImageContainer(){
         // Array of selected files
         const files = access_files.files;
 
-        // Accesses the div where all images will be uploaded to
-        const placeHolder = document.getElementById('place-holder');
-
         // Gives each image a unique id
         let index = 0
 
