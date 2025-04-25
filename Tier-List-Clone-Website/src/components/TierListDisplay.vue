@@ -1,6 +1,6 @@
 <script setup>
 import draggable from 'vuedraggable'
-import { reactive, ref, watch, computed } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { uploadToImageContainer } from '../front-end-code/customize_screen_functions.js'
 
 const emit = defineEmits(['open_tier_name_mod', 'open_tier_color_mod', 'delete_tiers', 'update:files_arr', 'update:current_tier_list'])
@@ -13,7 +13,6 @@ const props = defineProps({
 
 const current_tier_list = computed({
     get(){
-        console.log("Got the current_tier_list")
         return props.tier_list
     },
     set(newArr){
@@ -29,6 +28,9 @@ const files_arr = computed({
         emit('update:files_arr', newArr)
     }
 })
+
+// Contains image container for each tier
+var updateImageContainers = ref(current_tier_list.value.map((tier) => tier.tier_image_container))
 
 // Executes emit event when user clicks on button that modifies selected tier's name
 function open_tier_name_mod_dialog(index, props){
@@ -81,7 +83,7 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
                     <!-- Images for the Tier -->
                     <v-col class="d-flex flex-wrap align-end overflow-hidden h-auto w-100 bg-grey-darken-4">
                         <draggable
-                        v-model="tier.tier_image_container"
+                        v-model="updateImageContainers[index]"
                         class="d-flex"
                         group="tier_list"
                         item-key="id"
