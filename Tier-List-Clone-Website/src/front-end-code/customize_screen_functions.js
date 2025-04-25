@@ -6,7 +6,7 @@ export var default_tier_list = ref([
     {
         tier_name: "S", 
         color: "rgb(253, 123, 123)",
-        tier_image_container: []
+        tier_image_container: [{id: 0, src: new URL('./Images-For-Tier-List-Testing/Linkin_Park_Hybrid_Theory_Album_Cover.jpg', import.meta.url).href}]
     },
     {
         tier_name: "A", 
@@ -16,7 +16,7 @@ export var default_tier_list = ref([
     {
         tier_name: "B", 
         color: "rgb(253, 226, 144)",
-        tier_image_container: []
+        tier_image_container: [{id: 0, src: new URL('./Images-For-Tier-List-Testing/81aECQlJWwL._UF1000,1000_QL80_.jpg', import.meta.url).href}]
     },
     {
         tier_name: "C", 

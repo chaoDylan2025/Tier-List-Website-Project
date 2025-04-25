@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import TierListDisplay from '../components/TierListDisplay.vue'
 import ModifyTierList from '../components/ModifyTierList.vue'
 import DeleteTiers from '../components/DeleteTiers.vue'
@@ -10,7 +10,7 @@ const props = defineProps({
     tier_list: Object
 })
 
-var current_tier_list = ref(props.tier_list)
+var current_tier_list = reactive(props.tier_list)
 </script>
 
 <template>

@@ -15,14 +15,14 @@ export const router = createRouter({
       path: '/CustomTierList',
       name: 'CustomTierList',
       component: () => import('../views/CustomizeScreen.vue'),
-      props: {tier_list: custom_tier_list}
+      props: {tier_list: custom_tier_list.value}
     },
     {
       // Navigates to the CustomizeScreen Component with default_tier_list passed as a prop
       path: '/DefaultList',
       name: 'DefaultTierList',
       component: () => import('../views/CustomizeScreen.vue'),
-      props: {tier_list: default_tier_list}
+      props: {tier_list: default_tier_list.value}
     },
   ],
 })

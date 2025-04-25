@@ -1,6 +1,6 @@
 <script setup>
 import draggable from 'vuedraggable'
-import { ref, watch, computed } from 'vue'
+import { reactive, ref, watch, computed } from 'vue'
 import { uploadToImageContainer } from '../front-end-code/customize_screen_functions.js'
 
 const emit = defineEmits(['open_tier_name_mod', 'open_tier_color_mod', 'delete_tiers', 'update:files_arr', 'update:current_tier_list'])
@@ -83,7 +83,7 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
                         <draggable
                         v-model="tier.tier_image_container"
                         class="d-flex"
-                        group="tier_list" 
+                        group="tier_list"
                         item-key="id"
                         >
                             <template #item="{ element }">
