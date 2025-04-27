@@ -1,15 +1,35 @@
 <script setup>
 import draggable from 'vuedraggable'
-import { ref, watch } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
+import { saveToSessionStorage, updateSessionStorage, uploadToImageContainer } from '../front-end-code/customize_screen_functions.js'
 
-const emit = defineEmits(['open_tier_name_mod', 'open_tier_color_mod', 'delete_tiers', 'update_tier_images'])
+const emit = defineEmits(['open_tier_name_mod', 'open_tier_color_mod', 'delete_tiers', 'update:files_arr', 'update:current_tier_list'])
 const props = defineProps({
+    tier_list_name: String,
     tier_list: Object,
-    image_list: Array,
-    current_tier_images: Array,
+    files_arr: Array,
     show_mod_buttons: Boolean,
     show_checkboxes: Boolean,
-    delete_tiers_arr: Array
+})
+
+const current_tier_list_name = ref(props.tier_list_name)
+
+const current_tier_list = computed({
+    get(){
+        return props.tier_list
+    },
+    set(newArr){
+        emit('update:current_tier_list', newArr)
+    }
+})
+
+const files_arr = computed({
+    get(){
+        return props.files_arr
+    },
+    set(newArr){
+        emit('update:files_arr', newArr)
+    }
 })
 
 // Executes emit event when user clicks on button that modifies selected tier's name
@@ -34,13 +54,19 @@ var tiers_to_delete_arr = ref([])
 watch (() => tiers_to_delete_arr.value, (new_arr) => {
     update_delete_tiers_arr(new_arr)
 })
+
+// Access sessionStorage everytime user refreshes page
+onMounted(() => {
+    saveToSessionStorage(current_tier_list_name.value, current_tier_list.value)
+    current_tier_list.value = ref(JSON.parse(sessionStorage.getItem(current_tier_list_name.value)))
+})
 </script>
 
 <template>
     <!-- Contains tier list structure -->
     <v-container class="ml-5 mt-10 d-print-inline px-10 mb-10 h-auto">
         <!-- Iterates through the tier list -->
-        <v-row class="d-flex flex-row" v-for="(tier, index) in props.tier_list" :key="tier.tier_name" :class="`d-print-flex h-auto w-100 overflow-hidden`">
+        <v-row class="d-flex flex-row" v-for="(tier, index) in current_tier_list" :key="tier.tier_name" :class="`d-print-flex h-auto w-100 overflow-hidden`">
             <!-- Displays when user wants to delete any tier(s) -->
             <div class="mr-5" v-if="props.show_checkboxes === true">
                 <v-row>
@@ -63,8 +89,11 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
                     <!-- Images for the Tier -->
                     <v-col class="d-flex flex-wrap align-end overflow-hidden h-auto w-100 bg-grey-darken-4">
                         <draggable
-                        group="tier_list"
                         v-model="tier.tier_image_container"
+                        class="d-flex"
+                        group="tier_list"
+                        item-key="id"
+                        @change="updateSessionStorage(current_tier_list_name, current_tier_list)"
                         >
                             <template #item="{ element }">
                                 <img :src="element.src" height="85" width="85"></img>
@@ -88,6 +117,32 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
             </v-col>
         </v-row>
     </v-container>
+
+    <v-container id="image-place-holder-area">
+        <div>
+            <p id="cap_for_user"> Insert your images or uploaded images here </p>
+        </div> 
+        <div class="d-flex flex-column" id="image-place-holder">
+            <div class="mt-3 mb-3">
+                <div class="ml-2">
+                    <v-btn @click="uploadToImageContainer()" size="small"> Upload </v-btn>
+                </div>  
+            </div>
+            <div id="place-holder">
+                <draggable
+                v-model="files_arr"
+                class="d-flex"
+                group="tier_list"
+                item-key="id">
+                    <template #item="{ element }">
+                        <div>
+                            <img :src="element.src" height="85" width="85"></img>   
+                        </div>
+                    </template>
+                 </draggable>
+            </div>
+        </div>  
+    </v-container> 
 </template>
 
 <style lang="css">
@@ -96,5 +151,18 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
     border-style: solid;
     border-color: black;
     border-width: 2px;
+}
+/** Styling for image container that contains images to be inserted in tier list */
+#image-place-holder{
+    background-color: rgba(40, 40, 40, 0.927);
+    border-style: solid;
+}
+#place-holder{
+    background-color: rgba(27, 27, 27, 0.927);
+    border-style: solid;
+    border-width: 1px;
+}
+#place-holder img{
+    width: 85px;
 }
 </style>
