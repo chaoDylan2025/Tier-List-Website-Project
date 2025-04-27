@@ -1,15 +1,18 @@
 <script setup>
 import draggable from 'vuedraggable'
-import { ref, watch, computed } from 'vue'
-import { uploadToImageContainer } from '../front-end-code/customize_screen_functions.js'
+import { ref, onMounted, watch, computed } from 'vue'
+import { saveToSessionStorage, updateSessionStorage, uploadToImageContainer } from '../front-end-code/customize_screen_functions.js'
 
 const emit = defineEmits(['open_tier_name_mod', 'open_tier_color_mod', 'delete_tiers', 'update:files_arr', 'update:current_tier_list'])
 const props = defineProps({
+    tier_list_name: String,
     tier_list: Object,
     files_arr: Array,
     show_mod_buttons: Boolean,
     show_checkboxes: Boolean,
 })
+
+const current_tier_list_name = ref(props.tier_list_name)
 
 const current_tier_list = computed({
     get(){
@@ -28,9 +31,6 @@ const files_arr = computed({
         emit('update:files_arr', newArr)
     }
 })
-
-// Contains image container for each tier
-var updateImageContainers = ref(current_tier_list.value.map((tier) => tier.tier_image_container))
 
 // Executes emit event when user clicks on button that modifies selected tier's name
 function open_tier_name_mod_dialog(index, props){
@@ -53,6 +53,12 @@ var tiers_to_delete_arr = ref([])
 // Adds or removes any tiers from tiers_to_delete_arr
 watch (() => tiers_to_delete_arr.value, (new_arr) => {
     update_delete_tiers_arr(new_arr)
+})
+
+// Access sessionStorage everytime user refreshes page
+onMounted(() => {
+    saveToSessionStorage(current_tier_list_name.value, current_tier_list.value)
+    current_tier_list.value = ref(JSON.parse(sessionStorage.getItem(current_tier_list_name.value)))
 })
 </script>
 
@@ -83,10 +89,11 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
                     <!-- Images for the Tier -->
                     <v-col class="d-flex flex-wrap align-end overflow-hidden h-auto w-100 bg-grey-darken-4">
                         <draggable
-                        v-model="updateImageContainers[index]"
+                        v-model="tier.tier_image_container"
                         class="d-flex"
                         group="tier_list"
                         item-key="id"
+                        @change="updateSessionStorage(current_tier_list_name, current_tier_list)"
                         >
                             <template #item="{ element }">
                                 <img :src="element.src" height="85" width="85"></img>

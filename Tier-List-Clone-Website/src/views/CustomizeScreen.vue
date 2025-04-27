@@ -7,9 +7,11 @@ import { open_modal_dialog, delete_tiers_modal_dialog, files_arr } from '../fron
 import { add_new_tier, updateTierList, deleteTiers } from '../front-end-code/customize_screen_functions'
 
 const props = defineProps({
+    tier_list_name: String,
     tier_list: Object
 })
 
+var current_tier_list_name = ref(props.tier_list_name)
 var current_tier_list = reactive(props.tier_list)
 </script>
 
@@ -29,7 +31,7 @@ var current_tier_list = reactive(props.tier_list)
             </v-row>
         </v-container>
 
-        <TierListDisplay v-model:tier_list="current_tier_list"  v-model:files_arr="files_arr"/>
+        <TierListDisplay :tier_list_name="current_tier_list_name" v-model:tier_list="current_tier_list"  v-model:files_arr="files_arr"/>
 
         <!-- Displays if user wants to customize tier list -->
         <v-dialog
