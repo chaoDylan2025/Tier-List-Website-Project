@@ -15,11 +15,11 @@ const route = useRoute()
                 <v-container>
                     <v-row>
                         <v-col class="text-center">
-                            <v-btn :to="{ name: `Customization`}">Create a Tier List</v-btn>
+                            <v-btn rounded="lg" :to="{ name: `Customization`}">Create a Tier List</v-btn>
                         </v-col>
 
                         <v-col class="text-center">
-                            <v-btn class="text-center" :to="{ name: `DefaultTierList`}">Use a Default Tier List</v-btn>
+                            <v-btn rounded="lg" :to="{ name: `DefaultTierList`}">Use a Default Tier List</v-btn>
                         </v-col>                 
                     </v-row>
                 </v-container>
