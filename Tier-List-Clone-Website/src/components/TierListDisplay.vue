@@ -8,6 +8,7 @@ const props = defineProps({
     tier_list_name: String,
     tier_list: Object,
     files_arr: Array,
+    show_files_arr: Boolean,
     show_mod_buttons: Boolean,
     show_checkboxes: Boolean,
 })
@@ -118,7 +119,7 @@ onMounted(() => {
         </v-row>
     </v-container>
 
-    <v-container id="image-place-holder-area">
+    <v-container v-if="props.show_files_arr" id="image-place-holder-area">
         <div>
             <p id="cap_for_user"> Insert your images or uploaded images here </p>
         </div> 

@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { tier_list } from '../store/tierlist'
 import { add_new_tier, custom_tier_list, updateCustomTierList } from '../front-end-code/customize_screen_functions'
 import ModifyTierList from '../components/ModifyTierList.vue'
 
@@ -14,13 +13,10 @@ const rules = ref([value => !!value || 'Must have at least one tier', value => N
 // Used for incrementing and decrementing number of tiers to add
 var num_of_tiers = ref(1)
 
-// Contains Tier List store
-var store = tier_list()
-
 // Clear custom tier list if page refreshes
 onMounted(() => {
-    store.custom_list.length = 0
-    add_new_tier(store.custom_list)
+    custom_tier_list.length = 0
+    add_new_tier(custom_tier_list.value)
 })
 </script>
 
@@ -33,7 +29,7 @@ onMounted(() => {
                 <v-responsive max-width="350" class="mt-5">
                     <v-text-field :rules="rules" v-model="num_of_tiers" bg-color="white">
                         <template v-slot:append>
-                            <v-btn variant="text" @click="num_of_tiers += 1, add_new_tier(store.custom_list)">
+                            <v-btn variant="text" @click="num_of_tiers += 1, add_new_tier(custom_tier_list)">
                                 <v-icon color="red">
                                     mdi-plus
                                 </v-icon>
@@ -55,7 +51,7 @@ onMounted(() => {
 
         <!-- Displays if user has at least 1 tier in their customizable tier list -->
         <div v-if="custom_tier_list.length >= 1">
-            <ModifyTierList :tier_list="store.custom_list" :no_back_button="true" @updateCustomTierList="updateCustomTierList"/> 
+            <ModifyTierList :tier_list="custom_tier_list" :no_back_button="true" @updateCustomTierList="updateCustomTierList"/> 
         </div>
     </v-app>
 </template>

@@ -8,7 +8,8 @@ import { add_new_tier, updateTierList, deleteTiers } from '../front-end-code/cus
 
 const props = defineProps({
     tier_list_name: String,
-    tier_list: Object
+    tier_list: Object,
+    show_files_arr: Boolean,
 })
 
 var current_tier_list_name = ref(props.tier_list_name)
@@ -31,7 +32,7 @@ var current_tier_list = reactive(props.tier_list)
             </v-row>
         </v-container>
 
-        <TierListDisplay :tier_list_name="current_tier_list_name" v-model:tier_list="current_tier_list"  v-model:files_arr="files_arr"/>
+        <TierListDisplay :tier_list_name="current_tier_list_name" v-model:tier_list="current_tier_list"  v-model:files_arr="files_arr" show_files_arr="props.show_files_arr"/>
 
         <!-- Displays if user wants to customize tier list -->
         <v-dialog
