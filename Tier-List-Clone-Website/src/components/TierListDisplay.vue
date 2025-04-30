@@ -64,86 +64,91 @@ onMounted(() => {
 </script>
 
 <template>
-    <!-- Contains tier list structure -->
-    <v-container class="ml-5 mt-10 d-print-inline px-10 mb-10 h-auto">
-        <!-- Iterates through the tier list -->
-        <v-row class="d-flex flex-row" v-for="(tier, index) in current_tier_list" :key="tier.tier_name" :class="`d-print-flex h-auto w-100 overflow-hidden`">
-            <!-- Displays when user wants to delete any tier(s) -->
-            <div class="mr-5" v-if="props.show_checkboxes === true">
-                <v-row>
-                    <v-checkbox
-                        v-model="tiers_to_delete_arr"
-                        label=""
-                        :value="tier">
-                    </v-checkbox>
-                </v-row>
-            </div>
+    <div style="width: 100%; box-sizing: border-box;">
+        <!-- Contains tier list structure -->
+        <v-container class="ma-auto mt-10 px-10 mb-10">
+            <!-- Iterates through the tier list -->
+            <v-row class="d-flex flex-row" v-for="(tier, index) in current_tier_list" :key="tier.tier_name">
+                <!-- Displays when user wants to delete any tier(s) -->
+                <div class="mr-5" v-if="props.show_checkboxes === true">
+                    <v-row>
+                        <v-checkbox
+                            v-model="tiers_to_delete_arr"
+                            label=""
+                            :value="tier">
+                        </v-checkbox>
+                    </v-row>
+                </div>
+        
+                <!-- Contains the tier's name and color -->
+                <v-col>
+                    <!-- Tier color -->
+                    <v-row :key="tier.tier_name" :class="`d-print-flex h-auto w-auto tier-border overflow-hidden`" :style="`background-color: ${tier.color}`">
+                        <!-- Tier name -->
+                        <v-col class="h-auto w-auto"> 
+                            <p class="text-center text-break font-weight-bold" :style="`color: black`"> {{ tier.tier_name }} </p>
+                        </v-col>
+                        <!-- Images for the Tier -->
+                        <v-col class="d-flex flex-wrap align-end overflow-hidden h-auto w-100 bg-grey-darken-4">
+                            <draggable
+                            v-model="tier.tier_image_container"
+                            class="d-flex"
+                            group="tier_list"
+                            item-key="id"
+                            @change="updateSessionStorage(current_tier_list_name, current_tier_list)"
+                            >
+                                <template #item="{ element }">
+                                    <img :src="element.src" height="85" width="85"></img>
+                                </template>
+                            </draggable>
+                        </v-col>
+                    </v-row>
+                </v-col>
             
-            <!-- Contains the tier's name and color -->
-            <v-col>
-                <!-- Tier color -->
-                <v-row :key="tier.tier_name" :class="`d-print-flex h-auto w-auto tier-border overflow-hidden`" :style="`background-color: ${tier.color}`">
-                    <!-- Tier name -->
-                    <v-col class="h-auto w-auto"> 
-                        <p class="text-center text-break font-weight-bold" :style="`color: black`"> {{ tier.tier_name }} </p>
-                    </v-col>
-                    <!-- Images for the Tier -->
-                    <v-col class="d-flex flex-wrap align-end overflow-hidden h-auto w-100 bg-grey-darken-4">
-                        <draggable
-                        v-model="tier.tier_image_container"
-                        class="d-flex"
-                        group="tier_list"
-                        item-key="id"
-                        @change="updateSessionStorage(current_tier_list_name, current_tier_list)"
-                        >
-                            <template #item="{ element }">
-                                <img :src="element.src" height="85" width="85"></img>
-                            </template>
-                        </draggable>
-                    </v-col>
-                </v-row>
-            </v-col>
-                
-            <!-- Displays when user wants to modify any tier(s) -->
-            <v-col v-if="props.show_mod_buttons === true">
-                <v-row>
-                    <v-col>
-                        <v-btn @click="open_tier_name_mod_dialog(index, props.tier_list)" size="x-small" variant="plain" prepend-icon="mdi-pencil">Change Name</v-btn> 
-                    </v-col>
+                <!-- Displays when user wants to modify any tier(s) -->
+                <v-col v-if="props.show_mod_buttons === true">
+                    <v-row>
+                        <v-col>
+                            <v-btn @click="open_tier_name_mod_dialog(index, props.tier_list)" size="x-small" variant="plain" prepend-icon="mdi-pencil">Change Name</v-btn> 
+                        </v-col>
 
-                    <v-col>
-                        <v-btn @click="open_tier_color_mod_dialog(index, props.tier_list)" size="x-small" variant="plain" prepend-icon="mdi-format-color-fill"> Change Color</v-btn>
-                    </v-col>
-                </v-row>
-            </v-col>
-        </v-row>
-    </v-container>
+                        <v-col>
+                            <v-btn @click="open_tier_color_mod_dialog(index, props.tier_list)" size="x-small" variant="plain" prepend-icon="mdi-format-color-fill"> Change Color</v-btn>
+                        </v-col>
+                    </v-row>
+                </v-col>
+            </v-row>
 
-    <v-container v-if="props.show_files_arr" id="image-place-holder-area">
-        <div>
-            <p id="cap_for_user"> Insert your images or uploaded images here </p>
-        </div> 
-        <div class="d-flex flex-column" id="image-place-holder">
-            <div class="mt-3 mb-3">
-                <div class="ml-2">
-                    <v-btn @click="uploadToImageContainer()" size="small"> Upload </v-btn>
-                </div>  
-            </div>
-            <div id="place-holder">
-                <draggable
-                v-model="files_arr"
-                class="d-flex"
-                group="tier_list"
-                item-key="id">
-                    <template #item="{ element }">
-                        <div>
-                            <img :src="element.src" height="85" width="85"></img>   
+            <!-- Displays uploaded images -->
+            <v-row class="mt-8" v-if="props.show_files_arr">
+                <div class="w-100" id="image-place-holder-area">
+                    <div>
+                        <p id="cap_for_user"> Insert your images or uploaded images here </p>
+                    </div> 
+                    <div class="d-flex flex-column" id="image-place-holder">
+                        <div class="mt-3 mb-3">
+                            <div class="ml-2">
+                                <v-btn @click="uploadToImageContainer()" size="small"> Upload </v-btn>
+                            </div>  
                         </div>
-                    </template>
-                 </draggable>
-            </div>
-        </div>  
-    </v-container> 
+                        <div id="place-holder">
+                            <draggable
+                            v-model="files_arr"
+                            class="d-flex"
+                            group="tier_list"
+                            item-key="id">
+                                <template #item="{ element }">
+                                    <div>
+                                        <img :src="element.src" height="85" width="85"></img>   
+                                    </div>
+                                </template>
+                            </draggable>
+                        </div>
+                    </div>  
+                </div>
+            </v-row>
+        </v-container>
+    </div>
 </template>
 
 <style lang="css">
