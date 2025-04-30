@@ -51,9 +51,11 @@ onMounted(() => {
             </v-row>
         </v-container>
 
-        <!-- Displays if user has at least 1 tier in their customizable tier list -->
-        <div v-if="custom_tier_list.length >= 1">
-            <ModifyTierList :tier_list="custom_tier_list" :no_back_button="true" @updateCustomTierList="updateCustomTierList"/> 
-        </div>
+        <v-container>
+            <!-- Displays if user has at least 1 tier in their customizable tier list -->
+            <div class="justify-center" v-if="custom_tier_list.length >= 1">
+                <ModifyTierList :tier_list="custom_tier_list" :no_back_button="true" @updateCustomTierList="updateCustomTierList"/> 
+            </div>
+        </v-container>
     </v-app>
 </template>
