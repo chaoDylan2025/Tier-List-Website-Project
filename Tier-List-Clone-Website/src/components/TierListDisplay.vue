@@ -68,7 +68,7 @@ onMounted(() => {
         <!-- Contains tier list structure -->
         <v-container class="ma-auto mt-10 px-10 mb-10">
             <!-- Iterates through the tier list -->
-            <v-row class="d-flex flex-row" v-for="(tier, index) in current_tier_list" :key="tier.tier_name">
+            <v-row v-for="(tier, index) in current_tier_list" :key="tier.tier_name">
                 <!-- Displays when user wants to delete any tier(s) -->
                 <div class="mr-5" v-if="props.show_checkboxes === true">
                     <v-row>
@@ -83,16 +83,18 @@ onMounted(() => {
                 <!-- Contains the tier's name and color -->
                 <v-col>
                     <!-- Tier color -->
-                    <v-row :key="tier.tier_name" :class="`d-print-flex h-auto w-auto tier-border overflow-hidden`" :style="`background-color: ${tier.color}`">
+                    <v-row :key="tier.tier_name" :class="`d-flex tier-border h-auto`" :style="`background-color: ${tier.color}`">
                         <!-- Tier name -->
-                        <v-col class="h-auto w-auto"> 
-                            <p class="text-center text-break font-weight-bold" :style="`color: black`"> {{ tier.tier_name }} </p>
+                        <v-col cols="2" class="text-center font-weight-bold align-content-center" :style="`color: black`"> 
+                            <span>
+                                {{ tier.tier_name }}
+                            </span>
                         </v-col>
                         <!-- Images for the Tier -->
-                        <v-col class="d-flex flex-wrap align-end overflow-hidden h-auto w-100 bg-grey-darken-4">
+                        <v-col class="d-flex flex-wrap align-start bg-grey-darken-4" style="min-height: 85px;">
                             <draggable
                             v-model="tier.tier_image_container"
-                            class="d-flex"
+                            class="d-flex flex-wrap"
                             group="tier_list"
                             item-key="id"
                             @change="updateSessionStorage(current_tier_list_name, current_tier_list)"
