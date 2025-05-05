@@ -18,21 +18,23 @@ var current_tier_list = reactive(props.tier_list)
 
 <template>
     <v-app class="bg-black">
-        <v-container>
-            <v-row>
-                <v-col>
-                    <v-btn @click="add_new_tier(current_tier_list)" size="small"> Create new Tier </v-btn>
-                </v-col>
-                <v-col>
-                    <v-btn @click="open_modal_dialog = true" size="small"> Modify Tiers </v-btn>
-                </v-col>
-                <v-col>
-                    <v-btn @click="delete_tiers_modal_dialog = true" size="small"> Delete Tiers </v-btn>
-                </v-col>
-            </v-row>
-        </v-container>
+        <div style="width: 100%;">
+            <v-container>
+                <v-row>
+                    <v-col class="text-center">
+                        <v-btn @click="add_new_tier(current_tier_list)" size="small"> Create new Tier </v-btn>
+                    </v-col>
+                    <v-col class="text-center">
+                        <v-btn @click="open_modal_dialog = true" size="small"> Modify Tiers </v-btn>
+                    </v-col>
+                    <v-col class="text-center">
+                        <v-btn @click="delete_tiers_modal_dialog = true" size="small"> Delete Tiers </v-btn>
+                    </v-col>
+                </v-row>
+            </v-container>
 
-        <TierListDisplay :tier_list_name="current_tier_list_name" v-model:tier_list="current_tier_list"  v-model:files_arr="files_arr" show_files_arr="props.show_files_arr"/>
+            <TierListDisplay :tier_list_name="current_tier_list_name" v-model:tier_list="current_tier_list"  v-model:files_arr="files_arr" show_files_arr="props.show_files_arr"/>
+        </div>
 
         <!-- Displays if user wants to customize tier list -->
         <v-dialog
