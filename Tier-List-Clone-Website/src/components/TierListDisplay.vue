@@ -33,6 +33,8 @@ const files_arr = computed({
     }
 })
 
+var test_image_container = ref([])
+
 // Executes emit event when user clicks on button that modifies selected tier's name
 function open_tier_name_mod_dialog(index, props){
     emit('open_tier_name_mod', index, props)
@@ -82,25 +84,25 @@ onMounted(() => {
         
                 <!-- Contains the tier's name and color -->
                 <v-col>
-                    <!-- Tier color -->
-                    <v-row :key="tier.tier_name" :class="`d-flex tier-border h-auto`" :style="`background-color: ${tier.color}`">
-                        <!-- Tier name -->
-                        <v-col cols="2" class="text-center font-weight-bold align-content-center" :style="`color: black`"> 
+                    <v-row :key="tier.tier_name" :class="`d-flex h-auto`">
+                        <v-col cols="2" class="text-center font-weight-bold align-content-center tier-border" :style="`color: black; background-color: ${tier.color}`">
                             <span>
                                 {{ tier.tier_name }}
                             </span>
                         </v-col>
                         <!-- Images for the Tier -->
-                        <v-col class="d-flex flex-wrap align-start bg-grey-darken-4" style="min-height: 85px;">
+                        <v-col class="d-flex flex-wrap tier-border bg-grey-darken-4 w-100 pa-0 ma-0" style="min-height: 85px;">
                             <draggable
                             v-model="tier.tier_image_container"
-                            class="d-flex flex-wrap"
+                            class="d-flex flex-wrap w-100 align-start"
                             group="tier_list"
                             item-key="id"
                             @change="updateSessionStorage(current_tier_list_name, current_tier_list)"
                             >
                                 <template #item="{ element }">
-                                    <img :src="element.src" height="85" width="85"></img>
+                                    <div class="image-container">
+                                        <img :src="element.src" class="tier-image" />
+                                    </div>
                                 </template>
                             </draggable>
                         </v-col>
@@ -123,7 +125,7 @@ onMounted(() => {
 
             <!-- Displays uploaded images -->
             <v-row class="mt-8" v-if="props.show_files_arr">
-                <div class="w-100" id="image-place-holder-area">
+                <div class="w-100">
                     <div>
                         <p id="cap_for_user"> Insert your images or uploaded images here </p>
                     </div> 
@@ -136,12 +138,12 @@ onMounted(() => {
                         <div id="place-holder">
                             <draggable
                             v-model="files_arr"
-                            class="d-flex"
+                            class="d-flex flex-wrap w-100 align-start"
                             group="tier_list"
                             item-key="id">
                                 <template #item="{ element }">
-                                    <div>
-                                        <img :src="element.src" height="85" width="85"></img>   
+                                    <div class="image-container">
+                                        <img :src="element.src" class="tier-image"></img>   
                                     </div>
                                 </template>
                             </draggable>
@@ -166,11 +168,21 @@ onMounted(() => {
     border-style: solid;
 }
 #place-holder{
+    min-height: 85px;
     background-color: rgba(27, 27, 27, 0.927);
     border-style: solid;
     border-width: 1px;
 }
 #place-holder img{
+    width: 85px;
+}
+/** Styling for each tier's image container  **/
+.image-container{
+    display: flex;
+    align-items: stretch;
+}
+.tier-image {
+    height: 85px;
     width: 85px;
 }
 </style>
