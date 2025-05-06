@@ -11,6 +11,8 @@ const props = defineProps({
     show_files_arr: Boolean,
     show_mod_buttons: Boolean,
     show_checkboxes: Boolean,
+    show_clear_button: Boolean,
+    show_trashcan: Boolean
 })
 
 const current_tier_list_name = ref(props.tier_list_name)
@@ -71,20 +73,27 @@ onMounted(() => {
         <v-container class="ma-auto mt-10 px-10 mb-10">
             <!-- Iterates through the tier list -->
             <v-row v-for="(tier, index) in current_tier_list" :key="tier.tier_name">
-                <!-- Displays when user wants to delete any tier(s) -->
-                <div class="mr-5" v-if="props.show_checkboxes === true">
-                    <v-row>
+                <!-- Displays when user wants to delete any tier(s) or any image container(s) -->
+                <div class="mr-5" v-if="props.show_checkboxes === true || props.show_clear_button == true">
+                    <v-row v-if="props.show_checkboxes">
                         <v-checkbox
                             v-model="tiers_to_delete_arr"
                             label=""
                             :value="tier">
                         </v-checkbox>
                     </v-row>
+                    <v-row v-else-if="props.show_clear_button">
+                        <v-btn>
+                            <span>
+                                Clear
+                            </span>
+                        </v-btn>
+                    </v-row>
                 </div>
         
-                <!-- Contains the tier's name and color -->
                 <v-col>
                     <v-row :key="tier.tier_name" :class="`d-flex h-auto`">
+                        <!-- Contains the tier's name and color -->
                         <v-col cols="2" class="text-center font-weight-bold align-content-center tier-border" :style="`color: black; background-color: ${tier.color}`">
                             <span>
                                 {{ tier.tier_name }}
@@ -106,6 +115,10 @@ onMounted(() => {
                                 </template>
                             </draggable>
                         </v-col>
+                        <!-- Trashcan button for deleting selected images -->
+                         <v-col v-if="props.show_trashcan">
+                            <v-btn size="large" variant="plain" prepend-icon="mdi-trash-can"></v-btn>
+                         </v-col>
                     </v-row>
                 </v-col>
             
@@ -117,7 +130,11 @@ onMounted(() => {
                         </v-col>
 
                         <v-col>
-                            <v-btn @click="open_tier_color_mod_dialog(index, props.tier_list)" size="x-small" variant="plain" prepend-icon="mdi-format-color-fill"> Change Color</v-btn>
+                            <v-btn @click="open_tier_color_mod_dialog(index, props.tier_list)" size="x-small" variant="plain" prepend-icon="mdi-format-color-fill">Change Color</v-btn>
+                        </v-col>
+
+                        <v-col>
+                            <v-btn @click="" size="x-small" variant="plain" prepend-icon="mdi-trash-can">Delete Images</v-btn>
                         </v-col>
                     </v-row>
                 </v-col>
