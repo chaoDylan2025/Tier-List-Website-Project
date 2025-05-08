@@ -2,6 +2,7 @@
 import draggable from 'vuedraggable'
 import { ref, onMounted, watch, computed } from 'vue'
 import { saveToSessionStorage, updateSessionStorage, uploadToImageContainer } from '../front-end-code/customize_screen_functions.js'
+import { open_tier_image_deletion_dialog } from '../front-end-code/modify_tier_list_functions.js'
 
 const emit = defineEmits(['open_tier_name_mod', 'open_tier_color_mod', 'delete_tiers', 'update:files_arr', 'update:current_tier_list'])
 const props = defineProps({
@@ -73,26 +74,16 @@ onMounted(() => {
         <v-container class="ma-auto mt-10 px-10 mb-10">
             <!-- Iterates through the tier list -->
             <v-row v-for="(tier, index) in current_tier_list" :key="tier.tier_name">
-                <!-- Displays when user wants to delete any tier(s) or any image container(s) -->
-                <div class="mr-5" v-if="props.show_checkboxes === true || props.show_clear_button == true">
-                    <v-row v-if="props.show_checkboxes">
-                        <v-checkbox
-                            v-model="tiers_to_delete_arr"
-                            label=""
-                            :value="tier">
-                        </v-checkbox>
-                    </v-row>
-                    <v-row v-else-if="props.show_clear_button">
-                        <v-btn>
-                            <span>
-                                Clear
-                            </span>
-                        </v-btn>
-                    </v-row>
-                </div>
-        
                 <v-col>
                     <v-row :key="tier.tier_name" :class="`d-flex h-auto`">
+                        <!-- Displays when user wants to delete any tier(s) or any image container(s) -->
+                        <v-col v-if="props.show_checkboxes === true">
+                            <v-checkbox
+                                v-model="tiers_to_delete_arr"
+                                label=""
+                                :value="tier">
+                            </v-checkbox>
+                        </v-col>
                         <!-- Contains the tier's name and color -->
                         <v-col cols="2" class="text-center font-weight-bold align-content-center tier-border" :style="`color: black; background-color: ${tier.color}`">
                             <span>
@@ -116,8 +107,13 @@ onMounted(() => {
                             </draggable>
                         </v-col>
                         <!-- Trashcan button for deleting selected images -->
-                         <v-col v-if="props.show_trashcan">
+                         <v-col v-if="props.show_trashcan && props.show_clear_button">
                             <v-btn size="large" variant="plain" prepend-icon="mdi-trash-can"></v-btn>
+                            <v-btn size="small">
+                                <span>
+                                    Clear
+                                </span>
+                            </v-btn>
                          </v-col>
                     </v-row>
                 </v-col>
@@ -134,7 +130,7 @@ onMounted(() => {
                         </v-col>
 
                         <v-col>
-                            <v-btn @click="" size="x-small" variant="plain" prepend-icon="mdi-trash-can">Delete Images</v-btn>
+                            <v-btn @click="open_tier_image_deletion_dialog = true" size="x-small" variant="plain" prepend-icon="mdi-trash-can">Delete Images</v-btn>
                         </v-col>
                     </v-row>
                 </v-col>

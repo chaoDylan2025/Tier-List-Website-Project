@@ -13,8 +13,8 @@ const props = defineProps({
     <v-app class="bg-black">
         <v-dialog
         v-model="props.tier_image_deletion_dialog"
-        height="auto"
-        width="auto">
+        height="800"
+        width="800">
             <v-card>
                 <!-- Contains the default tier list structure -->
                 <v-container class="ml-5 mt-10 d-print-inline px-10 mb-10 h-auto">
@@ -24,7 +24,7 @@ const props = defineProps({
 
                     <v-row class="mt-8">
                         <v-btn @click="$emit('close', false)">Back</v-btn>
-                        <v-btn @click="$emit('changeTierName', false, change_selected_tier_name, props.tier_list), change_selected_tier_name=''">Confirm</v-btn>
+                        <v-btn @click="">Confirm</v-btn>
                     </v-row>
                 </v-container>
             </v-card>
