@@ -93,6 +93,11 @@ function deleteSelectedImgs(images){
     return tempArr
 }
 
+// Deletes all images from image container
+function deleteImageContainer(images){
+    return []
+}
+
 // Access sessionStorage everytime user refreshes page
 onMounted(() => {
     saveToSessionStorage(current_tier_list_name.value, current_tier_list.value)
@@ -141,7 +146,7 @@ onMounted(() => {
                         <!-- Trashcan button for deleting selected images -->
                          <v-col v-if="props.show_trashcan && props.show_clear_button">
                             <v-btn @click="tier.tier_image_container = deleteSelectedImgs(tier.tier_image_container)" size="large" variant="plain" prepend-icon="mdi-trash-can"></v-btn>
-                            <v-btn size="small">
+                            <v-btn @click="tier.tier_image_container = deleteImageContainer(tier.tier_image_container)" size="small">
                                 <span>
                                     Clear
                                 </span>
