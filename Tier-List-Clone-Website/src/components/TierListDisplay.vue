@@ -61,6 +61,29 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
     update_delete_tiers_arr(new_arr)
 })
 
+// Click event that executes when user clicks on an image in a tier list image container
+function image_click_evnt(showsTrashCan, showsClearBtn, image){
+    if(showsTrashCan && showsClearBtn){
+        select_image(image)
+    }
+}
+// Applys styling to an image that has been selected
+function select_image(image){
+    // Updates selected status of image
+    image.selected = isSelected(image)
+    // Gets the CSS class for the image
+    image.styling = currentClassOfImg(image.selected)
+}
+
+// Switches between true and false
+function isSelected(image){
+    return !image.selected ? true: false
+}
+
+function currentClassOfImg(selected){
+    return selected ? 'tier-image selected' : 'tier-image'
+}
+
 // Access sessionStorage everytime user refreshes page
 onMounted(() => {
     saveToSessionStorage(current_tier_list_name.value, current_tier_list.value)
@@ -101,7 +124,7 @@ onMounted(() => {
                             >
                                 <template #item="{ element }">
                                     <div class="image-container">
-                                        <img :src="element.src" class="tier-image" />
+                                        <img :src="element.src" :class="element.styling" @click="image_click_evnt(props.show_trashcan, props.show_clear_button, element)"/>
                                     </div>
                                 </template>
                             </draggable>
@@ -197,5 +220,10 @@ onMounted(() => {
 .tier-image {
     height: 85px;
     width: 85px;
+}
+.selected {
+  outline: 3px solid #2196F3;
+  outline-offset: -2px;
+  border-radius: 4px;
 }
 </style>

@@ -131,7 +131,9 @@ export function uploadToImageContainer(){
                 // Append image file to an array of draggable elements
                 files_arr.value.push({
                     id: index ++,
-                    src: e.target.result
+                    src: e.target.result,
+                    selected: false,
+                    styling: "tier-image"
                 })
             }
             // Reads contents of current file
