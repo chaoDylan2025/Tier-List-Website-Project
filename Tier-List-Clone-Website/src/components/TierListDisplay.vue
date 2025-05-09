@@ -36,8 +36,6 @@ const files_arr = computed({
     }
 })
 
-var test_image_container = ref([])
-
 // Executes emit event when user clicks on button that modifies selected tier's name
 function open_tier_name_mod_dialog(index, props){
     emit('open_tier_name_mod', index, props)
@@ -82,6 +80,17 @@ function isSelected(image){
 
 function currentClassOfImg(selected){
     return selected ? 'tier-image selected' : 'tier-image'
+}
+
+// Deletes selected images from image container
+function deleteSelectedImgs(images){
+    var tempArr = ref([])
+    images.forEach((img) => {
+        if(!img.selected){
+            tempArr.value.push(img)
+        }
+    })
+    return tempArr
 }
 
 // Access sessionStorage everytime user refreshes page
@@ -131,7 +140,7 @@ onMounted(() => {
                         </v-col>
                         <!-- Trashcan button for deleting selected images -->
                          <v-col v-if="props.show_trashcan && props.show_clear_button">
-                            <v-btn size="large" variant="plain" prepend-icon="mdi-trash-can"></v-btn>
+                            <v-btn @click="tier.tier_image_container = deleteSelectedImgs(tier.tier_image_container)" size="large" variant="plain" prepend-icon="mdi-trash-can"></v-btn>
                             <v-btn size="small">
                                 <span>
                                     Clear
