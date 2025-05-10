@@ -2,7 +2,7 @@
 import draggable from 'vuedraggable'
 import { ref, onMounted, watch, computed } from 'vue'
 import { saveToSessionStorage, updateSessionStorage, uploadToImageContainer } from '../front-end-code/customize_screen_functions.js'
-import { open_tier_image_deletion_dialog } from '../front-end-code/modify_tier_list_functions.js'
+import { open_tier_image_deletion_dialog, organizeTiers } from '../front-end-code/modify_tier_list_functions.js'
 
 const emit = defineEmits(['open_tier_name_mod', 'open_tier_color_mod', 'delete_tiers', 'update:files_arr', 'update:current_tier_list'])
 const props = defineProps({
@@ -114,13 +114,22 @@ onMounted(() => {
                 <v-col>
                     <v-row :key="tier.tier_name" :class="`d-flex h-auto`">
                         <!-- Displays when user wants to delete any tier(s) or any image container(s) -->
-                        <v-col v-if="props.show_checkboxes === true">
+                        <div class="tier-list-left-column" v-if="props.show_checkboxes === true || props.show_mod_buttons">
                             <v-checkbox
+                                v-if="props.show_checkboxes === true"
                                 v-model="tiers_to_delete_arr"
                                 label=""
                                 :value="tier">
                             </v-checkbox>
-                        </v-col>
+                            <div>
+                                <div>
+                                    <v-btn @click="organizeTiers(props.tier_list, index, 0)" size="small" variant="plain" prepend-icon="mdi-menu-up"></v-btn>
+                                </div>
+                                <div>
+                                    <v-btn @click="organizeTiers(props.tier_list, index, 1)" size="small" variant="plain" prepend-icon="mdi-menu-down"></v-btn>
+                                </div>
+                            </div>
+                        </div>
                         <!-- Contains the tier's name and color -->
                         <v-col cols="2" class="text-center font-weight-bold align-content-center tier-border" :style="`color: black; background-color: ${tier.color}`">
                             <span>
@@ -156,17 +165,17 @@ onMounted(() => {
                 </v-col>
             
                 <!-- Displays when user wants to modify any tier(s) -->
-                <v-col v-if="props.show_mod_buttons === true">
+                <v-col class="tier-list-mod-buttons" style="align-self: center;" v-if="props.show_mod_buttons === true">
                     <v-row>
-                        <v-col>
+                        <v-col class="tier-list-mod-buttons">
                             <v-btn @click="open_tier_name_mod_dialog(index, props.tier_list)" size="x-small" variant="plain" prepend-icon="mdi-pencil">Change Name</v-btn> 
                         </v-col>
 
-                        <v-col>
+                        <v-col class="tier-list-mod-buttons">
                             <v-btn @click="open_tier_color_mod_dialog(index, props.tier_list)" size="x-small" variant="plain" prepend-icon="mdi-format-color-fill">Change Color</v-btn>
                         </v-col>
 
-                        <v-col>
+                        <v-col class="tier-list-mod-buttons">
                             <v-btn @click="open_tier_image_deletion_dialog = true" size="x-small" variant="plain" prepend-icon="mdi-trash-can">Delete Images</v-btn>
                         </v-col>
                     </v-row>
@@ -239,5 +248,17 @@ onMounted(() => {
   outline: 3px solid #2196F3;
   outline-offset: -2px;
   border-radius: 4px;
+}
+/** Styling for left column of each tier **/
+.tier-list-left-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+/** Styling for tier list mod buttons **/
+.tier-list-mod-buttons {
+    margin: 0px;
+    margin-left: 12px;
+    padding: 0px;
 }
 </style>

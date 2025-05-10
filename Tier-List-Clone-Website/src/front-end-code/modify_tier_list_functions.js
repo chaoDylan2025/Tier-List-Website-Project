@@ -82,3 +82,31 @@ export function confirm_tier_color_change(state, new_color, props){
     // Set to false to exit modal dialog
     open_tier_color_dialog.value = state
 }
+
+// Organizes tiers
+export function organizeTiers(tier_list, index, direction){
+    // Reorganize the tier list only if the tier isn't the first or last tier
+    if(index == 0 && direction == 0 || index == tier_list.length - 1 && direction == 1){
+        return
+    }
+    else{
+        // Moves the tier up
+        if(direction == 0){
+            swapTiers(tier_list, index, index-1)
+        }
+
+        // Moves the tier down
+        else{
+            swapTiers(tier_list, index, index + 1)
+        }
+    }
+}
+
+function swapTiers(tier_list, i, j){
+    let tempVar = tier_list[i]
+    let tierToSwap = tier_list[j]
+
+    // Swap places
+    tier_list[j] = tempVar
+    tier_list[i] = tierToSwap  
+}
