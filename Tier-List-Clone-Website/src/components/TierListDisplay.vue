@@ -2,7 +2,7 @@
 import draggable from 'vuedraggable'
 import { ref, onMounted, watch, computed } from 'vue'
 import { saveToSessionStorage, updateSessionStorage, uploadToImageContainer } from '../front-end-code/customize_screen_functions.js'
-import { open_tier_image_deletion_dialog } from '../front-end-code/modify_tier_list_functions.js'
+import { open_tier_image_deletion_dialog, organizeTiers } from '../front-end-code/modify_tier_list_functions.js'
 
 const emit = defineEmits(['open_tier_name_mod', 'open_tier_color_mod', 'delete_tiers', 'update:files_arr', 'update:current_tier_list'])
 const props = defineProps({
@@ -123,10 +123,10 @@ onMounted(() => {
                             </v-checkbox>
                             <div>
                                 <div>
-                                    <v-btn size="small" variant="plain" prepend-icon="mdi-menu-up"></v-btn>
+                                    <v-btn @click="organizeTiers(props.tier_list, index, 0)" size="small" variant="plain" prepend-icon="mdi-menu-up"></v-btn>
                                 </div>
                                 <div>
-                                    <v-btn size="small" variant="plain" prepend-icon="mdi-menu-down"></v-btn>
+                                    <v-btn @click="organizeTiers(props.tier_list, index, 1)" size="small" variant="plain" prepend-icon="mdi-menu-down"></v-btn>
                                 </div>
                             </div>
                         </div>
