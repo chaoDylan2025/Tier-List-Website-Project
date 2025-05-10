@@ -1,9 +1,10 @@
 <script setup>
 import TierNameChange from './TierNameChange.vue'
 import TierColorChange from './TierColorChange.vue'
+import TierImageDeletion from './TierImageDeletion.vue'
 import TierListDisplay from './TierListDisplay.vue'
 import { open_tier_modification_dialog, open_tier_color_dialog, index_of_current_tier } from '../front-end-code/modify_tier_list_functions'
-import { open_tier_name_mod_dialog, open_tier_color_mod_dialog, confirm_tier_name_change, confirm_tier_color_change } from '../front-end-code/modify_tier_list_functions'
+import { open_tier_name_mod_dialog, open_tier_color_mod_dialog, open_tier_image_deletion_dialog, confirm_tier_name_change, confirm_tier_color_change } from '../front-end-code/modify_tier_list_functions'
 
 const props = defineProps({
     tier_list: Object,
@@ -37,6 +38,8 @@ const props = defineProps({
             @close="(state) => open_tier_modification_dialog = state" @changeTierName="confirm_tier_name_change"/>
             <TierColorChange :tier_color_dialog="open_tier_color_dialog" :tier_list="props.tier_list" :index="index_of_current_tier" 
             @close="(state) => open_tier_color_dialog = state" @changeTierColor="confirm_tier_color_change"/>
+            <TierImageDeletion :tier_image_deletion_dialog="open_tier_image_deletion_dialog" :tier_list="props.tier_list" 
+            @close="(state) => open_tier_image_deletion_dialog = state"/>
         </v-container>
 </template>
 

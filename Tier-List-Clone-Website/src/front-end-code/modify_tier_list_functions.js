@@ -6,6 +6,9 @@ export var open_tier_modification_dialog = ref(false)
 // Opens modal dialog for changing selected tier's color
 export var open_tier_color_dialog = ref(false)
 
+// Opens modal dialog for deleting tier list's images
+export var open_tier_image_deletion_dialog = ref(false)
+
 /***********************************************************************
  * Functions and variables for modifying selected tier's name or color *
  ***********************************************************************/
