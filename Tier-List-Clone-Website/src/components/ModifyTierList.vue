@@ -13,6 +13,15 @@ const props = defineProps({
 </script>
 
 <template>
+        <v-row class="ml-2 mt-2">
+            <v-btn
+            @click="$emit('update', false, props.tier_list)"
+            icon="$close"
+            size="medium"
+            variant="text"
+            >
+            </v-btn>
+        </v-row>
         <!-- Contains tier list structure -->
         <v-row>
             <TierListDisplay :tier_list= props.tier_list :show_mod_buttons="true" @open_tier_name_mod="open_tier_name_mod_dialog" @open_tier_color_mod="open_tier_color_mod_dialog"/>
