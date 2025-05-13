@@ -19,27 +19,29 @@ var change_selected_tier_name = ref("")
         width="auto">
             <v-card>
                 <!-- Contains the default tier list structure -->
-                <v-container class="ml-5 mt-10 d-print-inline px-10 mb-10 h-auto">
-                    <v-row>
-                        <v-col>
-                            <!-- Iterates through an object that contains default tier list -->
-                            <v-row :class="`d-print-flex h-auto w-auto tier-border overflow-hidden`" :style="`background-color: ${props.tier_list[props.index].color}`">
-                                <!-- Contains tier name and its color -->
-                                <v-col class="h-auto w-auto"> 
-                                    <v-text-field
-                                    v-model="change_selected_tier_name"
-                                    :placeholder="props.tier_list[props.index].tier_name"
-                                    </v-text-field>
-                                </v-col>
-                                <v-col class="d-flex flex-wrap align-end overflow-hidden h-auto w-100 bg-grey-darken-4">
-                                </v-col>
-                            </v-row>
+                <v-container class="mt-10 px-10 mb-10">
+                    <!-- Iterates through an object that contains default tier list -->
+                    <v-row class="tier-border" :style="`background-color: ${props.tier_list[props.index].color}`">
+                        <!-- Contains tier name and its color -->
+                        <v-col class="d-flex justify-center align-center"> 
+                            <div class="w-100">
+                                <v-text-field
+                                class="placeholder-text"
+                                v-model="change_selected_tier_name"
+                                :placeholder="props.tier_list[props.index].tier_name">                          
+                                </v-text-field>
+                            </div>
                         </v-col>
                     </v-row>
 
                     <v-row class="mt-8">
-                        <v-btn @click="$emit('close', false), change_selected_tier_name=''">Back</v-btn>
-                        <v-btn @click="$emit('changeTierName', false, change_selected_tier_name, props.tier_list), change_selected_tier_name=''">Confirm</v-btn>
+                        <v-col>
+                            <v-btn @click="$emit('close', false), change_selected_tier_name=''">Back</v-btn>
+                        </v-col>
+                        <v-col></v-col>
+                        <v-col>
+                            <v-btn @click="$emit('changeTierName', false, change_selected_tier_name, props.tier_list), change_selected_tier_name=''">Confirm</v-btn>
+                        </v-col>
                     </v-row>
                 </v-container>
             </v-card>
@@ -69,5 +71,10 @@ var change_selected_tier_name = ref("")
 
 #place-holder img{
     width: 85px;
+}
+
+/* Styling for centering placeholder text */
+.placeholder-text input {
+    text-align: center;
 }
 </style>
