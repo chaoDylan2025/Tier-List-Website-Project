@@ -43,7 +43,7 @@ var current_tier_list = reactive(props.tier_list)
         height="auto"
         width="1000">
             <v-container style="background-color: white">
-                <ModifyTierList :open_dialog="open_modal_dialog" :tier_list="current_tier_list" @close="(state) => open_modal_dialog = state"
+                <ModifyTierList :open_dialog="open_modal_dialog" :tier_list="current_tier_list" :show_exit_button="true" @close="(state) => open_modal_dialog = state"
                     @update="updateTierList"/>
             </v-container>
         </v-dialog>
