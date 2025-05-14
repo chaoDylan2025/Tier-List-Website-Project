@@ -16,7 +16,7 @@ const props = defineProps({
         height="800"
         width="800">
             <v-card>
-                <v-row class="ml-4">
+                <v-row class="mt-4 ml-4">
                     <v-btn
                     @click="$emit('close', false)"
                     icon="$close"

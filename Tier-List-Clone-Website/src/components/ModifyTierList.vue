@@ -24,7 +24,7 @@ const props = defineProps({
         </v-row>
         <!-- Contains tier list structure -->
         <v-row>
-            <TierListDisplay :tier_list= props.tier_list :show_mod_buttons="true" @open_tier_name_mod="open_tier_name_mod_dialog" @open_tier_color_mod="open_tier_color_mod_dialog"/>
+            <TierListDisplay :tier_list= props.tier_list :show_mod_buttons="true" :show_arrow_buttons="true" @open_tier_name_mod="open_tier_name_mod_dialog" @open_tier_color_mod="open_tier_color_mod_dialog"/>
         </v-row>
 
         <v-row class="mt-8" v-if="props.no_back_button == false">

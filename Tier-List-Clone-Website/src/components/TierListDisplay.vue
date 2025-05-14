@@ -13,6 +13,7 @@ const props = defineProps({
     show_mod_buttons: Boolean,
     show_checkboxes: Boolean,
     show_clear_button: Boolean,
+    show_arrow_buttons: Boolean,
     show_trashcan: Boolean
 })
 
@@ -121,7 +122,7 @@ onMounted(() => {
                                 label=""
                                 :value="tier">
                             </v-checkbox>
-                            <div>
+                            <div v-if="props.show_arrow_buttons">
                                 <div>
                                     <v-btn @click="organizeTiers(props.tier_list, index, 0)" size="small" variant="plain" prepend-icon="mdi-menu-up"></v-btn>
                                 </div>
