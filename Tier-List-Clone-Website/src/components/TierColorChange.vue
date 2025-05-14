@@ -25,28 +25,30 @@ watch (() => current_tier.color, (color) => {
         width="auto">
             <v-card>
                 <!-- Contains the default tier list structure -->
-                <v-container class="ml-5 mt-10 d-print-inline px-10 mb-10 h-auto">
+                <v-container class="ml-5 mt-10 px-10 mb-10">
                     <v-row>
                         <v-col>
                             <!-- Iterates through an object that contains default tier list -->
-                            <v-row :class="`d-print-flex h-auto w-auto tier-border overflow-hidden`" :style="`background-color: ${change_selected_tier_color}`">
+                            <v-row :class="`d-flex w-100 tier-border`" :style="`background-color: ${change_selected_tier_color}`">
                                 <!-- Contains tier name and its color -->
-                                <v-col class="h-auto w-auto"> 
-                                    <p> {{ current_tier.tier_name }} </p>
+                                <v-col> 
+                                    <span> {{ current_tier.tier_name }} </span>
                                 </v-col>
-                                <v-col class="d-flex flex-wrap align-end overflow-hidden h-auto w-100 bg-grey-darken-4">
-                                </v-col>
+                            </v-row>
+                            <v-row class="mt-8">
+                                <v-color-picker class="w-100" v-model="change_selected_tier_color"></v-color-picker>
                             </v-row>
                         </v-col>
                     </v-row>
 
                     <v-row class="mt-8">
-                        <v-color-picker v-model="change_selected_tier_color"></v-color-picker>
-                    </v-row>
-
-                    <v-row class="mt-8">
-                        <v-btn @click="$emit('close', false), change_selected_tier_color=current_tier.color">Back</v-btn>
-                        <v-btn @click="$emit('changeTierColor', false, change_selected_tier_color, props.tier_list)">Confirm</v-btn>
+                        <v-col>
+                            <v-btn @click="$emit('close', false), change_selected_tier_color=current_tier.color">Back</v-btn>
+                        </v-col>
+                    
+                        <v-col>
+                            <v-btn @click="$emit('changeTierColor', false, change_selected_tier_color, props.tier_list)">Confirm</v-btn>  
+                        </v-col>
                     </v-row>
                 </v-container>
             </v-card>
