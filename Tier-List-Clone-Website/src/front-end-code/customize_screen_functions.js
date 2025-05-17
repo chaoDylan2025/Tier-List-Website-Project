@@ -60,7 +60,7 @@ export function saveToSessionStorage(current_tier_list_name, current_tier_list){
         }
         // Creates a key for 'custom tier list'
         else if(current_tier_list_name == "custom_tier_list"){
-            sessionStorage.setItem("custom_tier_list", current_tier_list)
+            sessionStorage.setItem("custom_tier_list", JSON.stringify(current_tier_list))
         }
     }
 }
@@ -96,6 +96,7 @@ export function updateTierList(state, new_tier_list){
 // Updates custom tier list and navigates to Customization page
 export function updateCustomTierList(tier_list){
     custom_tier_list.value = tier_list
+    saveToSessionStorage('CustomTierList', custom_tier_list.value)
     router.push({name: 'CustomTierList'})    
 }
 

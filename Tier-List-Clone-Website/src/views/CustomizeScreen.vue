@@ -1,10 +1,11 @@
 <script setup>
-import { reactive, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import TierListDisplay from '../components/TierListDisplay.vue'
 import ModifyTierList from '../components/ModifyTierList.vue'
 import DeleteTiers from '../components/DeleteTiers.vue'
 import { open_modal_dialog, delete_tiers_modal_dialog, files_arr } from '../front-end-code/customize_screen_functions'
 import { add_new_tier, updateTierList, deleteTiers } from '../front-end-code/customize_screen_functions'
+import { saveToSessionStorage, updateSessionStorage } from '../front-end-code/customize_screen_functions.js'
 
 const props = defineProps({
     tier_list_name: String,
@@ -13,7 +14,16 @@ const props = defineProps({
 })
 
 var current_tier_list_name = ref(props.tier_list_name)
-var current_tier_list = reactive(props.tier_list)
+var current_tier_list = ref(props.tier_list)
+
+// Access sessionStorage everytime user refreshes page
+onMounted(() => {
+    //console.log("Before accessing session storage: ", current_tier_list.value)
+    saveToSessionStorage(current_tier_list_name.value, current_tier_list.value)
+    const parsed = JSON.parse(sessionStorage.getItem(current_tier_list_name.value))
+    current_tier_list.value = parsed
+    //console.log("After accessing session storage: ", current_tier_list.value)
+})
 </script>
 
 <template>

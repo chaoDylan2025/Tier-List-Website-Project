@@ -1,7 +1,7 @@
 <script setup>
 import draggable from 'vuedraggable'
-import { ref, onMounted, watch, computed } from 'vue'
-import { saveToSessionStorage, updateSessionStorage, uploadToImageContainer } from '../front-end-code/customize_screen_functions.js'
+import { ref, watch, computed } from 'vue'
+import { updateSessionStorage, uploadToImageContainer } from '../front-end-code/customize_screen_functions.js'
 import { open_tier_image_deletion_dialog, organizeTiers } from '../front-end-code/modify_tier_list_functions.js'
 
 const emit = defineEmits(['open_tier_name_mod', 'open_tier_color_mod', 'delete_tiers', 'update:files_arr', 'update:current_tier_list'])
@@ -99,11 +99,6 @@ function deleteImageContainer(images){
     return []
 }
 
-// Access sessionStorage everytime user refreshes page
-onMounted(() => {
-    saveToSessionStorage(current_tier_list_name.value, current_tier_list.value)
-    current_tier_list.value = ref(JSON.parse(sessionStorage.getItem(current_tier_list_name.value)))
-})
 </script>
 
 <template>
