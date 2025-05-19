@@ -2,6 +2,7 @@
 import {ref} from 'vue'
 
 const props = defineProps({
+    tier_list_name: String,
     tier_name_dialog: Boolean,
     tier_list: Object,
     index: Number
@@ -40,7 +41,7 @@ var change_selected_tier_name = ref("")
                         </v-col>
                         <v-col></v-col>
                         <v-col>
-                            <v-btn @click="$emit('changeTierName', false, change_selected_tier_name, props.tier_list), change_selected_tier_name=''">Confirm</v-btn>
+                            <v-btn @click="$emit('changeTierName', false, change_selected_tier_name, props.tier_list_name, props.tier_list), change_selected_tier_name=''">Confirm</v-btn>
                         </v-col>
                     </v-row>
                 </v-container>

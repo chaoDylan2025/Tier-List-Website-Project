@@ -50,21 +50,17 @@ export var delete_tiers_modal_dialog = ref(false)
 // Contains image files
 export var files_arr = ref([])
 
-// Saves current tier list to sessionStorage
-export function saveToSessionStorage(current_tier_list_name, current_tier_list){
-    // Creates a key for current tier list
-    if(!sessionStorage.getItem(current_tier_list_name)){
-        // Creates a key for 'default tier list'
-        if(current_tier_list_name == "default_tier_list"){
-            sessionStorage.setItem("default_tier_list", JSON.stringify(current_tier_list))
-        }
-        // Creates a key for 'custom tier list'
-        else if(current_tier_list_name == "custom_tier_list"){
-            sessionStorage.setItem("custom_tier_list", current_tier_list)
-        }
+// Creates a new key for the current tier list to sessionStorage
+export function createSessionStorage(current_tier_list_name, current_tier_list){
+    // Creates a key for 'default tier list'
+    if(current_tier_list_name == "default_tier_list"){
+        sessionStorage.setItem("default_tier_list", JSON.stringify(current_tier_list))
+    }
+    // Creates a key for 'custom tier list'
+    else if(current_tier_list_name == "custom_tier_list"){
+        sessionStorage.setItem("custom_tier_list", JSON.stringify(current_tier_list))
     }
 }
-
 // Update the current tier list in sessionStorage
 export function updateSessionStorage(current_tier_list_name, current_tier_list){
     sessionStorage.setItem(current_tier_list_name, JSON.stringify(current_tier_list))
@@ -88,22 +84,22 @@ export function getRandomInt(min, max) {
 }
 
 // Updates current tier list based on modifications
-export function updateTierList(state, new_tier_list){
-    open_modal_dialog.value = state
-    default_tier_list.value = new_tier_list
+export function updateTierList(tier_list_name, tier_list){
+    if(tier_list_name == 'CustomTierList'){
+        custom_tier_list.value = tier_list
+        updateSessionStorage(tier_list_name, custom_tier_list.value)
+    }
+    else{
+        default_tier_list.value = tier_list
+        updateSessionStorage(tier_list_name, default_tier_list.value)
+    }
 }
 
 // Updates custom tier list and navigates to Customization page
 export function updateCustomTierList(tier_list){
     custom_tier_list.value = tier_list
+    updateSessionStorage('CustomTierList', custom_tier_list.value)
     router.push({name: 'CustomTierList'})    
-}
-
-// Deletes selected tiers from current tier list
-export function deleteTiers(state, deleted_tiers){
-    delete_tiers_modal_dialog.value = state
-    const new_tier_list = default_tier_list.value.filter((tier) => !deleted_tiers.includes(tier))
-    default_tier_list.value = new_tier_list
 }
 
 // Upload images to image container
