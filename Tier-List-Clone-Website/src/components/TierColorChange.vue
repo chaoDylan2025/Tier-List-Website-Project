@@ -2,6 +2,7 @@
 import {ref, watch} from 'vue'
 
 const props = defineProps({
+    tier_list_name: String,
     tier_color_dialog: Boolean,
     tier_list: Object,
     index: Number
@@ -47,7 +48,7 @@ watch (() => current_tier.color, (color) => {
                         </v-col>
                     
                         <v-col>
-                            <v-btn @click="$emit('changeTierColor', false, change_selected_tier_color, props.tier_list)">Confirm</v-btn>  
+                            <v-btn @click="$emit('changeTierColor', false, change_selected_tier_color, props.tier_list_name, props.tier_list)">Confirm</v-btn>  
                         </v-col>
                     </v-row>
                 </v-container>

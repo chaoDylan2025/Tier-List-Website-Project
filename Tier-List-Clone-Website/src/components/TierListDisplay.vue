@@ -48,8 +48,8 @@ function open_tier_color_mod_dialog(index, props){
 }
 
 // Executes emit event when tiers_to_delete_arr updates
-function update_delete_tiers_arr(arr, index){
-    emit('delete_tiers', arr, index)
+function update_delete_tiers_arr(arr){
+    emit('delete_tiers', arr)
 }
 
 // Tiers to delete
@@ -85,20 +85,31 @@ function currentClassOfImg(selected){
 
 // Deletes selected images from image container
 function deleteSelectedImgs(images){
-    var tempArr = ref([])
+    var tempArr = []
     images.forEach((img) => {
         if(!img.selected){
-            tempArr.value.push(img)
+            tempArr.push(img)
         }
     })
     return tempArr
 }
 
 // Deletes all images from image container
-function deleteImageContainer(images){
+function deleteImageContainer(){
     return []
 }
 
+// Deletes images and updates session storage
+function deleteImages(deleteStatus, current_tier_list_name, current_tier_list, index){
+    if(deleteStatus == 0){
+        current_tier_list[index].tier_image_container = deleteSelectedImgs(current_tier_list[index].tier_image_container)
+        updateSessionStorage(current_tier_list_name, current_tier_list)
+    }
+    else{
+        current_tier_list[index].tier_image_container = deleteImageContainer()
+        updateSessionStorage(current_tier_list_name, current_tier_list)
+    }
+}
 </script>
 
 <template>
@@ -119,10 +130,10 @@ function deleteImageContainer(images){
                             </v-checkbox>
                             <div v-if="props.show_arrow_buttons">
                                 <div>
-                                    <v-btn @click="organizeTiers(props.tier_list, index, 0)" size="small" variant="plain" prepend-icon="mdi-menu-up"></v-btn>
+                                    <v-btn @click="organizeTiers(current_tier_list_name, props.tier_list, index, 0)" size="small" variant="plain" prepend-icon="mdi-menu-up"></v-btn>
                                 </div>
                                 <div>
-                                    <v-btn @click="organizeTiers(props.tier_list, index, 1)" size="small" variant="plain" prepend-icon="mdi-menu-down"></v-btn>
+                                    <v-btn @click="organizeTiers(current_tier_list_name, props.tier_list, index, 1)" size="small" variant="plain" prepend-icon="mdi-menu-down"></v-btn>
                                 </div>
                             </div>
                         </div>
@@ -150,8 +161,8 @@ function deleteImageContainer(images){
                         </v-col>
                         <!-- Trashcan button for deleting selected images -->
                          <v-col v-if="props.show_trashcan && props.show_clear_button">
-                            <v-btn @click="tier.tier_image_container = deleteSelectedImgs(tier.tier_image_container)" size="large" variant="plain" prepend-icon="mdi-trash-can"></v-btn>
-                            <v-btn @click="tier.tier_image_container = deleteImageContainer(tier.tier_image_container)" size="small">
+                            <v-btn @click="deleteImages(0, current_tier_list_name, current_tier_list, index)" size="large" variant="plain" prepend-icon="mdi-trash-can"></v-btn>
+                            <v-btn @click="deleteImages(1, current_tier_list_name, current_tier_list, index)" size="small">
                                 <span>
                                     Clear
                                 </span>
