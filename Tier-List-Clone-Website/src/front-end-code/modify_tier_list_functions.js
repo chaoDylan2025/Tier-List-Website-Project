@@ -1,5 +1,5 @@
 import {ref, computed} from 'vue'
-import { updateTierList } from './customize_screen_functions'
+import { updateTierList, updateSessionStorage } from './customize_screen_functions'
 
 // Opens modal dialog for changing selected tier's name
 export var open_tier_modification_dialog = ref(false)
@@ -113,4 +113,55 @@ function swapTiers(tier_list, i, j){
     // Swap places
     tier_list[j] = tempVar
     tier_list[i] = tierToSwap  
+}
+
+// Click event that executes when user clicks on an image in a tier list image container
+export function image_click_evnt(showsTrashCan, showsClearBtn, image){
+    if(showsTrashCan && showsClearBtn){
+        select_image(image)
+    }
+}
+// Applys styling to an image that has been selected
+export function select_image(image){
+    // Updates selected status of image
+    image.selected = isSelected(image)
+    // Gets the CSS class for the image
+    image.styling = currentClassOfImg(image.selected)
+}
+
+// Switches between true and false
+export function isSelected(image){
+    return !image.selected ? true: false
+}
+
+export function currentClassOfImg(selected){
+    return selected ? 'tier-image selected' : 'tier-image'
+}
+
+// Deletes selected images from image container
+export function deleteSelectedImgs(images){
+    var tempArr = []
+    images.forEach((img) => {
+        if(!img.selected){
+            tempArr.push(img)
+        }
+    })
+    return tempArr
+}
+
+// Deletes all images from image container
+export function deleteImageContainer(){
+    return []
+}
+
+// Deletes images and updates session storage
+export function deleteImages(deleteStatus, current_tier_list_name, current_tier_list, index){
+    if(deleteStatus == 0){
+        current_tier_list[index].tier_image_container = deleteSelectedImgs(current_tier_list[index].tier_image_container)
+        updateSessionStorage(current_tier_list_name, current_tier_list)
+    }
+    else{
+        current_tier_list[index].tier_image_container = deleteImageContainer()
+        updateSessionStorage(current_tier_list_name, current_tier_list)
+    }
 }

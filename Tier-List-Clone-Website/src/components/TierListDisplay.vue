@@ -2,7 +2,7 @@
 import draggable from 'vuedraggable'
 import { ref, watch, computed } from 'vue'
 import { updateSessionStorage, uploadToImageContainer } from '../front-end-code/customize_screen_functions.js'
-import { open_tier_image_deletion_dialog, organizeTiers } from '../front-end-code/modify_tier_list_functions.js'
+import { open_tier_image_deletion_dialog, organizeTiers, image_click_evnt, deleteImages } from '../front-end-code/modify_tier_list_functions.js'
 
 const emit = defineEmits(['open_tier_name_mod', 'open_tier_color_mod', 'delete_tiers', 'update:files_arr', 'update:current_tier_list'])
 const props = defineProps({
@@ -60,56 +60,6 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
     update_delete_tiers_arr(new_arr)
 })
 
-// Click event that executes when user clicks on an image in a tier list image container
-function image_click_evnt(showsTrashCan, showsClearBtn, image){
-    if(showsTrashCan && showsClearBtn){
-        select_image(image)
-    }
-}
-// Applys styling to an image that has been selected
-function select_image(image){
-    // Updates selected status of image
-    image.selected = isSelected(image)
-    // Gets the CSS class for the image
-    image.styling = currentClassOfImg(image.selected)
-}
-
-// Switches between true and false
-function isSelected(image){
-    return !image.selected ? true: false
-}
-
-function currentClassOfImg(selected){
-    return selected ? 'tier-image selected' : 'tier-image'
-}
-
-// Deletes selected images from image container
-function deleteSelectedImgs(images){
-    var tempArr = []
-    images.forEach((img) => {
-        if(!img.selected){
-            tempArr.push(img)
-        }
-    })
-    return tempArr
-}
-
-// Deletes all images from image container
-function deleteImageContainer(){
-    return []
-}
-
-// Deletes images and updates session storage
-function deleteImages(deleteStatus, current_tier_list_name, current_tier_list, index){
-    if(deleteStatus == 0){
-        current_tier_list[index].tier_image_container = deleteSelectedImgs(current_tier_list[index].tier_image_container)
-        updateSessionStorage(current_tier_list_name, current_tier_list)
-    }
-    else{
-        current_tier_list[index].tier_image_container = deleteImageContainer()
-        updateSessionStorage(current_tier_list_name, current_tier_list)
-    }
-}
 </script>
 
 <template>
