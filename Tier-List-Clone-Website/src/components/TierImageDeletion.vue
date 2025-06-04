@@ -16,7 +16,7 @@ const props = defineProps({
         height="800"
         width="800">
             <v-card>
-                <v-row class="mt-4 ml-4">
+                <div class="mt-4 ml-4">
                     <v-btn
                     @click="$emit('close', false)"
                     icon="$close"
@@ -24,9 +24,9 @@ const props = defineProps({
                     variant="text"
                     >
                     </v-btn>
-                </v-row>
+                </div>
                 <!-- Contains the default tier list structure -->
-                <v-container class="ml-8 mb-8 px-10">
+                <v-container class="d-flex ml-10 mb-8">
                     <v-row class="mb-12">
                         <TierListDisplay :tier_list_name="props.tier_list_name" :tier_list="props.tier_list" :show_clear_button="true" :show_trashcan="true"/>
                     </v-row>
