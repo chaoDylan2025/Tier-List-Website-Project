@@ -77,7 +77,7 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
                             label=""
                             :value="tier">
                         </v-checkbox>
-                        <div v-if="props.show_arrow_buttons">
+                        <div v-if="props.show_arrow_buttons && current_tier_list.length > 1">
                             <div>
                                 <v-btn @click="organizeTiers(current_tier_list_name, props.tier_list, index, 0)" size="small" variant="plain" prepend-icon="mdi-menu-up"></v-btn>
                             </div>
