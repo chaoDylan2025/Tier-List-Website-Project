@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { add_new_tier, custom_tier_list, updateCustomTierList } from '../front-end-code/customize_screen_functions'
+import { add_new_tier, custom_tier_list, updateSessionStorage } from '../front-end-code/customize_screen_functions'
+import { updateCustomTierList } from '../front-end-code/custom_tier_list'
 import ModifyTierList from '../components/ModifyTierList.vue'
 
 // Validation rule
@@ -11,11 +12,12 @@ var num_of_tiers = ref(1)
 
 // Clear custom tier list if page refreshes
 onMounted(() => {
-    if(sessionStorage.getItem("CustomTierList") != null){
-        sessionStorage.removeItem("CustomTierList")
-        custom_tier_list.value.length = 0
+    if(sessionStorage.getItem("custom_tier_list") != null){
+        sessionStorage.removeItem("custom_tier_list")
     }
+    custom_tier_list.value.length = 0
     add_new_tier(custom_tier_list.value)
+    updateSessionStorage("custom_tier_list", custom_tier_list.value)
 })
 </script>
 

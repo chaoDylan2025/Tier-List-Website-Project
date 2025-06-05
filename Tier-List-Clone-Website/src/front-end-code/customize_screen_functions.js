@@ -85,7 +85,7 @@ export function getRandomInt(min, max) {
 
 // Updates current tier list based on modifications
 export function updateTierList(tier_list_name, tier_list){
-    if(tier_list_name == 'CustomTierList'){
+    if(tier_list_name == 'custom_tier_list'){
         custom_tier_list.value = tier_list
         updateSessionStorage(tier_list_name, custom_tier_list.value)
     }
@@ -93,13 +93,6 @@ export function updateTierList(tier_list_name, tier_list){
         default_tier_list.value = tier_list
         updateSessionStorage(tier_list_name, default_tier_list.value)
     }
-}
-
-// Updates custom tier list and navigates to Customization page
-export function updateCustomTierList(tier_list){
-    custom_tier_list.value = tier_list
-    updateSessionStorage('CustomTierList', custom_tier_list.value)
-    router.push({name: 'CustomTierList'})    
 }
 
 // Upload images to image container
