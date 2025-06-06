@@ -70,19 +70,19 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
             <v-col>
                 <v-row :key="tier.tier_name" :class="`d-flex h-auto`">
                     <!-- Displays when user wants to delete any tier(s) or any image container(s) -->
-                    <div class="tier-list-left-column" v-if="props.show_checkboxes === true || props.show_mod_buttons">
+                    <div class="tier-list-left-column">
                         <v-checkbox
                             v-if="props.show_checkboxes === true"
                             v-model="tiers_to_delete_arr"
                             label=""
                             :value="tier">
                         </v-checkbox>
-                        <div v-if="props.show_arrow_buttons && current_tier_list.length > 1">
+                        <div class="mr-4" v-if="current_tier_list.length > 1">
                             <div>
-                                <v-btn @click="organizeTiers(current_tier_list_name, props.tier_list, index, 0)" size="small" variant="plain" prepend-icon="mdi-menu-up"></v-btn>
+                                <v-btn @click="organizeTiers(current_tier_list_name, props.tier_list, index, 0)" size="medium" variant="plain" prepend-icon="mdi-menu-up"></v-btn>
                             </div>
                             <div>
-                                <v-btn @click="organizeTiers(current_tier_list_name, props.tier_list, index, 1)" size="small" variant="plain" prepend-icon="mdi-menu-down"></v-btn>
+                                <v-btn @click="organizeTiers(current_tier_list_name, props.tier_list, index, 1)" size="medium" variant="plain" prepend-icon="mdi-menu-down"></v-btn>
                             </div>
                         </div>
                     </div>
@@ -119,7 +119,10 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
                         </v-col>
                 </v-row>
             </v-col>
-        
+            
+            <div class="ml-4 d-flex align-center">
+                <v-btn size="small"> Modify </v-btn>
+            </div>
             <!-- Displays when user wants to modify any tier(s) -->
             <v-col class="tier-list-mod-buttons" style="align-self: center;" v-if="props.show_mod_buttons === true">
                 <v-row>
@@ -140,8 +143,8 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
 
         <!-- Displays uploaded images -->
         <v-row class="mt-8" v-if="props.show_files_arr">
-            <div class="w-100">
-                <div>
+            <div draggable="false" class="w-100">
+                <div draggable="false">
                     <p id="cap_for_user"> Insert your images or uploaded images here </p>
                 </div> 
                 <div class="d-flex flex-column" id="image-place-holder">
