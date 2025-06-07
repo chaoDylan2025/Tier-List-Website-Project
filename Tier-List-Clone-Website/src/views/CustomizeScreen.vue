@@ -49,9 +49,6 @@ onMounted(() => {
                         <v-btn @click="add_new_tier(current_tier_list)" size="small"> Create new Tier </v-btn>
                     </v-col>
                     <v-col class="text-center">
-                        <v-btn @click="open_modal_dialog = true" size="small"> Modify Tiers </v-btn>
-                    </v-col>
-                    <v-col class="text-center">
                         <v-btn @click="delete_tiers_modal_dialog = true" size="small"> Delete Tiers </v-btn>
                     </v-col>
                 </v-row>
