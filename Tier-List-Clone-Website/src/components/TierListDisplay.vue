@@ -8,7 +8,6 @@ const emit = defineEmits(['open_tier_name_mod', 'open_tier_color_mod', 'delete_t
 const props = defineProps({
     tier_list: Object,
     files_arr: Array,
-    show_files_arr: Boolean,
     show_mod_buttons: Boolean,
     show_checkboxes: Boolean,
     show_clear_button: Boolean,
@@ -61,7 +60,7 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
 
 <template>
     <!-- Contains tier list structure -->
-    <div class="ma-auto mt-10 px-10 mb-10" style="width: 1000px;">
+    <div class="ma-auto mt-10 px-10 mb-10" style="width: 1200px;">
         <!-- Iterates through the tier list -->
         <v-row v-for="(tier, index) in current_tier_list" :key="tier.tier_name">
             <v-col>
@@ -139,7 +138,7 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
         </v-row>
 
         <!-- Displays uploaded images -->
-        <v-row class="mt-8" v-if="props.show_files_arr">
+        <v-row class="mt-8">
             <div draggable="false" class="w-100">
                 <div draggable="false">
                     <p id="cap_for_user"> Insert your images or uploaded images here </p>
@@ -191,8 +190,8 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
     align-items: stretch;
 }
 .place-holder-imgs img {
-    height: 78px;
-    width: 78px;
+    height: 80px;
+    width: 71px;
 }
 /** Styling for each tier's image container  **/
 .image-container{
@@ -200,8 +199,8 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
     align-items: stretch;
 }
 .image-container img{
-    height: 95px;
-    width: 95px;
+    height: 85px;
+    width: 77px;
 }
 .selected {
   outline: 3px solid #2196F3;
