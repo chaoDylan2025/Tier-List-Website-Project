@@ -1,4 +1,5 @@
 <script setup>
+import CustomizeScreen from './views/CustomizeScreen.vue'
 </script>
 
 <template>
@@ -11,6 +12,7 @@
             <!-- Button area -->
             <div class="mt-3">
                 <v-container>
+                    <CustomizeScreen />
                 </v-container>
             </div>
         </div>
