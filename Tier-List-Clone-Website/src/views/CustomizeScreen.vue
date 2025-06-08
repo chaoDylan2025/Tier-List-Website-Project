@@ -51,15 +51,16 @@ onMounted(() => {
                 </v-row>
             </v-container>
 
-            <TierListDisplay v-model:tier_list="default_tier_list"  v-model:files_arr="files_arr"/>
+            <TierListDisplay v-model:tier_list="default_tier_list"  v-model:files_arr="files_arr" :tier_list_width="1200" :show_files_arr="true" :show_arrow_buttons="true" :show_mod_buttons="true"/>
         </div>
 
         <!-- Displays if user wants to customize tier list -->
         <v-dialog
         v-model="open_modal_dialog"
+        scrollable="true"
         scrim="white"
         height="auto"
-        width="1000">
+        width="1200">
             <v-container style="background-color: white">
                 <ModifyTierList :open_dialog="open_modal_dialog" :tier_list="default_tier_list" :show_exit_button="true" @close="(state) => open_modal_dialog = state"/>
             </v-container>

@@ -8,6 +8,8 @@ const emit = defineEmits(['open_tier_name_mod', 'open_tier_color_mod', 'delete_t
 const props = defineProps({
     tier_list: Object,
     files_arr: Array,
+    tier_list_width: Number,
+    show_files_arr: Boolean,
     show_mod_buttons: Boolean,
     show_checkboxes: Boolean,
     show_clear_button: Boolean,
@@ -60,7 +62,7 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
 
 <template>
     <!-- Contains tier list structure -->
-    <div class="ma-auto mt-10 px-10 mb-10" style="width: 1200px;">
+    <div class="ma-auto mt-10 px-10 mb-10" :style="`width: ${props.tier_list_width}px;`">
         <!-- Iterates through the tier list -->
         <v-row v-for="(tier, index) in current_tier_list" :key="tier.tier_name">
             <v-col>
@@ -68,12 +70,13 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
                     <!-- Displays when user wants to delete any tier(s) or any image container(s) -->
                     <div class="tier-list-left-column">
                         <v-checkbox
+                            class="mr-4"
                             v-if="props.show_checkboxes === true"
                             v-model="tiers_to_delete_arr"
                             label=""
                             :value="tier">
                         </v-checkbox>
-                        <div class="mr-4" v-if="current_tier_list.length > 1">
+                        <div class="mr-4" v-if="current_tier_list.length > 1 & props.show_arrow_buttons">
                             <div>
                                 <v-btn @click="organizeTiers(props.tier_list, index, 0)" size="medium" variant="plain" prepend-icon="mdi-menu-up"></v-btn>
                             </div>
@@ -116,11 +119,11 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
                 </v-row>
             </v-col>
             
-            <div class="ml-4 d-flex align-center">
+            <div class="ml-4 d-flex align-center" v-if="props.show_mod_buttons">
                 <v-btn size="small"> Modify </v-btn>
             </div>
             <!-- Displays when user wants to modify any tier(s) -->
-            <v-col class="tier-list-mod-buttons" style="align-self: center;" v-if="props.show_mod_buttons === true">
+            <!-- <v-col class="tier-list-mod-buttons" style="align-self: center;">
                 <v-row>
                     <v-col class="tier-list-mod-buttons">
                         <v-btn @click="open_tier_name_mod_dialog(index, props.tier_list)" size="x-small" variant="plain" prepend-icon="mdi-pencil">Change Name</v-btn> 
@@ -134,11 +137,11 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
                         <v-btn @click="open_tier_image_deletion_dialog = true" size="x-small" variant="plain" prepend-icon="mdi-trash-can">Delete Images</v-btn>
                     </v-col>
                 </v-row>
-            </v-col>
+            </v-col> -->
         </v-row>
 
         <!-- Displays uploaded images -->
-        <v-row class="mt-8">
+        <v-row class="mt-8" v-if="props.show_files_arr">
             <div draggable="false" class="w-100">
                 <div draggable="false">
                     <p id="cap_for_user"> Insert your images or uploaded images here </p>
