@@ -6,7 +6,6 @@ import { open_tier_image_deletion_dialog, organizeTiers, image_click_evnt, delet
 
 const emit = defineEmits(['open_tier_name_mod', 'open_tier_color_mod', 'delete_tiers', 'update:files_arr', 'update:current_tier_list'])
 const props = defineProps({
-    tier_list_name: String,
     tier_list: Object,
     files_arr: Array,
     show_files_arr: Boolean,
@@ -16,8 +15,6 @@ const props = defineProps({
     show_arrow_buttons: Boolean,
     show_trashcan: Boolean
 })
-
-const current_tier_list_name = ref(props.tier_list_name)
 
 const current_tier_list = computed({
     get(){
@@ -79,10 +76,10 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
                         </v-checkbox>
                         <div class="mr-4" v-if="current_tier_list.length > 1">
                             <div>
-                                <v-btn @click="organizeTiers(current_tier_list_name, props.tier_list, index, 0)" size="medium" variant="plain" prepend-icon="mdi-menu-up"></v-btn>
+                                <v-btn @click="organizeTiers(props.tier_list, index, 0)" size="medium" variant="plain" prepend-icon="mdi-menu-up"></v-btn>
                             </div>
                             <div>
-                                <v-btn @click="organizeTiers(current_tier_list_name, props.tier_list, index, 1)" size="medium" variant="plain" prepend-icon="mdi-menu-down"></v-btn>
+                                <v-btn @click="organizeTiers(props.tier_list, index, 1)" size="medium" variant="plain" prepend-icon="mdi-menu-down"></v-btn>
                             </div>
                         </div>
                     </div>
@@ -99,7 +96,7 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
                         class="d-flex flex-wrap w-100 align-start"
                         group="tier_list"
                         item-key="id"
-                        @change="updateSessionStorage(current_tier_list_name, current_tier_list)"
+                        @change="updateSessionStorage(current_tier_list)"
                         >
                             <template #item="{ element }">
                                 <div class="image-container">
@@ -110,8 +107,8 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
                     </v-col>
                     <!-- Trashcan button for deleting selected images -->
                         <v-col v-if="props.show_trashcan && props.show_clear_button">
-                        <v-btn @click="deleteImages(0, current_tier_list_name, current_tier_list, index)" size="large" variant="plain" prepend-icon="mdi-trash-can"></v-btn>
-                        <v-btn @click="deleteImages(1, current_tier_list_name, current_tier_list, index)" size="small">
+                        <v-btn @click="deleteImages(0, current_tier_list, index)" size="large" variant="plain" prepend-icon="mdi-trash-can"></v-btn>
+                        <v-btn @click="deleteImages(1, current_tier_list, index)" size="small">
                             <span>
                                 Clear
                             </span>

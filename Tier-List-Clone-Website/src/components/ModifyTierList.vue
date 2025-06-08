@@ -8,7 +8,6 @@ import { open_tier_name_mod_dialog, open_tier_color_mod_dialog, open_tier_image_
 
 const props = defineProps({
     tier_list: Object,
-    tier_list_name: String,
     show_exit_button: Boolean,
     show_confirm_button: Boolean,
     mod_tier_dialog: Boolean
@@ -27,7 +26,7 @@ const props = defineProps({
     </v-row>
     <!-- Contains tier list structure -->
     <v-row>
-        <TierListDisplay :tier_list_name="props.tier_list_name" :tier_list="props.tier_list" :show_mod_buttons="true" :show_arrow_buttons="true" @open_tier_name_mod="open_tier_name_mod_dialog" @open_tier_color_mod="open_tier_color_mod_dialog"/>
+        <TierListDisplay :tier_list="props.tier_list" :show_mod_buttons="true" :show_arrow_buttons="true" @open_tier_name_mod="open_tier_name_mod_dialog" @open_tier_color_mod="open_tier_color_mod_dialog"/>
     </v-row>
 
     <v-row v-if="props.show_confirm_button" class="mt-8 justify-center">
@@ -35,11 +34,11 @@ const props = defineProps({
     </v-row>
 
     <v-container v-show="false">
-        <TierNameChange :tier_list_name="props.tier_list_name" :tier_name_dialog="open_tier_modification_dialog" :tier_list="props.tier_list" :index="index_of_current_tier"
+        <TierNameChange :tier_name_dialog="open_tier_modification_dialog" :tier_list="props.tier_list" :index="index_of_current_tier"
         @close="(state) => open_tier_modification_dialog = state" @changeTierName="confirm_tier_name_change"/>
-        <TierColorChange :tier_list_name="props.tier_list_name" :tier_color_dialog="open_tier_color_dialog" :tier_list="props.tier_list" :index="index_of_current_tier" 
+        <TierColorChange :tier_color_dialog="open_tier_color_dialog" :tier_list="props.tier_list" :index="index_of_current_tier" 
         @close="(state) => open_tier_color_dialog = state" @changeTierColor="confirm_tier_color_change"/>
-        <TierImageDeletion :tier_list_name="props.tier_list_name" :tier_image_deletion_dialog="open_tier_image_deletion_dialog" :tier_list="props.tier_list" 
+        <TierImageDeletion :tier_image_deletion_dialog="open_tier_image_deletion_dialog" :tier_list="props.tier_list" 
         @close="(state) => open_tier_image_deletion_dialog = state"/>
     </v-container>
 </template>

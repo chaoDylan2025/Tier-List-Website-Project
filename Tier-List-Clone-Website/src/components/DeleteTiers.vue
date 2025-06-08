@@ -3,7 +3,6 @@ import TierListDisplay from '../components/TierListDisplay.vue'
 import { watch, ref } from 'vue'
 
 const props = defineProps({
-    tier_list_name: String,
     tier_delete_dialog: Boolean,
     tier_list: Object,
 })

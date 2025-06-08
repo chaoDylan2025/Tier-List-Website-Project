@@ -2,7 +2,6 @@
 import TierListDisplay from './TierListDisplay.vue'
 
 const props = defineProps({
-    tier_list_name: String,
     tier_image_deletion_dialog: Boolean,
     tier_list: Object,
 })
@@ -28,7 +27,7 @@ const props = defineProps({
                 <!-- Contains the default tier list structure -->
                 <v-container class="d-flex ml-10 mb-8">
                     <v-row class="mb-12">
-                        <TierListDisplay :tier_list_name="props.tier_list_name" :tier_list="props.tier_list" :show_clear_button="true" :show_trashcan="true"/>
+                        <TierListDisplay :tier_list="props.tier_list" :show_clear_button="true" :show_trashcan="true"/>
                     </v-row>
                 </v-container>
             </v-card>
