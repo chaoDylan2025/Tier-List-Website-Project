@@ -1,5 +1,4 @@
 import { ref } from 'vue'
-import { router } from '../router/index'
 
 // Contains the initial default tier list
 export var default_tier_list = ref([
@@ -35,9 +34,6 @@ export var default_tier_list = ref([
     },
 ])
 
-// Contains the customizable tier list
-export var custom_tier_list = ref([])
-
 // Contains colors used in default tier list
 export const colors_of_default_tier_list = ["rgb(253, 123, 123)", "rgb(255, 170, 91)", "rgb(253, 226, 144)", "rgb(246, 253, 123)", "rgb(146, 246, 115)", "rgb(123, 253, 244)"]
 
@@ -51,19 +47,13 @@ export var delete_tiers_modal_dialog = ref(false)
 export var files_arr = ref([])
 
 // Creates a new key for the current tier list to sessionStorage
-export function createSessionStorage(current_tier_list_name, current_tier_list){
+export function createSessionStorage(current_tier_list){
     // Creates a key for 'default tier list'
-    if(current_tier_list_name == "default_tier_list"){
-        sessionStorage.setItem("default_tier_list", JSON.stringify(current_tier_list))
-    }
-    // Creates a key for 'custom tier list'
-    else if(current_tier_list_name == "custom_tier_list"){
-        sessionStorage.setItem("custom_tier_list", JSON.stringify(current_tier_list))
-    }
+    sessionStorage.setItem("default_tier_list", JSON.stringify(current_tier_list))
 }
 // Update the current tier list in sessionStorage
-export function updateSessionStorage(current_tier_list_name, current_tier_list){
-    sessionStorage.setItem(current_tier_list_name, JSON.stringify(current_tier_list))
+export function updateSessionStorage(current_tier_list){
+    sessionStorage.setItem("default_tier_list", JSON.stringify(current_tier_list))
 }
 
 // Inserts a new tier in the tier list
@@ -84,15 +74,9 @@ export function getRandomInt(min, max) {
 }
 
 // Updates current tier list based on modifications
-export function updateTierList(tier_list_name, tier_list){
-    if(tier_list_name == 'custom_tier_list'){
-        custom_tier_list.value = tier_list
-        updateSessionStorage(tier_list_name, custom_tier_list.value)
-    }
-    else{
-        default_tier_list.value = tier_list
-        updateSessionStorage(tier_list_name, default_tier_list.value)
-    }
+export function updateTierList(tier_list){
+    default_tier_list.value = tier_list
+    updateSessionStorage(default_tier_list.value)
 }
 
 // Upload images to image container

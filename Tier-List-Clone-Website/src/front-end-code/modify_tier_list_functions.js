@@ -67,27 +67,27 @@ export function open_tier_color_mod_dialog(index, props){
 }
 
 // Changes selected tier's new name
-export function confirm_tier_name_change(state, new_name, tier_list_name, props){
+export function confirm_tier_name_change(state, new_name, props){
     const tier = get_tier_name_change_computed_property(props)
     // Changes name of selected tier
     tier.value = new_name
-    updateTierList(tier_list_name, props)
+    updateTierList(props)
     // Set to false to exit modal dialog
     open_tier_modification_dialog.value = state
 }
 
 // Changes selected tier's color
-export function confirm_tier_color_change(state, new_color, tier_list_name, props){
+export function confirm_tier_color_change(state, new_color, props){
     const tier_color = get_tier_color_change_computed_property(props)
     // Changes name of selected tier
     tier_color.value = new_color
-    updateTierList(tier_list_name, props)
+    updateTierList(props)
     // Set to false to exit modal dialog
     open_tier_color_dialog.value = state
 }
 
 // Organizes tiers
-export function organizeTiers(tier_list_name, tier_list, index, direction){
+export function organizeTiers(tier_list, index, direction){
     // Reorganize the tier list only if the tier isn't the first or last tier
     if(index == 0 && direction == 0 || index == tier_list.length - 1 && direction == 1){
         return
@@ -103,7 +103,7 @@ export function organizeTiers(tier_list_name, tier_list, index, direction){
             swapTiers(tier_list, index, index + 1)
         }
     }
-    updateTierList(tier_list_name, tier_list)
+    updateTierList(tier_list)
 }
 
 function swapTiers(tier_list, i, j){
@@ -155,13 +155,13 @@ export function deleteImageContainer(){
 }
 
 // Deletes images and updates session storage
-export function deleteImages(deleteStatus, current_tier_list_name, current_tier_list, index){
+export function deleteImages(deleteStatus, current_tier_list, index){
     if(deleteStatus == 0){
         current_tier_list[index].tier_image_container = deleteSelectedImgs(current_tier_list[index].tier_image_container)
-        updateSessionStorage(current_tier_list_name, current_tier_list)
+        updateSessionStorage(current_tier_list)
     }
     else{
         current_tier_list[index].tier_image_container = deleteImageContainer()
-        updateSessionStorage(current_tier_list_name, current_tier_list)
+        updateSessionStorage(current_tier_list)
     }
 }
