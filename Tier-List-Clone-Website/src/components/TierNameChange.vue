@@ -1,10 +1,10 @@
 <script setup>
+import { current_tier } from '@/front-end-code/modify_tier_list_functions';
 import {ref} from 'vue'
 
 const props = defineProps({
     tier_name_dialog: Boolean,
-    tier_list: Object,
-    index: Number
+    current_tier: Object,
 })
 
 // Change selected tier's name
@@ -21,14 +21,14 @@ var change_selected_tier_name = ref("")
                 <!-- Contains the default tier list structure -->
                 <v-container class="mt-10 px-10 mb-10">
                     <!-- Iterates through an object that contains default tier list -->
-                    <v-row class="tier-border" :style="`background-color: ${props.tier_list[props.index].color}`">
+                    <v-row class="tier-border" :style="`background-color: ${props.current_tier.color}`">
                         <!-- Contains tier name and its color -->
                         <v-col class="d-flex justify-center align-center"> 
                             <div class="w-100">
                                 <v-text-field
                                 class="placeholder-text"
                                 v-model="change_selected_tier_name"
-                                :placeholder="props.tier_list[props.index].tier_name">                          
+                                :placeholder="props.current_tier.tier_name">                          
                                 </v-text-field>
                             </div>
                         </v-col>
@@ -40,7 +40,7 @@ var change_selected_tier_name = ref("")
                         </v-col>
                         <v-col></v-col>
                         <v-col>
-                            <v-btn @click="$emit('changeTierName', false, change_selected_tier_name, props.tier_list), change_selected_tier_name=''">Confirm</v-btn>
+                            <v-btn @click="$emit('changeTierName', false, change_selected_tier_name, props.current_tier), change_selected_tier_name=''">Confirm</v-btn>
                         </v-col>
                     </v-row>
                 </v-container>

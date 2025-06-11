@@ -6,12 +6,13 @@ import DeleteTiers from '../components/DeleteTiers.vue'
 import { open_modal_dialog, delete_tiers_modal_dialog, default_tier_list, files_arr, add_new_tier } from '../front-end-code/customize_screen_functions'
 import { createSessionStorage, updateSessionStorage } from '../front-end-code/customize_screen_functions.js'
 
-// const props = defineProps({
-//     tier_list: Object,
-//     show_files_arr: Boolean,
-// })
+var current_tier = ref([])
 
-//var current_tier_list = ref(props.tier_list)
+// Sets up variables for modifying current tier
+function setUpTierModificationData(state, index){
+    open_modal_dialog.value = state
+    current_tier.value = default_tier_list.value[index]
+}
 
 // Deletes selected tiers from current tier list
 function deleteTiers(state, deleted_tiers){
@@ -51,7 +52,8 @@ onMounted(() => {
                 </v-row>
             </v-container>
 
-            <TierListDisplay v-model:tier_list="default_tier_list"  v-model:files_arr="files_arr" :tier_list_width="1200" :show_files_arr="true" :show_arrow_buttons="true" :show_mod_buttons="true"/>
+            <TierListDisplay v-model:tier_list="default_tier_list"  v-model:files_arr="files_arr" :tier_list_width="1200" :show_files_arr="true" :show_arrow_buttons="true" :show_mod_buttons="true"
+            @modify_current_tier="setUpTierModificationData"/>
         </div>
 
         <!-- Displays if user wants to customize tier list -->
@@ -62,7 +64,7 @@ onMounted(() => {
         height="auto"
         width="1200">
             <v-container style="background-color: white">
-                <ModifyTierList :open_dialog="open_modal_dialog" :tier_list="default_tier_list" :show_exit_button="true" @close="(state) => open_modal_dialog = state"/>
+                <ModifyTierList :open_dialog="open_modal_dialog" :current_tier="current_tier" :show_exit_button="true" @close="(state) => open_modal_dialog = state"/>
             </v-container>
         </v-dialog>
 

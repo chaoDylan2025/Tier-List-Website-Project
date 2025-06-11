@@ -1,16 +1,18 @@
 <script setup>
 import draggable from 'vuedraggable'
 import { ref, watch, computed } from 'vue'
-import { updateSessionStorage, uploadToImageContainer } from '../front-end-code/customize_screen_functions.js'
+import { open_modal_dialog, updateSessionStorage, uploadToImageContainer } from '../front-end-code/customize_screen_functions.js'
 import { open_tier_image_deletion_dialog, organizeTiers, image_click_evnt, deleteImages } from '../front-end-code/modify_tier_list_functions.js'
 
 const emit = defineEmits(['open_tier_name_mod', 'open_tier_color_mod', 'delete_tiers', 'update:files_arr', 'update:current_tier_list'])
 const props = defineProps({
     tier_list: Object,
     files_arr: Array,
+    current_tier: Object,
     tier_list_width: Number,
     show_files_arr: Boolean,
     show_mod_buttons: Boolean,
+    show_mods: Boolean,
     show_checkboxes: Boolean,
     show_clear_button: Boolean,
     show_arrow_buttons: Boolean,
@@ -34,6 +36,13 @@ const files_arr = computed({
         emit('update:files_arr', newArr)
     }
 })
+
+var current_tier_to_modify = ref(props.current_tier)
+
+// Executes emit event when user clicks on the modify button of a specific tier
+function modifyCurrentTier(state, index){
+    emit('modify_current_tier', state, index)
+}
 
 // Executes emit event when user clicks on button that modifies selected tier's name
 function open_tier_name_mod_dialog(index, props){
@@ -63,6 +72,59 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
 <template>
     <!-- Contains tier list structure -->
     <div class="ma-auto mt-10 px-10 mb-10" :style="`width: ${props.tier_list_width}px;`">
+        <!-- Displays when ModifyTierList dialog is opened -->
+        <div v-if="show_mods && current_tier_to_modify != undefined">
+            <v-row :class="`d-flex h-auto`">
+                <!-- Contains the tier's name and color -->
+                <div class="text-center text-break font-weight-bold align-content-center tier-border" :style="`color: black; background-color: ${current_tier_to_modify.color}; width: 85px;`">
+                    <span>
+                        {{ current_tier_to_modify.tier_name }}
+                    </span>
+                </div>
+                <!-- Images for the Tier -->
+                <v-col class="d-flex flex-wrap tier-border bg-grey-darken-4 w-100 pa-0 ma-0" style="min-height: 85px;">
+                    <draggable
+                    v-model="current_tier_to_modify.tier_image_container"
+                    class="d-flex flex-wrap w-100 align-start"
+                    group="tier_list"
+                    item-key="id"
+                    @change="updateSessionStorage(current_tier_to_modify)"
+                    >
+                        <template #item="{ element }">
+                            <div class="image-container">
+                                <img :src="element.src" :class="element.styling" @click="image_click_evnt(props.show_trashcan, props.show_clear_button, element)"/>
+                            </div>
+                        </template>
+                    </draggable>
+                </v-col>
+                <!-- Trashcan button for deleting selected images -->
+                <v-col v-if="props.show_trashcan && props.show_clear_button">
+                <v-btn @click="deleteImages(0, props.current_tier, index)" size="large" variant="plain" prepend-icon="mdi-trash-can"></v-btn>
+                <v-btn @click="deleteImages(1, props.current_tier, index)" size="small">
+                    <span>
+                        Clear
+                    </span>
+                </v-btn>
+                </v-col>
+            </v-row>
+            <!-- Displays when user wants to modify any tier(s) -->
+            <div class="d-flex tier-list-mod-buttons" style="align-self: center; margin-top: 30px;">
+                <div class="d-flex w-100 justify-space-around mt-4">
+                    <div class="tier-list-mod-buttons">
+                        <v-btn @click="open_tier_name_mod_dialog(index, props.current_tier)" size="x-small" variant="plain" prepend-icon="mdi-pencil">Change Name</v-btn> 
+                    </div>
+
+                    <div class="tier-list-mod-buttons">
+                        <v-btn @click="open_tier_color_mod_dialog(index, props.current_tier)" size="x-small" variant="plain" prepend-icon="mdi-format-color-fill">Change Color</v-btn>
+                    </div>
+
+                    <div class="tier-list-mod-buttons">
+                        <v-btn @click="open_tier_image_deletion_dialog = true" size="x-small" variant="plain" prepend-icon="mdi-trash-can">Delete Images</v-btn>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Iterates through the tier list -->
         <v-row v-for="(tier, index) in current_tier_list" :key="tier.tier_name">
             <v-col>
@@ -120,24 +182,8 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
             </v-col>
             
             <div class="ml-4 d-flex align-center" v-if="props.show_mod_buttons">
-                <v-btn size="small"> Modify </v-btn>
+                <v-btn @click="modifyCurrentTier(true, index)" size="small"> Modify </v-btn>
             </div>
-            <!-- Displays when user wants to modify any tier(s) -->
-            <!-- <v-col class="tier-list-mod-buttons" style="align-self: center;">
-                <v-row>
-                    <v-col class="tier-list-mod-buttons">
-                        <v-btn @click="open_tier_name_mod_dialog(index, props.tier_list)" size="x-small" variant="plain" prepend-icon="mdi-pencil">Change Name</v-btn> 
-                    </v-col>
-
-                    <v-col class="tier-list-mod-buttons">
-                        <v-btn @click="open_tier_color_mod_dialog(index, props.tier_list)" size="x-small" variant="plain" prepend-icon="mdi-format-color-fill">Change Color</v-btn>
-                    </v-col>
-
-                    <v-col class="tier-list-mod-buttons">
-                        <v-btn @click="open_tier_image_deletion_dialog = true" size="x-small" variant="plain" prepend-icon="mdi-trash-can">Delete Images</v-btn>
-                    </v-col>
-                </v-row>
-            </v-col> -->
         </v-row>
 
         <!-- Displays uploaded images -->
@@ -218,8 +264,8 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
 }
 /** Styling for tier list mod buttons **/
 .tier-list-mod-buttons {
-    margin: 0px;
-    margin-left: 12px;
+    display: flex;
+    justify-content: center;
     padding: 0px;
 }
 </style>

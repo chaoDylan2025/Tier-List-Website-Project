@@ -3,16 +3,15 @@ import {ref, watch} from 'vue'
 
 const props = defineProps({
     tier_color_dialog: Boolean,
-    tier_list: Object,
-    index: Number
+    current_tier: Object,
 })
 
-const current_tier = props.tier_list[props.index]
-
-var change_selected_tier_color = ref(current_tier.color)
+const current_tier_to_modify = ref(props.current_tier)
+console.log("Current tier in TierColorChange: ", current_tier_to_modify.value.color)
+var change_selected_tier_color = ref(current_tier_to_modify.value.color)
 
 // Watch for changes to selected tier's color
-watch (() => current_tier.color, (color) => {
+watch (() => current_tier_to_modify .color, (color) => {
     change_selected_tier_color.value = color  
 })
 </script>
@@ -32,7 +31,7 @@ watch (() => current_tier.color, (color) => {
                             <v-row :class="`d-flex w-100 tier-border`" :style="`background-color: ${change_selected_tier_color}`">
                                 <!-- Contains tier name and its color -->
                                 <v-col> 
-                                    <span> {{ current_tier.tier_name }} </span>
+                                    <span> {{ current_tier_to_modify.tier_name }} </span>
                                 </v-col>
                             </v-row>
                             <v-row class="mt-8">
@@ -43,11 +42,11 @@ watch (() => current_tier.color, (color) => {
 
                     <v-row class="mt-8">
                         <v-col>
-                            <v-btn @click="$emit('close', false), change_selected_tier_color=current_tier.color">Back</v-btn>
+                            <v-btn @click="$emit('close', false), change_selected_tier_color=current_tier_to_modify.color">Back</v-btn>
                         </v-col>
                     
                         <v-col>
-                            <v-btn @click="$emit('changeTierColor', false, change_selected_tier_color, props.tier_list)">Confirm</v-btn>  
+                            <v-btn @click="$emit('changeTierColor', false, change_selected_tier_color, props.current_tier)">Confirm</v-btn>  
                         </v-col>
                     </v-row>
                 </v-container>
