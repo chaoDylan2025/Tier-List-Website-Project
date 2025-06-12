@@ -22,34 +22,6 @@ export var original_tier = ref("")
 // Index of selected tier
 export var index_of_current_tier = ref(0)
 
-// Returns computed property that changes current tier's name
-function get_tier_name_change_computed_property(props){
-    return computed({
-        get(){
-            return props[index_of_current_tier.value]
-        },
-        set(new_name){
-            props[index_of_current_tier].tier_name = new_name
-        }
-    })
-}
-
-// Returns computed property that changes current tier's color
-function get_tier_color_change_computed_property(props){
-    return computed({
-        get(){
-            return props[index_of_current_tier.value]
-        },
-        set(new_color){
-            props[index_of_current_tier].color = new_color
-        }
-    })
-}
-
-export function get_tier_list_prop(prop){
-    return prop
-}
-
 // Assign variables their values before opening tier name modification dialog
 export function open_tier_name_mod_dialog(index, props){
     current_tier = props[index]
@@ -67,23 +39,17 @@ export function open_tier_color_mod_dialog(index, props){
 }
 
 // Changes selected tier's new name
-export function confirm_tier_name_change(state, new_name, props){
-    const tier = get_tier_name_change_computed_property(props)
-    // Changes name of selected tier
-    tier.value = new_name
-    updateTierList(props)
-    // Set to false to exit modal dialog
-    open_tier_modification_dialog.value = state
+export function confirm_tier_name_change(state, new_name, index, props){
+    props.tier_name = new_name // Changes name of selected tier
+    updateTierList(index, props)
+    open_tier_modification_dialog.value = state // Set to false to exit modal dialog
 }
 
 // Changes selected tier's color
-export function confirm_tier_color_change(state, new_color, props){
-    const tier_color = get_tier_color_change_computed_property(props)
-    // Changes name of selected tier
-    tier_color.value = new_color
-    updateTierList(props)
-    // Set to false to exit modal dialog
-    open_tier_color_dialog.value = state
+export function confirm_tier_color_change(state, new_color, index, props){
+    props.color = new_color // Changes name of selected tier
+    updateTierList(index, props)
+    open_tier_color_dialog.value = state // Set to false to exit modal dialog
 }
 
 // Organizes tiers

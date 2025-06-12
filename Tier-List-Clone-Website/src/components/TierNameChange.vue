@@ -1,10 +1,10 @@
 <script setup>
-import { current_tier } from '@/front-end-code/modify_tier_list_functions';
 import {ref} from 'vue'
 
 const props = defineProps({
     tier_name_dialog: Boolean,
     current_tier: Object,
+    index: Number
 })
 
 // Change selected tier's name
@@ -40,7 +40,7 @@ var change_selected_tier_name = ref("")
                         </v-col>
                         <v-col></v-col>
                         <v-col>
-                            <v-btn @click="$emit('changeTierName', false, change_selected_tier_name, props.current_tier), change_selected_tier_name=''">Confirm</v-btn>
+                            <v-btn @click="$emit('changeTierName', false, change_selected_tier_name, props.index, props.current_tier), change_selected_tier_name=''">Confirm</v-btn>
                         </v-col>
                     </v-row>
                 </v-container>

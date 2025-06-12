@@ -7,11 +7,13 @@ import { open_modal_dialog, delete_tiers_modal_dialog, default_tier_list, files_
 import { createSessionStorage, updateSessionStorage } from '../front-end-code/customize_screen_functions.js'
 
 var current_tier = ref([])
+var current_tier_index = ref(0)
 
 // Sets up variables for modifying current tier
 function setUpTierModificationData(state, index){
     open_modal_dialog.value = state
     current_tier.value = default_tier_list.value[index]
+    current_tier_index.value = index
 }
 
 // Deletes selected tiers from current tier list
@@ -64,7 +66,7 @@ onMounted(() => {
         height="auto"
         width="1200">
             <v-container style="background-color: white">
-                <ModifyTierList :open_dialog="open_modal_dialog" :current_tier="current_tier" :show_exit_button="true" @close="(state) => open_modal_dialog = state"/>
+                <ModifyTierList :open_dialog="open_modal_dialog" :current_tier="current_tier" :current_tier_index="current_tier_index" :show_exit_button="true" @close="(state) => open_modal_dialog = state"/>
             </v-container>
         </v-dialog>
 

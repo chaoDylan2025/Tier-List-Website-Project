@@ -9,6 +9,7 @@ const props = defineProps({
     tier_list: Object,
     files_arr: Array,
     current_tier: Object,
+    current_tier_index: Number,
     tier_list_width: Number,
     show_files_arr: Boolean,
     show_mod_buttons: Boolean,

@@ -74,8 +74,8 @@ export function getRandomInt(min, max) {
 }
 
 // Updates current tier list based on modifications
-export function updateTierList(tier_list){
-    default_tier_list.value = tier_list
+export function updateTierList(index, current_tier){
+    default_tier_list.value[index] = current_tier
     updateSessionStorage(default_tier_list.value)
 }
 
