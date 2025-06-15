@@ -74,7 +74,7 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
     <!-- Contains tier list structure -->
     <div class="ma-auto mt-10 px-10 mb-10" :style="`width: ${props.tier_list_width}px;`">
         <!-- Displays when ModifyTierList dialog is opened -->
-        <div v-if="show_mods && current_tier_to_modify != undefined">
+        <div v-if="current_tier_to_modify != undefined">
             <v-row :class="`d-flex h-auto`">
                 <!-- Contains the tier's name and color -->
                 <div class="text-center text-break font-weight-bold align-content-center tier-border" :style="`color: black; background-color: ${current_tier_to_modify.color}; width: 85px;`">
@@ -93,24 +93,21 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
                     >
                         <template #item="{ element }">
                             <div class="image-container">
-                                <img :src="element.src" :class="element.styling" @click="image_click_evnt(props.show_trashcan, props.show_clear_button, element)"/>
+                                <img :src="element.src" :class="element.styling" @click="image_click_evnt(element)"/>
                             </div>
                         </template>
                     </draggable>
                 </v-col>
                 <!-- Trashcan button for deleting selected images -->
-                <v-col v-if="props.show_trashcan && props.show_clear_button">
-                <v-btn @click="deleteImages(0, props.current_tier, index)" size="large" variant="plain" prepend-icon="mdi-trash-can"></v-btn>
-                <v-btn @click="deleteImages(1, props.current_tier, index)" size="small">
-                    <span>
+                <div class="align-self-center" style="margin-left: 20px;">
+                    <v-btn @click="deleteImages(1, props.current_tier, current_tier_index)" size="small">
                         Clear
-                    </span>
-                </v-btn>
-                </v-col>
+                    </v-btn>
+                </div>
             </v-row>
             <!-- Displays when user wants to modify any tier(s) -->
             <div class="d-flex tier-list-mod-buttons" style="align-self: center; margin-top: 30px;">
-                <div class="d-flex w-100 justify-space-around mt-4">
+                <div v-if="show_mod_buttons" class="d-flex w-100 justify-space-around mt-4">
                     <div class="tier-list-mod-buttons">
                         <v-btn @click="open_tier_name_mod_dialog(index, props.current_tier)" size="x-small" variant="plain" prepend-icon="mdi-pencil">Change Name</v-btn> 
                     </div>
@@ -120,7 +117,7 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
                     </div>
 
                     <div class="tier-list-mod-buttons">
-                        <v-btn @click="open_tier_image_deletion_dialog = true" size="x-small" variant="plain" prepend-icon="mdi-trash-can">Delete Images</v-btn>
+                        <v-btn @click="deleteImages(0, props.current_tier, current_tier_index)" size="x-small" variant="plain" prepend-icon="mdi-trash-can"> Delete Selected Images </v-btn>
                     </div>
                 </div>
             </div>
@@ -165,20 +162,11 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
                         >
                             <template #item="{ element }">
                                 <div class="image-container">
-                                    <img :src="element.src" :class="element.styling" @click="image_click_evnt(props.show_trashcan, props.show_clear_button, element)"/>
+                                    <img :src="element.src"/>
                                 </div>
                             </template>
                         </draggable>
                     </v-col>
-                    <!-- Trashcan button for deleting selected images -->
-                        <v-col v-if="props.show_trashcan && props.show_clear_button">
-                        <v-btn @click="deleteImages(0, current_tier_list, index)" size="large" variant="plain" prepend-icon="mdi-trash-can"></v-btn>
-                        <v-btn @click="deleteImages(1, current_tier_list, index)" size="small">
-                            <span>
-                                Clear
-                            </span>
-                        </v-btn>
-                        </v-col>
                 </v-row>
             </v-col>
             

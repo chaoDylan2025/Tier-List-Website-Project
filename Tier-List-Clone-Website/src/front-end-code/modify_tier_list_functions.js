@@ -82,10 +82,8 @@ function swapTiers(tier_list, i, j){
 }
 
 // Click event that executes when user clicks on an image in a tier list image container
-export function image_click_evnt(showsTrashCan, showsClearBtn, image){
-    if(showsTrashCan && showsClearBtn){
-        select_image(image)
-    }
+export function image_click_evnt(image){
+    select_image(image)
 }
 // Applys styling to an image that has been selected
 export function select_image(image){
@@ -121,13 +119,13 @@ export function deleteImageContainer(){
 }
 
 // Deletes images and updates session storage
-export function deleteImages(deleteStatus, current_tier_list, index){
+export function deleteImages(deleteStatus, current_tier, index){
     if(deleteStatus == 0){
-        current_tier_list[index].tier_image_container = deleteSelectedImgs(current_tier_list[index].tier_image_container)
-        updateSessionStorage(current_tier_list)
+        current_tier.tier_image_container = deleteSelectedImgs(current_tier.tier_image_container)
+        updateTierList(index, current_tier)
     }
     else{
-        current_tier_list[index].tier_image_container = deleteImageContainer()
-        updateSessionStorage(current_tier_list)
+        current_tier.tier_image_container = deleteImageContainer()
+        updateTierList(index, current_tier)
     }
 }
