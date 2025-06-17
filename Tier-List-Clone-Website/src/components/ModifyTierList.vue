@@ -1,17 +1,13 @@
 <script setup>
 import TierNameChange from './TierNameChange.vue'
 import TierColorChange from './TierColorChange.vue'
-import TierImageDeletion from './TierImageDeletion.vue'
 import TierListDisplay from './TierListDisplay.vue'
 import { open_tier_modification_dialog, open_tier_color_dialog, current_tier } from '../front-end-code/modify_tier_list_functions'
-import { open_tier_name_mod_dialog, open_tier_color_mod_dialog, open_tier_image_deletion_dialog, confirm_tier_name_change, confirm_tier_color_change } from '../front-end-code/modify_tier_list_functions'
+import { open_tier_name_mod_dialog, open_tier_color_mod_dialog, confirm_tier_name_change, confirm_tier_color_change } from '../front-end-code/modify_tier_list_functions'
 
 const props = defineProps({
     current_tier: Object,
-    current_tier_index: Number,
-    show_exit_button: Boolean,
-    show_confirm_button: Boolean,
-    mod_tier_dialog: Boolean
+    current_tier_index: Number
 })
 
 var current_tier_to_modify = props.current_tier
@@ -20,7 +16,7 @@ var current_tier_index = props.current_tier_index
 </script>
 
 <template>
-    <v-row v-if="props.show_exit_button" class="ml-2 mt-2">
+    <v-row class="ml-2 mt-2">
         <v-btn
         @click="$emit('close', false)"
         icon="$close"
@@ -39,8 +35,6 @@ var current_tier_index = props.current_tier_index
         @close="(state) => open_tier_modification_dialog = state" @changeTierName="confirm_tier_name_change"/>
         <TierColorChange :tier_color_dialog="open_tier_color_dialog" :current_tier="current_tier_to_modify" :index="current_tier_index"
         @close="(state) => open_tier_color_dialog = state" @changeTierColor="confirm_tier_color_change"/>
-        <TierImageDeletion :tier_image_deletion_dialog="open_tier_image_deletion_dialog" :current_tier="current_tier" 
-        @close="(state) => open_tier_image_deletion_dialog = state"/>
     </v-container>
 </template>
 

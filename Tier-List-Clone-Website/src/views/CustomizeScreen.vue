@@ -66,7 +66,7 @@ onMounted(() => {
         height="auto"
         width="1200">
             <v-container style="background-color: white">
-                <ModifyTierList :open_dialog="open_modal_dialog" :current_tier="current_tier" :current_tier_index="current_tier_index" :show_exit_button="true" @close="(state) => open_modal_dialog = state"/>
+                <ModifyTierList :open_dialog="open_modal_dialog" :current_tier="current_tier" :current_tier_index="current_tier_index" @close="(state) => open_modal_dialog = state"/>
             </v-container>
         </v-dialog>
 

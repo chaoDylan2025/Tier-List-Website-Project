@@ -1,16 +1,16 @@
 <script setup>
 import draggable from 'vuedraggable'
 import { ref, watch, computed } from 'vue'
-import { open_modal_dialog, updateSessionStorage, uploadToImageContainer } from '../front-end-code/customize_screen_functions.js'
-import { open_tier_image_deletion_dialog, organizeTiers, image_click_evnt, deleteImages } from '../front-end-code/modify_tier_list_functions.js'
+import { updateSessionStorage, uploadToImageContainer } from '../front-end-code/customize_screen_functions.js'
+import { organizeTiers, image_click_evnt, deleteImages } from '../front-end-code/modify_tier_list_functions.js'
 
 const emit = defineEmits(['open_tier_name_mod', 'open_tier_color_mod', 'delete_tiers', 'update:files_arr', 'update:current_tier_list'])
 const props = defineProps({
     tier_list: Object,
-    files_arr: Array,
     current_tier: Object,
     current_tier_index: Number,
     tier_list_width: Number,
+    files_arr: Array,
     show_files_arr: Boolean,
     show_mod_buttons: Boolean,
     show_mods: Boolean,
