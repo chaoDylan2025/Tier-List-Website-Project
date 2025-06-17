@@ -59,15 +59,11 @@ export function organizeTiers(tier_list, index, direction){
         return
     }
     else{
-        // Moves the tier up
-        if(direction == 0){
-            swapTiers(tier_list, index, index-1)
-        }
-
-        // Moves the tier down
-        else{
-            swapTiers(tier_list, index, index + 1)
-        }
+        /*
+        * Move the tier up if direction is 0
+        * Move the tier down if direction is not 0
+        */
+        direction == 0 ? swapTiers(tier_list, index, index-1) : swapTiers(tier_list, index, index + 1)
     }
     updateTierList(tier_list)
 }
