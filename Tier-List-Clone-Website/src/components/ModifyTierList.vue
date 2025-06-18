@@ -31,6 +31,7 @@ var current_tier_index = props.current_tier_index
         <TierListDisplay :current_tier="props.current_tier" :tier_list_width="1005" :show_mods="true" :show_mod_buttons="true" :show_arrow_buttons="true" @open_tier_name_mod="open_tier_name_mod_dialog" @open_tier_color_mod="open_tier_color_mod_dialog"/>
     </v-row>
 
+    <!-- Displays dialogs for changing current tier's name and color -->
     <v-container v-if="current_tier != undefined" v-show="false">
         <TierNameChange :tier_name_dialog="open_tier_modification_dialog" :current_tier="current_tier_to_modify" :index="current_tier_index"
         @close="(state) => open_tier_modification_dialog = state" @changeTierName="confirm_tier_name_change"/>
@@ -38,28 +39,3 @@ var current_tier_index = props.current_tier_index
         @close="(state) => open_tier_color_dialog = state" @changeTierColor="confirm_tier_color_change"/>
     </v-container>
 </template>
-
-<style lang="css">
-/* Styling for Default Tier List border */
-.tier-border{
-    border-style: solid;
-    border-width: 2px;
-}
-
-/** Styling for image container that contains images to be inserted in tier list */
-#image-place-holder{
-    background-color: rgba(40, 40, 40, 0.927);
-    border-style: solid;
-}
-
-/* Styling for Image Container */
-#place-holder{
-    background-color: rgba(27, 27, 27, 0.927);
-    border-style: solid;
-    border-width: 1px;
-}
-
-#place-holder img{
-    width: 85px;
-}
-</style>

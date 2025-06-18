@@ -59,26 +59,9 @@ watch (() => current_tier_to_modify.color, (color) => {
 </template>
 
 <style lang="css">
-/* Styling for Default Tier List border */
+/* Styling for current tier's border */
 .tier-border{
     border-style: solid;
     border-width: 2px;
-}
-
-/** Styling for image container that contains images to be inserted in tier list */
-#image-place-holder{
-    background-color: rgba(40, 40, 40, 0.927);
-    border-style: solid;
-}
-
-/* Styling for Image Container */
-#place-holder{
-    background-color: rgba(27, 27, 27, 0.927);
-    border-style: solid;
-    border-width: 1px;
-}
-
-#place-holder img{
-    width: 85px;
 }
 </style>

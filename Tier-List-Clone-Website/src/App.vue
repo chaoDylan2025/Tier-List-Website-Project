@@ -17,9 +17,5 @@ import CustomizeScreen from './views/CustomizeScreen.vue'
                 </v-container>
             </div>
         </div>
-
-        <!-- Displays current view -->
-        <v-main>
-        </v-main>
     </v-app>
 </template>

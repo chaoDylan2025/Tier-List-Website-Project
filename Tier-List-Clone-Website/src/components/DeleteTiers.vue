@@ -50,12 +50,3 @@ watch (() => arr_of_tiers_to_delete.value, () => {
         </v-dialog>
     </v-app>
 </template>
-
-<style lang="css">
-/* Styling for Default Tier List border */
-.tier-border{
-    border-style: solid;
-    border-color: black;
-    border-width: 2px;
-}
-</style>
