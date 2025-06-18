@@ -37,7 +37,7 @@ export var default_tier_list = ref([
 // Contains colors used in default tier list
 export const colors_of_default_tier_list = ["rgb(253, 123, 123)", "rgb(255, 170, 91)", "rgb(253, 226, 144)", "rgb(246, 253, 123)", "rgb(146, 246, 115)", "rgb(123, 253, 244)"]
 
-// Opens modal dialog for customizing tier list
+// Opens modal dialog for modifying current tier
 export var open_modal_dialog = ref(false)
 
 // Opens modal dialog for deleting tiers
@@ -46,12 +46,7 @@ export var delete_tiers_modal_dialog = ref(false)
 // Contains uploaded images
 export var files_arr = ref([])
 
-// Creates a new sessionStorage key for the current tier list
-export function createSessionStorage(current_tier_list){
-    // Creates a key for 'default tier list'
-    sessionStorage.setItem("default_tier_list", JSON.stringify(current_tier_list))
-}
-// Updates the current tier list in sessionStorage
+// Saves the default tier list's changes in sessionStorage
 export function updateSessionStorage(current_tier_list){
     sessionStorage.setItem("default_tier_list", JSON.stringify(current_tier_list))
 }

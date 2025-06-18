@@ -3,8 +3,7 @@ import { onMounted, ref } from 'vue'
 import TierListDisplay from '../components/TierListDisplay.vue'
 import ModifyTierList from '../components/ModifyTierList.vue'
 import DeleteTiers from '../components/DeleteTiers.vue'
-import { open_modal_dialog, delete_tiers_modal_dialog, default_tier_list, files_arr, add_new_tier } from '../front-end-code/customize_screen_functions'
-import { createSessionStorage, updateSessionStorage } from '../front-end-code/customize_screen_functions.js'
+import { open_modal_dialog, delete_tiers_modal_dialog, default_tier_list, files_arr, add_new_tier, updateSessionStorage } from '../front-end-code/customize_screen_functions'
 
 var current_tier = ref([])
 var current_tier_index = ref(0)
@@ -31,7 +30,7 @@ function deleteTiers(state, deleted_tiers){
 // Access sessionStorage everytime user refreshes page
 onMounted(() => {
     if(sessionStorage.getItem("default_tier_list") == null){
-        createSessionStorage(default_tier_list.value)
+        updateSessionStorage(default_tier_list.value)
     }
     else{
         const parsed = JSON.parse(sessionStorage.getItem("default_tier_list"))
@@ -68,7 +67,7 @@ onMounted(() => {
         height="auto"
         width="1200">
             <v-container style="background-color: white">
-                <ModifyTierList :open_dialog="open_modal_dialog" :current_tier="current_tier" :current_tier_index="current_tier_index" @close="(state) => open_modal_dialog = state"/>
+                <ModifyTierList :current_tier="current_tier" :current_tier_index="current_tier_index" @close="(state) => open_modal_dialog = state"/>
             </v-container>
         </v-dialog>
 
