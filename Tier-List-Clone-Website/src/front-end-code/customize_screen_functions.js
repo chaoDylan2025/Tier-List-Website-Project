@@ -40,23 +40,23 @@ export const colors_of_default_tier_list = ["rgb(253, 123, 123)", "rgb(255, 170,
 // Opens modal dialog for customizing tier list
 export var open_modal_dialog = ref(false)
 
-// Opens modal dialog for deleting tiers in tier list
+// Opens modal dialog for deleting tiers
 export var delete_tiers_modal_dialog = ref(false)
 
-// Contains image files
+// Contains uploaded images
 export var files_arr = ref([])
 
-// Creates a new key for the current tier list to sessionStorage
+// Creates a new sessionStorage key for the current tier list
 export function createSessionStorage(current_tier_list){
     // Creates a key for 'default tier list'
     sessionStorage.setItem("default_tier_list", JSON.stringify(current_tier_list))
 }
-// Update the current tier list in sessionStorage
+// Updates the current tier list in sessionStorage
 export function updateSessionStorage(current_tier_list){
     sessionStorage.setItem("default_tier_list", JSON.stringify(current_tier_list))
 }
 
-// Inserts a new tier in the tier list
+// Inserts a new tier
 export function add_new_tier(tier_list){
     const num_of_tiers = tier_list.length
     tier_list.push({
@@ -101,7 +101,7 @@ export function uploadToImageContainer(){
             // Reads current file
             const reader = new FileReader();
             reader.onload = (e) => {
-                // Append image file to an array of draggable elements
+                // Appends image file
                 files_arr.value.push({
                     id: index ++,
                     src: e.target.result,

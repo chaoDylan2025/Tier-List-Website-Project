@@ -11,6 +11,7 @@ import CustomizeScreen from './views/CustomizeScreen.vue'
             </div>
             <!-- Button area -->
             <div class="mt-3">
+                <!-- Displays customization page for default tier list -->
                 <v-container>
                     <CustomizeScreen />
                 </v-container>

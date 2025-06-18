@@ -16,6 +16,7 @@ var current_tier_index = props.current_tier_index
 </script>
 
 <template>
+    <!-- Displays button for exiting dialog -->
     <v-row class="ml-2 mt-2">
         <v-btn
         @click="$emit('close', false)"

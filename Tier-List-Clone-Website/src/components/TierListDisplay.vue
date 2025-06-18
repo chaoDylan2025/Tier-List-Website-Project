@@ -40,22 +40,22 @@ const files_arr = computed({
 
 var current_tier_to_modify = ref(props.current_tier)
 
-// Executes emit event when user clicks on the modify button of a specific tier
+// Executes when user clicks on the modify button of a specific tier
 function modifyCurrentTier(state, index){
     emit('modify_current_tier', state, index)
 }
 
-// Executes emit event when user clicks on button that modifies selected tier's name
+// Executes when user clicks on button that modifies selected tier's name
 function open_tier_name_mod_dialog(index, props){
     emit('open_tier_name_mod', index, props)
 }
 
-// Executes emit event when user clicks on button that modifies selected tier's color
+// Executes when user clicks on button that modifies selected tier's color
 function open_tier_color_mod_dialog(index, props){
     emit('open_tier_color_mod', index, props)
 }
 
-// Executes emit event when tiers_to_delete_arr updates
+// Executes when user confirms the tiers to delete
 function update_delete_tiers_arr(arr){
     emit('delete_tiers', arr)
 }
@@ -67,7 +67,6 @@ var tiers_to_delete_arr = ref([])
 watch (() => tiers_to_delete_arr.value, (new_arr) => {
     update_delete_tiers_arr(new_arr)
 })
-
 </script>
 
 <template>
@@ -98,7 +97,7 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
                         </template>
                     </draggable>
                 </v-col>
-                <!-- Trashcan button for deleting selected images -->
+                <!-- Deletes all of the current tier's images -->
                 <div class="align-self-center" style="margin-left: 20px;">
                     <v-btn @click="deleteImages(1, props.current_tier, current_tier_index)" size="small">
                         Clear
@@ -127,7 +126,7 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
         <v-row v-for="(tier, index) in current_tier_list" :key="tier.tier_name">
             <v-col>
                 <v-row :key="tier.tier_name" :class="`d-flex h-auto`">
-                    <!-- Displays when user wants to delete any tier(s) or any image container(s) -->
+                    <!-- Displays when user wants to delete any tier(s) or reorganize tiers -->
                     <div class="tier-list-left-column">
                         <v-checkbox
                             class="mr-4"
@@ -170,6 +169,7 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
                 </v-row>
             </v-col>
             
+            <!-- Button for modifying current tier -->
             <div class="ml-4 d-flex align-center" v-if="props.show_mod_buttons">
                 <v-btn @click="modifyCurrentTier(true, index)" size="small"> Modify </v-btn>
             </div>
@@ -178,15 +178,18 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
         <!-- Displays uploaded images -->
         <v-row class="mt-8" v-if="props.show_files_arr">
             <div draggable="false" class="w-100">
+                <!-- Caption for uploaded images container -->
                 <div draggable="false">
                     <p id="cap_for_user"> Insert your images or uploaded images here </p>
                 </div> 
                 <div class="d-flex flex-column" id="image-place-holder">
                     <div class="mt-3 mb-3">
+                        <!-- Displays button for uploading images -->
                         <div class="ml-2">
                             <v-btn @click="uploadToImageContainer()" size="small"> Upload </v-btn>
                         </div>  
                     </div>
+                    <!-- Container for uploaded images -->
                     <div class="place-holder">
                         <draggable
                         v-model="files_arr"
@@ -213,7 +216,7 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
     border-color: black;
     border-width: 2px;
 }
-/** Styling for image container that contains images to be inserted in tier list */
+/** Styling for uploaded images container */
 #image-place-holder{
     background-color: rgba(40, 40, 40, 0.927);
     border-style: solid;

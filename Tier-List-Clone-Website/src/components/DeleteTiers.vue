@@ -27,13 +27,16 @@ watch (() => arr_of_tiers_to_delete.value, () => {
         height="auto"
         width="1200">
             <v-card>
+               <!-- Title for dialog -->
                <v-card-title class="mt-4 text-center"> Select Tier(s) to delete </v-card-title>
                <v-container>
+                    <!-- Displays the tier list -->
                     <v-row>
                         <TierListDisplay :tier_list="props.tier_list" :tier_list_width="1125" :show_checkboxes="props.tier_delete_dialog"
                         @delete_tiers="update_delete_tiers_arr"/>
                     </v-row>
 
+                    <!-- Displays the Back and Confirm Buttons -->
                     <v-row>
                         <v-col class="d-flex justify-center">
                             <v-btn class="mr-8" @click="$emit('close', false)">Back</v-btn>

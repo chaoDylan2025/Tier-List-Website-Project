@@ -11,8 +11,8 @@ const current_tier_to_modify = ref(props.current_tier)
 console.log("Current tier in TierColorChange: ", current_tier_to_modify.value.color)
 var change_selected_tier_color = ref(current_tier_to_modify.value.color)
 
-// Watch for changes to selected tier's color
-watch (() => current_tier_to_modify .color, (color) => {
+// Update selected tier's color
+watch (() => current_tier_to_modify.color, (color) => {
     change_selected_tier_color.value = color  
 })
 </script>
@@ -24,23 +24,25 @@ watch (() => current_tier_to_modify .color, (color) => {
         height="auto"
         width="auto">
             <v-card>
-                <!-- Contains the default tier list structure -->
+                <!-- Contains the current tier's structure -->
                 <v-container class="ml-5 mt-10 px-10 mb-10">
                     <v-row>
                         <v-col>
-                            <!-- Iterates through an object that contains default tier list -->
+                            <!-- Contains tier name and its color -->
                             <v-row :class="`d-flex w-100 tier-border`" :style="`background-color: ${change_selected_tier_color}`">
-                                <!-- Contains tier name and its color -->
                                 <v-col> 
                                     <span> {{ current_tier_to_modify.tier_name }} </span>
                                 </v-col>
                             </v-row>
+
+                            <!-- Displays option for changing current tier's color -->
                             <v-row class="mt-8">
                                 <v-color-picker class="w-100" v-model="change_selected_tier_color"></v-color-picker>
                             </v-row>
                         </v-col>
                     </v-row>
 
+                    <!-- Displays the Back and Confirm Buttons -->
                     <v-row class="mt-8">
                         <v-col>
                             <v-btn @click="$emit('close', false), change_selected_tier_color=current_tier_to_modify.color">Back</v-btn>

@@ -43,6 +43,7 @@ onMounted(() => {
 <template>
     <v-app class="bg-black">
         <div style="width: 100%;">
+            <!-- Displays buttons for creating and deleting tiers -->
             <v-container>
                 <v-row>
                     <v-col class="text-center">
@@ -54,6 +55,7 @@ onMounted(() => {
                 </v-row>
             </v-container>
 
+            <!-- Displays the tier list -->
             <TierListDisplay v-model:tier_list="default_tier_list"  v-model:files_arr="files_arr" :tier_list_width="1200" :show_files_arr="true" :show_arrow_buttons="true" :show_mod_buttons="true"
             @modify_current_tier="setUpTierModificationData"/>
         </div>

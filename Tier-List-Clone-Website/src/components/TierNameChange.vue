@@ -18,12 +18,12 @@ var change_selected_tier_name = ref("")
         height="auto"
         width="auto">
             <v-card>
-                <!-- Contains the default tier list structure -->
+                <!-- Contains the current tier's structure -->
                 <v-container class="mt-10 px-10 mb-10">
-                    <!-- Iterates through an object that contains default tier list -->
+                    <!-- Contains tier name and its color -->
                     <v-row class="tier-border" :style="`background-color: ${props.current_tier.color}`">
-                        <!-- Contains tier name and its color -->
                         <v-col class="d-flex justify-center align-center"> 
+                            <!-- For entering the current tier's new name -->
                             <div class="w-100">
                                 <v-text-field
                                 class="placeholder-text"
@@ -34,6 +34,7 @@ var change_selected_tier_name = ref("")
                         </v-col>
                     </v-row>
 
+                    <!-- Displays the Back and Confirm Buttons -->
                     <v-row class="mt-8">
                         <v-col>
                             <v-btn @click="$emit('close', false), change_selected_tier_name=''">Back</v-btn>

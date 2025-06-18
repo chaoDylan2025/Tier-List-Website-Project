@@ -10,13 +10,13 @@ export var open_tier_color_dialog = ref(false)
 // Opens modal dialog for deleting tier list's images
 export var open_tier_image_deletion_dialog = ref(false)
 
-/***********************************************************************
- * Functions and variables for modifying selected tier's name or color *
- ***********************************************************************/
+/***************************************************************************
+ * Functions and variables for modifying selected tier's name or/and color *
+ ***************************************************************************/
 // Selected tier
 export var current_tier = ref("")
 
-// Original content of selected tier
+// Original state of selected tier
 export var original_tier = ref("")
 
 // Index of selected tier
