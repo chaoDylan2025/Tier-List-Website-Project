@@ -55,7 +55,7 @@ onMounted(() => {
             </v-container>
 
             <!-- Displays the tier list -->
-            <TierListDisplay v-model:tier_list="default_tier_list"  v-model:files_arr="files_arr" :tier_list_width="1200" :show_files_arr="true" :show_arrow_buttons="true" :show_mod_buttons="true"
+            <TierListDisplay v-model:tier_list="default_tier_list"  v-model:files_arr="files_arr" :tier_list_width="1046" :show_files_arr="true" :show_arrow_buttons="true" :show_mod_buttons="true"
             @modify_current_tier="setUpTierModificationData"/>
         </div>
 

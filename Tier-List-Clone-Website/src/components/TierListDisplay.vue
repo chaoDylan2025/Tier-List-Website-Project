@@ -92,7 +92,7 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
                     >
                         <template #item="{ element }">
                             <div class="image-container">
-                                <img :src="element.src" :class="element.styling" @click="image_click_evnt(element)"/>
+                                <img :src="element.src" :class="element.styling" style="width: 75px;" @click="image_click_evnt(element)"/>
                             </div>
                         </template>
                     </draggable>
@@ -232,12 +232,13 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
 }
 .place-holder-imgs img {
     height: 80px;
-    width: 71px;
+    width: 75.5px;
 }
 /** Styling for each tier's image container  **/
 .image-container{
     display: flex;
     align-items: stretch;
+    object-fit: cover;
 }
 .image-container img{
     height: 85px;

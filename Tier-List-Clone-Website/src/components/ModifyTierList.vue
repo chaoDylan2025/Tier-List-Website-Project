@@ -28,7 +28,7 @@ var current_tier_index = props.current_tier_index
     </v-row>
     <!-- Contains tier list structure -->
     <v-row>
-        <TierListDisplay :current_tier="props.current_tier" :tier_list_width="1005" :show_mods="true" :show_mod_buttons="true" :show_arrow_buttons="true" @open_tier_name_mod="open_tier_name_mod_dialog" @open_tier_color_mod="open_tier_color_mod_dialog"/>
+        <TierListDisplay :current_tier="props.current_tier" :tier_list_width="1136" :show_mods="true" :show_mod_buttons="true" :show_arrow_buttons="true" @open_tier_name_mod="open_tier_name_mod_dialog" @open_tier_color_mod="open_tier_color_mod_dialog"/>
     </v-row>
 
     <!-- Displays dialogs for changing current tier's name and color -->
