@@ -46,8 +46,7 @@ export function confirm_tier_name_change(state, new_name, index, props){
 }
 
 // Changes selected tier's color
-export function confirm_tier_color_change(state, new_color, index, props){
-    props.color = new_color // Changes name of selected tier
+export function confirm_tier_color_change(state, index, props){
     updateTierList(index, props)
     open_tier_color_dialog.value = state // Set to false to exit modal dialog
 }

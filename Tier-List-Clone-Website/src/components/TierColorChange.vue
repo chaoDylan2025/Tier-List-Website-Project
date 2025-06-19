@@ -1,5 +1,5 @@
 <script setup>
-import {ref, watch} from 'vue'
+import { watch } from 'vue'
 
 const props = defineProps({
     tier_color_dialog: Boolean,
@@ -7,13 +7,12 @@ const props = defineProps({
     index: Number
 })
 
-const current_tier_to_modify = ref(props.current_tier)
-console.log("Current tier in TierColorChange: ", current_tier_to_modify.value.color)
-var change_selected_tier_color = ref(current_tier_to_modify.value.color)
+// Contains old color of current tier
+var old_color = JSON.stringify(props.current_tier.color)
 
 // Update selected tier's color
-watch (() => current_tier_to_modify.color, (color) => {
-    change_selected_tier_color.value = color  
+watch (() => props.current_tier.color, (color) => {
+    props.current_tier.color = color  
 })
 </script>
 
@@ -29,15 +28,15 @@ watch (() => current_tier_to_modify.color, (color) => {
                     <v-row>
                         <v-col>
                             <!-- Contains tier name and its color -->
-                            <v-row :class="`d-flex w-100 tier-border`" :style="`background-color: ${change_selected_tier_color}`">
+                            <v-row :class="`d-flex w-100 tier-border`" :style="`background-color: ${props.current_tier.color}`">
                                 <v-col> 
-                                    <span> {{ current_tier_to_modify.tier_name }} </span>
+                                    <span> {{ props.current_tier.tier_name }} </span>
                                 </v-col>
                             </v-row>
 
                             <!-- Displays option for changing current tier's color -->
                             <v-row class="mt-8">
-                                <v-color-picker class="w-100" v-model="change_selected_tier_color"></v-color-picker>
+                                <v-color-picker class="w-100" v-model="props.current_tier.color"></v-color-picker>
                             </v-row>
                         </v-col>
                     </v-row>
@@ -45,11 +44,11 @@ watch (() => current_tier_to_modify.color, (color) => {
                     <!-- Displays the Back and Confirm Buttons -->
                     <v-row class="mt-8">
                         <v-col>
-                            <v-btn @click="$emit('close', false), change_selected_tier_color=current_tier_to_modify.color">Back</v-btn>
+                            <v-btn @click="$emit('close', false), props.current_tier.color = JSON.parse(old_color)">Back</v-btn>
                         </v-col>
                     
                         <v-col>
-                            <v-btn @click="$emit('changeTierColor', false, change_selected_tier_color, props.index, props.current_tier)">Confirm</v-btn>  
+                            <v-btn @click="$emit('changeTierColor', false, props.index, props.current_tier)">Confirm</v-btn>  
                         </v-col>
                     </v-row>
                 </v-container>
