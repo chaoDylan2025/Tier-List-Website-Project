@@ -1,20 +1,18 @@
 <script setup>
-import {ref, watch} from 'vue'
+import { watch } from 'vue'
 
 const props = defineProps({
-    tier_list_name: String,
     tier_color_dialog: Boolean,
-    tier_list: Object,
+    current_tier: Object,
     index: Number
 })
 
-const current_tier = props.tier_list[props.index]
+// Contains old color of current tier
+var old_color = JSON.stringify(props.current_tier.color)
 
-var change_selected_tier_color = ref(current_tier.color)
-
-// Watch for changes to selected tier's color
-watch (() => current_tier.color, (color) => {
-    change_selected_tier_color.value = color  
+// Update selected tier's color
+watch (() => props.current_tier.color, (color) => {
+    props.current_tier.color = color  
 })
 </script>
 
@@ -25,30 +23,32 @@ watch (() => current_tier.color, (color) => {
         height="auto"
         width="auto">
             <v-card>
-                <!-- Contains the default tier list structure -->
+                <!-- Contains the current tier's structure -->
                 <v-container class="ml-5 mt-10 px-10 mb-10">
                     <v-row>
                         <v-col>
-                            <!-- Iterates through an object that contains default tier list -->
-                            <v-row :class="`d-flex w-100 tier-border`" :style="`background-color: ${change_selected_tier_color}`">
-                                <!-- Contains tier name and its color -->
+                            <!-- Contains tier name and its color -->
+                            <v-row :class="`d-flex w-100 tier-border`" :style="`background-color: ${props.current_tier.color}`">
                                 <v-col> 
-                                    <span> {{ current_tier.tier_name }} </span>
+                                    <span> {{ props.current_tier.tier_name }} </span>
                                 </v-col>
                             </v-row>
+
+                            <!-- Displays option for changing current tier's color -->
                             <v-row class="mt-8">
-                                <v-color-picker class="w-100" v-model="change_selected_tier_color"></v-color-picker>
+                                <v-color-picker class="w-100" v-model="props.current_tier.color"></v-color-picker>
                             </v-row>
                         </v-col>
                     </v-row>
 
+                    <!-- Displays the Back and Confirm Buttons -->
                     <v-row class="mt-8">
                         <v-col>
-                            <v-btn @click="$emit('close', false), change_selected_tier_color=current_tier.color">Back</v-btn>
+                            <v-btn @click="$emit('close', false), props.current_tier.color = JSON.parse(old_color)">Back</v-btn>
                         </v-col>
                     
                         <v-col>
-                            <v-btn @click="$emit('changeTierColor', false, change_selected_tier_color, props.tier_list_name, props.tier_list)">Confirm</v-btn>  
+                            <v-btn @click="$emit('changeTierColor', false, props.index, props.current_tier)">Confirm</v-btn>  
                         </v-col>
                     </v-row>
                 </v-container>
@@ -58,26 +58,9 @@ watch (() => current_tier.color, (color) => {
 </template>
 
 <style lang="css">
-/* Styling for Default Tier List border */
+/* Styling for current tier's border */
 .tier-border{
     border-style: solid;
     border-width: 2px;
-}
-
-/** Styling for image container that contains images to be inserted in tier list */
-#image-place-holder{
-    background-color: rgba(40, 40, 40, 0.927);
-    border-style: solid;
-}
-
-/* Styling for Image Container */
-#place-holder{
-    background-color: rgba(27, 27, 27, 0.927);
-    border-style: solid;
-    border-width: 1px;
-}
-
-#place-holder img{
-    width: 85px;
 }
 </style>

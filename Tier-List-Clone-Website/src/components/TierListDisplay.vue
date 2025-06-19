@@ -2,22 +2,23 @@
 import draggable from 'vuedraggable'
 import { ref, watch, computed } from 'vue'
 import { updateSessionStorage, uploadToImageContainer } from '../front-end-code/customize_screen_functions.js'
-import { open_tier_image_deletion_dialog, organizeTiers, image_click_evnt, deleteImages } from '../front-end-code/modify_tier_list_functions.js'
+import { organizeTiers, image_click_evnt, deleteImages } from '../front-end-code/modify_tier_list_functions.js'
 
 const emit = defineEmits(['open_tier_name_mod', 'open_tier_color_mod', 'delete_tiers', 'update:files_arr', 'update:current_tier_list'])
 const props = defineProps({
-    tier_list_name: String,
     tier_list: Object,
+    current_tier: Object,
+    current_tier_index: Number,
+    tier_list_width: Number,
     files_arr: Array,
     show_files_arr: Boolean,
     show_mod_buttons: Boolean,
+    show_mods: Boolean,
     show_checkboxes: Boolean,
     show_clear_button: Boolean,
     show_arrow_buttons: Boolean,
     show_trashcan: Boolean
 })
-
-const current_tier_list_name = ref(props.tier_list_name)
 
 const current_tier_list = computed({
     get(){
@@ -37,17 +38,24 @@ const files_arr = computed({
     }
 })
 
-// Executes emit event when user clicks on button that modifies selected tier's name
+var current_tier_to_modify = ref(props.current_tier)
+
+// Executes when user clicks on the modify button of a specific tier
+function modifyCurrentTier(state, index){
+    emit('modify_current_tier', state, index)
+}
+
+// Executes when user clicks on button that modifies selected tier's name
 function open_tier_name_mod_dialog(index, props){
     emit('open_tier_name_mod', index, props)
 }
 
-// Executes emit event when user clicks on button that modifies selected tier's color
+// Executes when user clicks on button that modifies selected tier's color
 function open_tier_color_mod_dialog(index, props){
     emit('open_tier_color_mod', index, props)
 }
 
-// Executes emit event when tiers_to_delete_arr updates
+// Executes when user confirms the tiers to delete
 function update_delete_tiers_arr(arr){
     emit('delete_tiers', arr)
 }
@@ -59,30 +67,80 @@ var tiers_to_delete_arr = ref([])
 watch (() => tiers_to_delete_arr.value, (new_arr) => {
     update_delete_tiers_arr(new_arr)
 })
-
 </script>
 
 <template>
     <!-- Contains tier list structure -->
-    <div class="ma-auto mt-10 px-10 mb-10" style="width: 1000px;">
+    <div class="ma-auto mt-10 px-10 mb-10" :style="`width: ${props.tier_list_width}px;`">
+        <!-- Displays when ModifyTierList dialog is opened -->
+        <div v-if="current_tier_to_modify != undefined">
+            <v-row :class="`d-flex h-auto`">
+                <!-- Contains the tier's name and color -->
+                <div class="text-center text-break font-weight-bold align-content-center tier-border" :style="`color: black; background-color: ${current_tier_to_modify.color}; width: 85px;`">
+                    <span>
+                        {{ current_tier_to_modify.tier_name }}
+                    </span>
+                </div>
+                <!-- Images for the Tier -->
+                <v-col class="d-flex flex-wrap tier-border bg-grey-darken-4 w-100 pa-0 ma-0" style="min-height: 85px;">
+                    <draggable
+                    v-model="current_tier_to_modify.tier_image_container"
+                    class="d-flex flex-wrap w-100 align-start"
+                    group="tier_list"
+                    item-key="id"
+                    @change="updateSessionStorage(current_tier_to_modify)"
+                    >
+                        <template #item="{ element }">
+                            <div class="image-container">
+                                <img :src="element.src" :class="element.styling" style="width: 75px;" @click="image_click_evnt(element)"/>
+                            </div>
+                        </template>
+                    </draggable>
+                </v-col>
+                <!-- Deletes all of the current tier's images -->
+                <div class="align-self-center" style="margin-left: 20px;">
+                    <v-btn @click="deleteImages(1, props.current_tier, current_tier_index)" size="small">
+                        Clear
+                    </v-btn>
+                </div>
+            </v-row>
+            <!-- Displays when user wants to modify any tier(s) -->
+            <div class="d-flex tier-list-mod-buttons" style="align-self: center; margin-top: 30px;">
+                <div v-if="show_mod_buttons" class="d-flex w-100 justify-space-around mt-4">
+                    <div class="tier-list-mod-buttons">
+                        <v-btn @click="open_tier_name_mod_dialog(index, props.current_tier)" size="x-small" variant="plain" prepend-icon="mdi-pencil">Change Name</v-btn> 
+                    </div>
+
+                    <div class="tier-list-mod-buttons">
+                        <v-btn @click="open_tier_color_mod_dialog(index, props.current_tier)" size="x-small" variant="plain" prepend-icon="mdi-format-color-fill">Change Color</v-btn>
+                    </div>
+
+                    <div class="tier-list-mod-buttons">
+                        <v-btn @click="deleteImages(0, props.current_tier, current_tier_index)" size="x-small" variant="plain" prepend-icon="mdi-trash-can"> Delete Selected Images </v-btn>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Iterates through the tier list -->
         <v-row v-for="(tier, index) in current_tier_list" :key="tier.tier_name">
             <v-col>
                 <v-row :key="tier.tier_name" :class="`d-flex h-auto`">
-                    <!-- Displays when user wants to delete any tier(s) or any image container(s) -->
-                    <div class="tier-list-left-column" v-if="props.show_checkboxes === true || props.show_mod_buttons">
+                    <!-- Displays when user wants to delete any tier(s) or reorganize tiers -->
+                    <div class="tier-list-left-column">
                         <v-checkbox
+                            class="mr-4"
                             v-if="props.show_checkboxes === true"
                             v-model="tiers_to_delete_arr"
                             label=""
                             :value="tier">
                         </v-checkbox>
-                        <div v-if="props.show_arrow_buttons && current_tier_list.length > 1">
+                        <div class="mr-4" v-if="current_tier_list.length > 1 & props.show_arrow_buttons">
                             <div>
-                                <v-btn @click="organizeTiers(current_tier_list_name, props.tier_list, index, 0)" size="small" variant="plain" prepend-icon="mdi-menu-up"></v-btn>
+                                <v-btn @click="organizeTiers(props.tier_list, index, 0)" size="medium" variant="plain" prepend-icon="mdi-menu-up"></v-btn>
                             </div>
                             <div>
-                                <v-btn @click="organizeTiers(current_tier_list_name, props.tier_list, index, 1)" size="small" variant="plain" prepend-icon="mdi-menu-down"></v-btn>
+                                <v-btn @click="organizeTiers(props.tier_list, index, 1)" size="medium" variant="plain" prepend-icon="mdi-menu-down"></v-btn>
                             </div>
                         </div>
                     </div>
@@ -99,57 +157,39 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
                         class="d-flex flex-wrap w-100 align-start"
                         group="tier_list"
                         item-key="id"
-                        @change="updateSessionStorage(current_tier_list_name, current_tier_list)"
+                        @change="updateSessionStorage(current_tier_list)"
                         >
                             <template #item="{ element }">
                                 <div class="image-container">
-                                    <img :src="element.src" :class="element.styling" @click="image_click_evnt(props.show_trashcan, props.show_clear_button, element)"/>
+                                    <img :src="element.src"/>
                                 </div>
                             </template>
                         </draggable>
                     </v-col>
-                    <!-- Trashcan button for deleting selected images -->
-                        <v-col v-if="props.show_trashcan && props.show_clear_button">
-                        <v-btn @click="deleteImages(0, current_tier_list_name, current_tier_list, index)" size="large" variant="plain" prepend-icon="mdi-trash-can"></v-btn>
-                        <v-btn @click="deleteImages(1, current_tier_list_name, current_tier_list, index)" size="small">
-                            <span>
-                                Clear
-                            </span>
-                        </v-btn>
-                        </v-col>
                 </v-row>
             </v-col>
-        
-            <!-- Displays when user wants to modify any tier(s) -->
-            <v-col class="tier-list-mod-buttons" style="align-self: center;" v-if="props.show_mod_buttons === true">
-                <v-row>
-                    <v-col class="tier-list-mod-buttons">
-                        <v-btn @click="open_tier_name_mod_dialog(index, props.tier_list)" size="x-small" variant="plain" prepend-icon="mdi-pencil">Change Name</v-btn> 
-                    </v-col>
-
-                    <v-col class="tier-list-mod-buttons">
-                        <v-btn @click="open_tier_color_mod_dialog(index, props.tier_list)" size="x-small" variant="plain" prepend-icon="mdi-format-color-fill">Change Color</v-btn>
-                    </v-col>
-
-                    <v-col class="tier-list-mod-buttons">
-                        <v-btn @click="open_tier_image_deletion_dialog = true" size="x-small" variant="plain" prepend-icon="mdi-trash-can">Delete Images</v-btn>
-                    </v-col>
-                </v-row>
-            </v-col>
+            
+            <!-- Button for modifying current tier -->
+            <div class="ml-4 d-flex align-center" v-if="props.show_mod_buttons">
+                <v-btn @click="modifyCurrentTier(true, index)" size="small"> Modify </v-btn>
+            </div>
         </v-row>
 
         <!-- Displays uploaded images -->
         <v-row class="mt-8" v-if="props.show_files_arr">
-            <div class="w-100">
-                <div>
+            <div draggable="false" class="w-100">
+                <!-- Caption for uploaded images container -->
+                <div draggable="false">
                     <p id="cap_for_user"> Insert your images or uploaded images here </p>
                 </div> 
                 <div class="d-flex flex-column" id="image-place-holder">
                     <div class="mt-3 mb-3">
+                        <!-- Displays button for uploading images -->
                         <div class="ml-2">
                             <v-btn @click="uploadToImageContainer()" size="small"> Upload </v-btn>
                         </div>  
                     </div>
+                    <!-- Container for uploaded images -->
                     <div class="place-holder">
                         <draggable
                         v-model="files_arr"
@@ -176,7 +216,7 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
     border-color: black;
     border-width: 2px;
 }
-/** Styling for image container that contains images to be inserted in tier list */
+/** Styling for uploaded images container */
 #image-place-holder{
     background-color: rgba(40, 40, 40, 0.927);
     border-style: solid;
@@ -191,17 +231,18 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
     align-items: stretch;
 }
 .place-holder-imgs img {
-    height: 78px;
-    width: 78px;
+    height: 80px;
+    width: 75.5px;
 }
 /** Styling for each tier's image container  **/
 .image-container{
     display: flex;
     align-items: stretch;
+    object-fit: cover;
 }
 .image-container img{
-    height: 95px;
-    width: 95px;
+    height: 85px;
+    width: 77px;
 }
 .selected {
   outline: 3px solid #2196F3;
@@ -216,8 +257,8 @@ watch (() => tiers_to_delete_arr.value, (new_arr) => {
 }
 /** Styling for tier list mod buttons **/
 .tier-list-mod-buttons {
-    margin: 0px;
-    margin-left: 12px;
+    display: flex;
+    justify-content: center;
     padding: 0px;
 }
 </style>
