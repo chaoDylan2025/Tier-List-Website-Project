@@ -29,7 +29,7 @@ function deleteTiers(state, deleted_tiers){
 
 // Access sessionStorage everytime user refreshes page
 onMounted(() => {
-    if(sessionStorage.getItem("default_tier_list") == null){
+    if(sessionStorage.getItem("default_tier_list") == null || sessionStorage.getItem("default_tier_list") == "[]"){
         updateSessionStorage(default_tier_list.value)
     }
     else{

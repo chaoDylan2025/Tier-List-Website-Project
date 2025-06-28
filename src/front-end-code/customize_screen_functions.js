@@ -59,6 +59,7 @@ export function add_new_tier(tier_list){
         color: colors_of_default_tier_list[getRandomInt(0, colors_of_default_tier_list.length)],
         tier_image_container: []
     })
+    updateSessionStorage(tier_list)
 }
 
 // Gets a random number between the minimum number and maximum number
